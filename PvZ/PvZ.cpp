@@ -5,7 +5,7 @@ int main()
 {
 	system("chcp 1251>nul");
 
-	cout << "Hello, PvZ" << endl;
+	cout << "PvZ" << endl;
 
 	return 0;
 }
