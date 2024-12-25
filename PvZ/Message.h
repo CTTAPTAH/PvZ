@@ -12,6 +12,7 @@ public:
 	union {
 		struct {
 			double damage;
+			GameObject* who_receive;
 		} damage;
 		struct {
 			GameObject* creature;
@@ -27,9 +28,10 @@ public:
 			int y;
 			int disp_x;
 			int disp_y;
-			sf::Texture texture;
+			sf::Texture* texture;
 		} add_map;
 
 	};
+	Message();
+	Message(const Message&);
 };
-

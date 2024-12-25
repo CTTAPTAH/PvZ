@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 
 class Message;
 
@@ -11,7 +12,7 @@ class GameObject
 private:
 	Position pos;
 	int hp;
-	// Texture*
+	sf::Texture* texture;
 	int idx_line;
 	int id;
 public:
@@ -20,13 +21,13 @@ public:
 	virtual ~GameObject();
 
 	void ReceiveDamage();
-	void UpdatePosition();
-	void Animation();
-	void isLive();
+	void UpdatePosition(double dt, double speed);
+	void Animation(double dt);
+	//void isLive();
 	void Collision();
 
 	//static int GetId();
 	Position GetPosition();
 	virtual void SendMsg(double dt);
-	virtual void ReceiveMsg(Message msg);
+	virtual void ReceiveMsg(Message* msg);
 };
