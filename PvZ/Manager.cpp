@@ -2,8 +2,17 @@
 
 Manager* Manager::born = nullptr;
 
-Manager::Manager() : game_object(), message() {}
-Manager::Manager(const Manager&) {}
+Manager::Manager() : game_object(), message() {
+	win_wid = 800; win_hei = 600;
+	born = nullptr;
+	map = nullptr;
+
+	Texture.plant;
+	Texture.zombie;
+
+	Font.newRoman;
+}
+//Manager::Manager(const Manager&) {}
 Manager::~Manager() {
 	for (auto obj : game_object) {
 		delete obj;
@@ -22,6 +31,12 @@ Manager::~Manager() {
 Manager* Manager::GetBorn() {
 	if (!born) born = new Manager;
 	return born;
+}
+void Manager::addMessage(Message* msg) {
+	message.push_back(msg);
+}
+void Manager::setMap(Map* map_) {
+	map = map_;
 }
 void Manager::UpdateAll(double dt) {
 	for (auto obj : game_object) {
@@ -45,6 +60,10 @@ void Manager::UpdateAll(double dt) {
 			for (auto obj : game_object) {
 				obj->ReceiveMsg(msg);
 			}
+		}
+		// Сообщение для map
+		else if (msg->type == TypeMsg::ADD_MAP) {
+			map->receiveMsg(msg);
 		}
 	}
 }

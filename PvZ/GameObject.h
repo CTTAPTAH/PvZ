@@ -4,7 +4,7 @@
 class Message;
 
 struct Position {
-	double x, y;
+	double x = 0, y = 0;
 };
 
 class GameObject

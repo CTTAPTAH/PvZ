@@ -1,8 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+class Message;
+
 struct Field {
-	bool placed;
+	bool isPlaced = false;
 	sf::IntRect pos;
 	sf::Texture texture;
 };
@@ -10,14 +12,26 @@ struct Field {
 class Map
 {
 private:
-	int win_wid;
-	int win_hei;
-	Field fields[5][9];
+	const int amount_field_w = 9, amount_field_h = 5;
+	int map_x, map_y; // в какой точке на экране начинается карта
+	int field_width, field_height;
+	int win_width, win_height;
+	Field fields[9][5];
 public:
 	Map();
-	Map(int win_wid_, int win_hei_);
+	Map(int win_width_, int win_height_, int field_width_, int field_height_);
 
-	void add(int x, int y, int disp_x, int disp_y, sf::Texture texture);
-	void draw_all();
-	void draw_map(sf::RenderWindow& win);
+	Field getField(int x, int y);
+	bool isFieldTree(int x, int y);
+	sf::Vector2i getFieldIndex(int x, int y);
+	void setTexture(sf::Texture new_texture, int x, int y);
+	void setMapX(int x);
+	void setMapY(int y);
+
+	void receiveMsg(Message* message);
+	void add(int x, int y, int disp_x, int disp_y, sf::Texture* texture);
+	void drawMap(sf::RenderWindow& win);
+	void drawAllPlants(sf::RenderWindow& win);
+	void remove(int x, int y);
+	void clear();
 };

@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Map.h"
 
-enum class TypeMsg { DAMAGE, DEATH, CREATE, MOVE, ADD_MAP };
+enum class TypeMsg { UNDEFINED, DAMAGE, DEATH,
+	CREATE, MOVE, ADD_MAP };
 class Message
 {
 public:

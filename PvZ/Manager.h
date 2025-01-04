@@ -1,5 +1,6 @@
 #pragma once
 #include "Message.h"
+#include "Map.h"
 #include "LoadTexture.h"
 #include <list>
 
@@ -12,6 +13,7 @@ private:
 	static Manager* born;
 	std::list<GameObject*> game_object;
 	std::list<Message*> message;
+	Map* map;
 
 	struct {
 		sf::Texture plant;
@@ -22,10 +24,13 @@ private:
 	} Font;
 
 	Manager();
-	Manager(const Manager&);
+	Manager(Map* map_);
+	//Manager(const Manager&);
 	~Manager();
 public:
 	static Manager* GetBorn();
+	void addMessage(Message* msg);
+	void setMap(Map* map_);
 	void UpdateAll(double dt);
 	void LoadTextures(sf::Texture jump, UnitId id);
 };
