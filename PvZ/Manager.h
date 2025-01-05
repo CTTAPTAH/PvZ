@@ -32,5 +32,5 @@ public:
 	void addMessage(Message* msg);
 	void setMap(Map* map_);
 	void UpdateAll(double dt);
-	void LoadTextures(sf::Texture jump, UnitId id);
+	void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename)
 };

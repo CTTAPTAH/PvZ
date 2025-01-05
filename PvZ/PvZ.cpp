@@ -17,6 +17,13 @@ int main()
 
 	RenderWindow win(VideoMode(win_width, win_height), "PVZ");
 
+	Texture* texture;
+	IntRect rect;
+	MGR->LoadTextures(Identificate::PEA, texture, rect, "file.png");
+
+    Sprite sprite(*texture);
+
+
 	while (win.isOpen()) {
 		Event ev;
 		while (win.pollEvent(ev)) {

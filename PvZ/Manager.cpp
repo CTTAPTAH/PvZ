@@ -67,6 +67,15 @@ void Manager::UpdateAll(double dt) {
 		}
 	}
 }
-void Manager::LoadTextures(sf::Texture texture, UnitId id) {
-
+void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename) {
+	texture = loader->LoadingRecieveMSG1(texture, rect, filename);
+	switch (id) {
+	case Identificate::PEA:
+		Texture.plant = texture;
+		break;
+	case Identificate::ZOMBIE:
+		Texture.zombie = texture;
+		break;
+	}
+	//рср асдср бяе нярюкэмше сйюгюрекх мю мсфмше рейярспш
 }
