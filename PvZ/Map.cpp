@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "Message.h"
+#include "Peashooter.h"
 
 // конструктор
 Map::Map()
@@ -36,7 +37,7 @@ sf::Vector2i Map::getFieldIndex(int x, int y) {
 }
 void Map::setTexture(sf::Texture new_texture, int x, int y)
 {
-	fields[x][y].texture = new_texture;
+	//fields[x][y].texture = new_texture;
 }
 void Map::setMapX(int x) {
 	map_x = x;
@@ -46,31 +47,33 @@ void Map::setMapY(int y) {
 }
 
 // методы
-void Map::receiveMsg(Message* message) {
-	if (message->type == TypeMsg::ADD_MAP) {
-		int x = message->add_map.x;
-		int y = message->add_map.y;
-		int disp_x = message->add_map.disp_x;
-		int disp_y = message->add_map.disp_y;
-		sf::Texture* texture = message->add_map.texture;
+bool Map::addPlant(Message* message)
+{
+	int x = message->add_map.x;
+	int y = message->add_map.y;
+	int disp_x = message->add_map.disp_x;
+	int disp_y = message->add_map.disp_y;
+	int width = message->add_map.width;
+	int height = message->add_map.height;
+	sf::Color color = message->add_map.color;
+	sf::Texture* texture = message->add_map.texture;
 
-		if (fields[x][y].isPlaced) {
-			return;
-		}
-
-		add(x, y, disp_x, disp_y, texture);
+	if (fields[x][y].isPlaced) {
+		return false;
 	}
-}
-void Map::add(int x, int y, int disp_x, int disp_y, sf::Texture* texture) {
+
 	sf::IntRect pos;
 	pos.left = x * field_width + disp_x;
 	pos.top = y * field_height + disp_y;
 	// убрать или добавить в дальнейшем (будут текстуры)
-	pos.width = 25;
-	pos.height = 25;
+	pos.width = width;
+	pos.height = height;
 	// убрать или добавить в дальнейшем (будут текстуры)
+	message->add_map.plant->setPosition({ double(pos.left), double(pos.top) });
 
-	fields[x][y] = { true, pos, *texture };
+	fields[x][y] = { true, pos, color, /**texture*/ };
+
+	return true;
 }
 void Map::drawMap(sf::RenderWindow& win)
 {
@@ -104,7 +107,7 @@ void Map::drawAllPlants(sf::RenderWindow& win) {
 				sf::IntRect rect = fields[i][j].pos;
 				rectangle.setPosition(rect.left, rect.top);
 				rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-				rectangle.setFillColor(sf::Color::Green);
+				rectangle.setFillColor(fields[i][j].color);
 				win.draw(rectangle);
 			}
 		}

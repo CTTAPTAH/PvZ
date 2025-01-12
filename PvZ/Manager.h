@@ -2,6 +2,7 @@
 #include "Message.h"
 #include "Map.h"
 #include "LoadTexture.h"
+#include "Peashooter.h"
 #include <list>
 
 class Manager
@@ -11,7 +12,7 @@ private:
 	int win_hei;
 
 	static Manager* born;
-	std::list<GameObject*> game_object;
+	std::list<GameObject*> game_objects;
 	std::list<Message*> message;
 	Map* map;
 
@@ -29,8 +30,12 @@ private:
 	~Manager();
 public:
 	static Manager* GetBorn();
-	void addMessage(Message* msg);
+	void addMessage(Message msg);
 	void setMap(Map* map_);
-	void UpdateAll(double dt);
-	void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename)
+	void UpdateAll(double dt); // сообщения
+	void update(double dt); // физика
+	void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename);
+	void drawAll(sf::RenderWindow& win);
+
+	void PrintObject();
 };

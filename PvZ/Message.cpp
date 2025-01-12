@@ -29,3 +29,4 @@ Message::Message(const Message& msg) : object()
         break;
     }
 }
+Message::~Message(){}

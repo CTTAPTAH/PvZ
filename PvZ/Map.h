@@ -5,8 +5,10 @@ class Message;
 
 struct Field {
 	bool isPlaced = false;
-	sf::IntRect pos;
-	sf::Texture texture;
+	// Замена текстуры
+	sf::IntRect pos{ 0, 0, 0, 0 };
+	sf::Color color{ 0, 0, 0, 0 };
+	//sf::Texture texture;
 };
 
 class Map
@@ -28,8 +30,7 @@ public:
 	void setMapX(int x);
 	void setMapY(int y);
 
-	void receiveMsg(Message* message);
-	void add(int x, int y, int disp_x, int disp_y, sf::Texture* texture);
+	bool addPlant(Message* message);
 	void drawMap(sf::RenderWindow& win);
 	void drawAllPlants(sf::RenderWindow& win);
 	void remove(int x, int y);

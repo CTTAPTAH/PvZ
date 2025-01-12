@@ -2,7 +2,7 @@
 
 Manager* Manager::born = nullptr;
 
-Manager::Manager() : game_object(), message() {
+Manager::Manager() : game_objects(), message() {
 	win_wid = 800; win_hei = 600;
 	born = nullptr;
 	map = nullptr;
@@ -14,10 +14,10 @@ Manager::Manager() : game_object(), message() {
 }
 //Manager::Manager(const Manager&) {}
 Manager::~Manager() {
-	for (auto obj : game_object) {
+	for (auto obj : game_objects) {
 		delete obj;
 	}
-	game_object.clear();
+	game_objects.clear();
 
 	for (auto msg : message) {
 		delete msg;
@@ -32,50 +32,82 @@ Manager* Manager::GetBorn() {
 	if (!born) born = new Manager;
 	return born;
 }
-void Manager::addMessage(Message* msg) {
-	message.push_back(msg);
+void Manager::addMessage(Message msg) {
+	message.push_back(new Message(msg)); // Создаём копию сообщения в куче
 }
 void Manager::setMap(Map* map_) {
 	map = map_;
 }
 void Manager::UpdateAll(double dt) {
-	for (auto obj : game_object) {
+	for (auto obj : game_objects) {
 		obj->SendMsg(dt);
 	}
 
 	for (auto msg : message) {
 		// Сообщение для manager
 		if (msg->type == TypeMsg::DEATH) {
-			auto res = std::find(game_object.begin(), game_object.end(), msg->death.creature);
+			auto res = std::find(game_objects.begin(), game_objects.end(), msg->death.creature);
 			delete* res; // удаляем сам объект
-			game_object.erase(res); // удаляем указатель на объект в списке
+			game_objects.erase(res); // удаляем указатель на объект в списке
 		}
 		else if (msg->type == TypeMsg::CREATE) {
-			game_object.push_back(msg->create.new_object);
+			game_objects.push_back(msg->create.new_object);
 		}
 
 		// Сообщение для game_object
 		if (msg->type == TypeMsg::DAMAGE or
 			msg->type == TypeMsg::MOVE) {
-			for (auto obj : game_object) {
+			for (auto obj : game_objects) {
 				obj->ReceiveMsg(msg);
 			}
 		}
 		// Сообщение для map
 		else if (msg->type == TypeMsg::ADD_MAP) {
-			map->receiveMsg(msg);
+			if (map->addPlant(msg)) {
+				game_objects.push_back(msg->add_map.plant);
+			}
+		}
+	}
+	message.clear();
+} // Для сообщений
+void Manager::update(double dt) // Для позиции
+{
+	for (auto obj : game_objects) {
+		// Проверяем, может ли объект стрелять
+		Peashooter* pea = dynamic_cast<Peashooter*>(obj);
+		if (pea) {
+			pea->isShooting(dt);  // Если объект - Peashooter, вызываем его метод shoot()
+		}
+		Projectile* projectile = dynamic_cast<Projectile*>(obj);
+		if (projectile) {
+			projectile->move(dt);
 		}
 	}
 }
 void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename) {
-	texture = loader->LoadingRecieveMSG1(texture, rect, filename);
+	//texture = loader->LoadingRecieveMSG1(texture, rect, filename);
 	switch (id) {
 	case Identificate::PEA:
-		Texture.plant = texture;
+		//Texture.plant = texture;
 		break;
 	case Identificate::ZOMBIE:
-		Texture.zombie = texture;
+		//Texture.zombie = texture;
 		break;
 	}
 	//ТУТ БУДУТ ВСЕ ОСТАЛЬНЫЕ УКАЗАТЕЛИ НА НУЖНЫЕ ТЕКСТУРЫ
+}
+void Manager::drawAll(sf::RenderWindow& win) {
+	for (auto obj : game_objects) {
+		obj->draw(win);
+	}
+}
+
+void Manager::PrintObject()
+{
+	int count = 0;
+	for (auto obj : game_objects) {
+		count++;
+		printf_s("%d: %lf-%lf\n", count, obj->GetPosition().x,
+			obj->GetPosition().y);
+	}
 }
