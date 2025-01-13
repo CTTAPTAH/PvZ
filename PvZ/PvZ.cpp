@@ -48,7 +48,7 @@ int main()
     //Sprite sprite(*texture);
 
 	for (int i = 0; i < 5; i++) {
-		Peashooter* pea = new Peashooter({ 50, 50 }, 10, 0, TypeObject::PEASHOOTER);
+		Peashooter* pea = new Peashooter(0, TypeObject::PEASHOOTER);
 		Message msg;
 		msg.type = TypeMsg::ADD_MAP;
 		msg.add_map.plant = pea;
@@ -63,8 +63,6 @@ int main()
 		mng->addMessage(msg);
 	}
 
-	mng->UpdateAll(fps.dt);
-
 	Event ev;
 	while (win.isOpen()) {
 		FPS();
@@ -72,14 +70,13 @@ int main()
 			if (ev.type == Event::Closed)
 				win.close();
 		}
-		mng->UpdateAll(fps.dt);
-		
-		mng->update(fps.dt);
 
 		win.clear();
-		map.drawMap(win);
-		map.drawAllPlants(win);
-		mng->drawAll(win);
+		map.drawMap(win); // сначала рисуем карту
+
+		mng->updateMessage(fps.dt); // обрабатываем сообщения
+		mng->updateObject(fps.dt, win); // объекты действуют и рисуются (можно разделить на действие и рисование)
+
 		win.display();
 	}
 

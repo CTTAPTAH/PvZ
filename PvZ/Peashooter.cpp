@@ -1,14 +1,21 @@
 #include "Peashooter.h"
 #include "Message.h"
 
-Peashooter::Peashooter(Position pos_, int hp_, int idx_line_, TypeObject type_)
-    : GameObject(pos_, hp_, idx_line_, type_)
+Peashooter::Peashooter(int idx_line_, TypeObject type_)
+    : GameObject(idx_line_, type_)
 {
     // временно место текстуры
     rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
     color.r = 0; color.g = 255; color.b = 0; color.a = 0;
     // То, что было
     reload = time_reload; 
+}
+Peashooter::Peashooter()
+{
+    rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
+    color.r = 0; color.g = 255; color.b = 0; color.a = 0;
+    reload = time_reload;
+    idx_line = -1; type = TypeObject::PEASHOOTER;
 }
 
 void Peashooter::isShooting(double dt)
@@ -27,13 +34,12 @@ void Peashooter::isShooting(double dt)
             10}; // Заменить на указываемые
         sf::Color color(0, 0, 255, 255);
 
-        msg.create.new_object = new Projectile(pos_projectile,
-            rect_projectile, color);
+        msg.create.new_object = new Projectile(rect_projectile, color);
         Manager* manager = Manager::GetBorn();
         manager->addMessage(msg);
     }
 }
-void Peashooter::Update(double dt)
+void Peashooter::update(double dt, sf::RenderWindow& win)
 {
     isShooting(dt);
 }

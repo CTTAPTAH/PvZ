@@ -14,7 +14,8 @@ private:
 	static Manager* born;
 	std::list<GameObject*> game_objects;
 	std::list<Message*> message;
-	Map* map;
+	int zombie_on_line[5]; // 5 желательно заменить на переменную или define
+	Map* map; // может и не надо
 
 	struct {
 		sf::Texture plant;
@@ -32,10 +33,9 @@ public:
 	static Manager* GetBorn();
 	void addMessage(Message msg);
 	void setMap(Map* map_);
-	void UpdateAll(double dt); // сообщения
-	void update(double dt); // физика
+	void updateMessage(double dt); // сообщения
+	void updateObject(double dt, sf::RenderWindow& win); // физика объектов и рисуем объекты
 	void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename);
-	void drawAll(sf::RenderWindow& win);
 
 	void PrintObject();
 };

@@ -38,7 +38,7 @@ void Manager::addMessage(Message msg) {
 void Manager::setMap(Map* map_) {
 	map = map_;
 }
-void Manager::UpdateAll(double dt) {
+void Manager::updateMessage(double dt) {
 	for (auto obj : game_objects) {
 		obj->SendMsg(dt);
 	}
@@ -70,18 +70,19 @@ void Manager::UpdateAll(double dt) {
 	}
 	message.clear();
 } // Для сообщений
-void Manager::update(double dt) // Для позиции
+void Manager::updateObject(double dt, sf::RenderWindow& win) // Для позиции
 {
 	for (auto obj : game_objects) {
-		// Проверяем, может ли объект стрелять
-		Peashooter* pea = dynamic_cast<Peashooter*>(obj);
-		if (pea) {
-			pea->isShooting(dt);  // Если объект - Peashooter, вызываем его метод shoot()
-		}
-		Projectile* projectile = dynamic_cast<Projectile*>(obj);
-		if (projectile) {
-			projectile->move(dt);
-		}
+		//// Проверяем, может ли объект стрелять
+		//Peashooter* pea = dynamic_cast<Peashooter*>(obj);
+		//if (pea) {
+		//	pea->isShooting(dt);  // Если объект - Peashooter, вызываем его метод shoot()
+		//}
+		//Projectile* projectile = dynamic_cast<Projectile*>(obj);
+		//if (projectile) {
+		//	projectile->move(dt);
+		//}
+		obj->update(dt, win);
 	}
 }
 void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename) {
@@ -96,18 +97,13 @@ void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect re
 	}
 	//ТУТ БУДУТ ВСЕ ОСТАЛЬНЫЕ УКАЗАТЕЛИ НА НУЖНЫЕ ТЕКСТУРЫ
 }
-void Manager::drawAll(sf::RenderWindow& win) {
-	for (auto obj : game_objects) {
-		obj->draw(win);
-	}
-}
 
 void Manager::PrintObject()
 {
 	int count = 0;
 	for (auto obj : game_objects) {
 		count++;
-		printf_s("%d: %lf-%lf\n", count, obj->GetPosition().x,
-			obj->GetPosition().y);
+		printf_s("%d: %lf-%lf\n", count, obj->getPosition().x,
+			obj->getPosition().y);
 	}
 }

@@ -16,26 +16,27 @@ protected:
 	sf::IntRect rect;
 	sf::Color color;
 	// То, что было
-	Position pos;
+	int win_width = 800, win_height = 600; // в config
+	Position pos; // временно не нужен, т.к. имеется rect
 	int hp;
-	sf::Texture* texture;
+	sf::Texture* texture; // временно не нужен, т.к. имеется rect и color
 	int idx_line;
-	TypeObject type;
+	TypeObject type; // Скорее всего не понадобится. Всё реализовано в update
 public:
 	GameObject();
-	GameObject(Position pos_, int hp_, int idx_line_, TypeObject type);
+	GameObject(int idx_line_, TypeObject type);
 	GameObject(const GameObject&);
 	virtual ~GameObject();
 
 	void ReceiveDamage();
-	void Update();
-	void UpdatePosition(double dt, double speed);
+	virtual void update(double dt, sf::RenderWindow& win);
+	void UpdatePosition(double dt, double speed); // переименовать на move и скорее всего убрать
 	void Animation(double dt);
 	//void isLive();
 	void Collision();
 
 	//static int GetId();
-	Position GetPosition();
+	Position getPosition();
 	virtual void draw(sf::RenderWindow& win);
 	virtual void setPosition(Position pos_);
 	virtual void SendMsg(double dt);
