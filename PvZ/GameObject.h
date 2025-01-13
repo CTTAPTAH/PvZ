@@ -3,7 +3,7 @@
 class Message;
 
 enum class TypeObject {
-	UNDEFINED, PEASHOOTER
+	UNDEFINED, PEASHOOTER, ZOMBIE
 };
 struct Position {
 	double x = 0, y = 0;
@@ -18,8 +18,8 @@ protected:
 	// То, что было
 	int win_width = 800, win_height = 600; // в config
 	Position pos; // временно не нужен, т.к. имеется rect
-	int hp;
-	sf::Texture* texture; // временно не нужен, т.к. имеется rect и color
+	int hp=0;
+	sf::Texture* texture=nullptr; // временно не нужен, т.к. имеется rect и color
 	int idx_line;
 	TypeObject type; // Скорее всего не понадобится. Всё реализовано в update
 public:
@@ -34,6 +34,10 @@ public:
 	void Animation(double dt);
 	//void isLive();
 	void Collision();
+
+	//Cделал пару нужных геттеров
+	TypeObject getType();
+	sf::IntRect getRect();
 
 	//static int GetId();
 	Position getPosition();

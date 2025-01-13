@@ -36,6 +36,7 @@ public:
 	void updateMessage(double dt); // сообщения
 	void updateObject(double dt, sf::RenderWindow& win); // физика объектов и рисуем объекты
 	void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename);
-
+	std::list<GameObject*> getListObject();
+	std::vector<sf::IntRect> getZombieRects() const;
 	void PrintObject();
 };

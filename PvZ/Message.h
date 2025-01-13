@@ -35,11 +35,6 @@ public:
 			sf::Color color;
 			sf::Texture* texture;
 		} add_map;
-		struct {
-			sf::Texture* texture;
-			sf::IntRect rect;
-			const std::string filename;
-		}load;
 
 	};
 	Message();

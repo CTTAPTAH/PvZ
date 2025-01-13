@@ -2,6 +2,7 @@
 #include "Manager.h"
 #include "GameObject.h"
 #include "Message.h"
+#include "Zombie.h"
 
 class Projectile : public GameObject
 {
@@ -14,6 +15,7 @@ public:
 	void draw(sf::RenderWindow& win);
 	void update(double dt, sf::RenderWindow& win);
 	void collision(); // не забыть добавить проверку с зомби
+	void CollisionWithGO();
 	void sendMsg(); // ¬ќ«ћќ∆Ќќ придЄтс€ убрать
 	void receiveMsg(); // ¬ќ«ћќ∆Ќќ придЄтс€ убрать
 };

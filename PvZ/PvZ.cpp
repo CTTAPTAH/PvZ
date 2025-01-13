@@ -2,7 +2,9 @@
 #include "Manager.h"
 #include "Peashooter.h"
 #include "Map.h"
+#include"Zombie.h"
 #include <SFML/System.hpp>
+
 using namespace std;
 using namespace sf;
 
@@ -14,7 +16,8 @@ struct Dt
 	double dt;
 
 };
-int win_width = 800, win_height = 600;
+int win_width = 800, win_height = 600;// в конфиг
+int w_cell = win_width / 9, h_cell = win_height / 5;// в конфиг
 Dt fps;
 
 void FPS()
@@ -62,6 +65,12 @@ int main()
 		msg.add_map.color = { 0, 255, 0, 255 };
 		mng->addMessage(msg);
 	}
+	//Cоздание зомби
+	Zombie* zombie = new Zombie(2, TypeObject::ZOMBIE, w_cell, h_cell);
+	Message zombie_msg;
+	zombie_msg.type = TypeMsg::CREATE;
+	zombie_msg.create.new_object = zombie;
+	mng->addMessage(zombie_msg);
 
 	Event ev;
 	while (win.isOpen()) {

@@ -68,6 +68,8 @@ void Manager::updateMessage(double dt) {
 			}
 		}
 	}
+	//std::cout << game_objects.size() << std::endl;
+
 	message.clear();
 } // Для сообщений
 void Manager::updateObject(double dt, sf::RenderWindow& win) // Для позиции
@@ -106,4 +108,18 @@ void Manager::PrintObject()
 		printf_s("%d: %lf-%lf\n", count, obj->getPosition().x,
 			obj->getPosition().y);
 	}
+}
+std::list<GameObject*> Manager::getListObject() {
+	return game_objects;
+}
+
+//Функция для создания списка ректов исключительно зомби
+std::vector<sf::IntRect> Manager::getZombieRects() const {
+    std::vector<sf::IntRect> zombieRects;
+    for (auto obj : game_objects) {
+        if (obj->getType() == TypeObject::ZOMBIE) {
+            zombieRects.push_back(obj->getRect());
+        }
+    }
+    return zombieRects;
 }

@@ -25,6 +25,7 @@ void Projectile::update(double dt, sf::RenderWindow& win)
 {
 	move(dt);
 	collision();
+	CollisionWithGO();
 	draw(win);
 }
 void Projectile::collision()
@@ -39,6 +40,38 @@ void Projectile::collision()
 		mng->addMessage(msg);
 	}
 }
+
+void Projectile::CollisionWithGO()
+{
+	//Своя коллизия:
+	/*if (rect.left + rect.width > zombie_rect.left and
+		rect.left < zombie_rect.left + zombie_rect.width and
+		rect.top + rect.height > zombie_rect.top and
+		rect.top < zombie_rect.top + zombie_rect.height) {
+
+	}*/
+	//Затестил через библиотеку
+	Manager* MGR = Manager::GetBorn();
+	std::list<GameObject*> objects = MGR->getListObject();
+	for (auto obj : objects) {
+		if (obj->getType() == TypeObject::ZOMBIE) {
+			if (rect.intersects(obj->getRect())) {
+				std::cout << "Обнаружена коллизия между ректами!" << std::endl;
+				Message msg;
+				msg.type = TypeMsg::DEATH;
+				msg.death.creature = this;
+				MGR->addMessage(msg);
+
+				Message msg2;
+				msg2.type = TypeMsg::DAMAGE;
+				msg2.damage.damage = 1;
+				msg2.damage.who_receive = obj;
+				MGR->addMessage(msg2);
+			}
+		}
+	}
+}
+
 void Projectile::sendMsg()
 {
 

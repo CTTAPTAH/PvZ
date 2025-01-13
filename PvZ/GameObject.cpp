@@ -45,6 +45,14 @@ void GameObject::Animation(double dt)
 void GameObject::Collision()
 {
 }
+TypeObject GameObject::getType()
+{
+	return type;
+}
+sf::IntRect GameObject::getRect()
+{
+	return rect;
+}
 Position GameObject::getPosition()
 {
 	return pos;
