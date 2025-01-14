@@ -19,6 +19,10 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	hp = 3;
 	count++;
 
+	// увеличиваем количество зомби на указанной линии
+	Manager* mng = Manager::GetBorn();
+	mng->addZombieOnLine(_index_line);
+
 	//Убрал pos!!!
 	//pos.x = 800 - w_cell / 2 - rect.width / 2;
 	//pos.y = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
@@ -27,6 +31,10 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 Zombie::~Zombie()
 {
 	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
+
+	// уменьшаем количество зомби на указанной линии
+	Manager* mng = Manager::GetBorn();
+	mng->removeZombieOnLine(idx_line);
 }
 
 void Zombie::move(double dt)
@@ -35,7 +43,7 @@ void Zombie::move(double dt)
 	if (Collision()) {
 		velocity_x = 0;
 	}
-	////std::cout << "Zombie moving, position x: " <<rect.left << "\n";
+	//std::cout << "Zombie moving, position x: " <<rect.left << "\n";
 }
 
 void Zombie::draw(sf::RenderWindow& win)
@@ -50,12 +58,13 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 	//Добавил update
 	move(dt);
 	draw(win);
-	std::cout << hp << std::endl;
+	//std::cout << hp << std::endl;
 }
 void Zombie::ReceiveMsg(Message* msg)
 {
-	if (msg->type == TypeMsg::DAMAGE) {
-		if (hp != 0) {
+	if (msg->type == TypeMsg::DAMAGE and
+		this == msg->damage.who_receive) {
+		if (hp > 0) {
 			hp-=msg->damage.damage;
 		}
 		else {
@@ -74,4 +83,5 @@ bool Zombie::Collision()
 
 void Zombie::EatingPlant(double dt)
 {
+	
 }

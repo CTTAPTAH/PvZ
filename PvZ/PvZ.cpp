@@ -32,9 +32,13 @@ void FPS()
 	fps.lasttime = fps.newtime;
 	
 }
+int Random(int start, int end) {
+	return rand() % (end - start + 1) + start;
+}
 
 int main()
 {
+	srand(time(0));
 	system("chcp 1251>nul");
 
 	Texture test_texture;
@@ -49,9 +53,9 @@ int main()
 	//MGR->LoadTextures(Identificate::PEA, texture, rect, "file.png");
 
     //Sprite sprite(*texture);
-
+	// Создание гороха
 	for (int i = 0; i < 5; i++) {
-		Peashooter* pea = new Peashooter(0, TypeObject::PEASHOOTER);
+		Peashooter* pea = new Peashooter(i, TypeObject::PEASHOOTER);
 		Message msg;
 		msg.type = TypeMsg::ADD_MAP;
 		msg.add_map.plant = pea;
@@ -66,11 +70,16 @@ int main()
 		mng->addMessage(msg);
 	}
 	//Cоздание зомби
-	Zombie* zombie = new Zombie(2, TypeObject::ZOMBIE, w_cell, h_cell);
-	Message zombie_msg;
-	zombie_msg.type = TypeMsg::CREATE;
-	zombie_msg.create.new_object = zombie;
-	mng->addMessage(zombie_msg);
+	//for (int i = 0; i < 5; i++) {
+	//	Zombie* zombie = new Zombie(Random(0, 4), TypeObject::ZOMBIE, w_cell, h_cell);
+	//	Message zombie_msg;
+	//	zombie_msg.type = TypeMsg::CREATE;
+	//	zombie_msg.create.new_object = zombie;
+	//	mng->addMessage(zombie_msg);
+	//}
+
+	const double set_time = 5;
+	double timer = set_time;
 
 	Event ev;
 	while (win.isOpen()) {
@@ -78,6 +87,17 @@ int main()
 		while (win.pollEvent(ev)) {
 			if (ev.type == Event::Closed)
 				win.close();
+		}
+
+		// Спавнер зомби
+		timer -= fps.dt;
+		if (timer <= 0) {
+			timer = Random(0, set_time);
+			Zombie* zombie = new Zombie(Random(0, 4), TypeObject::ZOMBIE, w_cell, h_cell);
+			Message zombie_msg;
+			zombie_msg.type = TypeMsg::CREATE;
+			zombie_msg.create.new_object = zombie;
+			mng->addMessage(zombie_msg);
 		}
 
 		win.clear();

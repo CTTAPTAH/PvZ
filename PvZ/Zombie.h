@@ -26,5 +26,3 @@ public:
     void update(double dt, sf::RenderWindow& win) override;
     void ReceiveMsg(Message* msg) override;
 };
-
-

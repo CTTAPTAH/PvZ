@@ -109,6 +109,25 @@ void Manager::PrintObject()
 			obj->getPosition().y);
 	}
 }
+void Manager::addZombieOnLine(int idx_line)
+{
+	if (0 <= idx_line and idx_line <= 4) {
+		zombie_on_line[idx_line]++;
+		printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
+	}
+}
+void Manager::removeZombieOnLine(int idx_line)
+{
+	if (0 <= idx_line and idx_line <= 4) {
+		if (zombie_on_line[idx_line] > 0)
+			zombie_on_line[idx_line]--;
+		printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
+	}
+}
+int Manager::getZombieOnLine(int idx_line)
+{
+	return zombie_on_line[idx_line];
+}
 std::list<GameObject*> Manager::getListObject() {
 	return game_objects;
 }

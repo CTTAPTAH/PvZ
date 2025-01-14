@@ -7,8 +7,9 @@
 class Peashooter : public GameObject
 {
 protected:
+	bool shooting = false;
 	const int amount_hp = 10; // â config
-	const double damage = 2; // â config
+	const double damage = 1; // â config
 	const double time_reload = 2; // â config
 	double reload;
 public:

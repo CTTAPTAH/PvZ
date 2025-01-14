@@ -56,7 +56,7 @@ void Projectile::CollisionWithGO()
 	for (auto obj : objects) {
 		if (obj->getType() == TypeObject::ZOMBIE) {
 			if (rect.intersects(obj->getRect())) {
-				std::cout << "Обнаружена коллизия между ректами!" << std::endl;
+				//std::cout << "Обнаружена коллизия между ректами!" << std::endl;
 				Message msg;
 				msg.type = TypeMsg::DEATH;
 				msg.death.creature = this;
@@ -67,6 +67,7 @@ void Projectile::CollisionWithGO()
 				msg2.damage.damage = 1;
 				msg2.damage.who_receive = obj;
 				MGR->addMessage(msg2);
+				break;
 			}
 		}
 	}

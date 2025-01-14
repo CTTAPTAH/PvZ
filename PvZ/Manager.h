@@ -5,7 +5,7 @@
 #include "Peashooter.h"
 #include <list>
 
-class Manager
+class Manager 
 {
 private:
 	int win_wid;
@@ -39,4 +39,8 @@ public:
 	std::list<GameObject*> getListObject();
 	std::vector<sf::IntRect> getZombieRects() const;
 	void PrintObject();
+
+	void addZombieOnLine(int idx_line);
+	void removeZombieOnLine(int idx_line);
+	int getZombieOnLine(int idx_line);
 };

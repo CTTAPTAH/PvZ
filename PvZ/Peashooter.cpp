@@ -20,23 +20,37 @@ Peashooter::Peashooter()
 
 void Peashooter::isShooting(double dt)
 {
-    reload -= dt;
-    if (reload <= 0) {
+    Manager* manager = Manager::GetBorn();
+
+    if (!shooting and manager->getZombieOnLine(idx_line) > 0) {
+        shooting = true;
         reload = time_reload;
+    }
 
-        Message msg;
-        msg.type = TypeMsg::CREATE;
+    if (shooting) {
+        if (manager->getZombieOnLine(idx_line) == 0) {
+            shooting = false;
+            reload = time_reload;
+            return;
+        }
 
-        Position pos_projectile{ pos.x, pos.y }; // Заменить на норм спавн
-        sf::IntRect rect_projectile{ (int)pos.x + 25,
-            (int)pos.y + 25,
-            10,
-            10}; // Заменить на указываемые
-        sf::Color color(0, 0, 255, 255);
+        reload -= dt;
+        if (reload <= 0) {
+            reload = time_reload;
 
-        msg.create.new_object = new Projectile(rect_projectile, color);
-        Manager* manager = Manager::GetBorn();
-        manager->addMessage(msg);
+            Message msg;
+            msg.type = TypeMsg::CREATE;
+
+            Position pos_projectile{ pos.x, pos.y }; // Заменить на норм спавн
+            sf::IntRect rect_projectile{ (int)pos.x + 25,
+                (int)pos.y + 25,
+                10,
+                10 }; // Заменить на указываемые
+            sf::Color color(0, 0, 255, 255);
+
+            msg.create.new_object = new Projectile(rect_projectile, color);
+            manager->addMessage(msg);
+        }
     }
 }
 void Peashooter::update(double dt, sf::RenderWindow& win)
