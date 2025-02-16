@@ -1,5 +1,6 @@
 #include "Zombie.h"
-
+#define DEFAULT_ZOMBIE_SPEED 100
+#define IDLE_ZOMMIE_SPEED 0
 int Zombie::count = 0;
 
 Zombie::Zombie() {}
@@ -14,9 +15,9 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	rect.top = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
 
 	color = { 255,255,255,255 };
-	velocity_x = 30;
+	velocity_x = 100;
 	current_index = count;
-	hp = 3;
+	hp = 100;
 	count++;
 
 	// увеличиваем количество зомби на указанной линии
@@ -40,10 +41,8 @@ Zombie::~Zombie()
 void Zombie::move(double dt)
 {
 	rect.left -= velocity_x * dt;
-	if (Collision()) {
-		velocity_x = 0;
-	}
-	//std::cout << "Zombie moving, position x: " <<rect.left << "\n";
+	
+	std::cout << "Zombie moving, position x: " <<dt << "\n";
 }
 
 void Zombie::draw(sf::RenderWindow& win)
@@ -58,6 +57,7 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 	//Добавил update
 	move(dt);
 	draw(win);
+	CollisionWithPlants(dt);
 	//std::cout << hp << std::endl;
 }
 void Zombie::ReceiveMsg(Message* msg)
@@ -76,12 +76,58 @@ void Zombie::ReceiveMsg(Message* msg)
 		}
 	}
 }
-bool Zombie::Collision()
+bool Zombie::Collision1()
 {
 	return rect.left <= 800 / 9;
 }
 
-void Zombie::EatingPlant(double dt)
+void Zombie::EatingPlants(double dt, GameObject* current_object)
 {
-	
+	Manager* MGR = Manager::GetBorn();
+
+	if (!isEating) {
+		isEating = true;
+	}
+	if (isEating) {
+
+		int cur_plant_hp = current_object->getHp();
+
+		if (cur_plant_hp <= 0) {
+			velocity_x = DEFAULT_ZOMBIE_SPEED;
+			isEating = false;
+			return;
+		}
+
+		reload -= dt;
+
+		velocity_x = IDLE_ZOMMIE_SPEED;
+
+		if (reload <= 0) {
+			reload = time_reload;
+			Message msg;
+			msg.type = TypeMsg::DAMAGE;
+			msg.damage.damage = damage;
+			msg.damage.who_receive = current_object;
+			MGR->addMessage(msg);
+		}
+	}
+
+}
+
+
+void Zombie::CollisionWithPlants(double dt)
+{
+	Manager* MGR = Manager::GetBorn();
+
+	std::list<GameObject*> objects = MGR->getListObject();
+
+	for (auto obj : objects) {
+		if (obj->getType() == TypeObject::PEASHOOTER) {
+			if (Collision1() && idx_line == obj->getIdxLine()) {
+				std::cout << "Yes" << std::endl;
+				EatingPlants(dt, obj);
+				break;
+			}
+		}
+	}
 }

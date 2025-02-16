@@ -7,6 +7,7 @@ Peashooter::Peashooter(int idx_line_, TypeObject type_)
     // временно место текстуры
     rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
     color.r = 0; color.g = 255; color.b = 0; color.a = 0;
+    hp = 3;
     // То, что было
     reload = time_reload; 
 }
@@ -16,6 +17,11 @@ Peashooter::Peashooter()
     color.r = 0; color.g = 255; color.b = 0; color.a = 0;
     reload = time_reload;
     idx_line = -1; type = TypeObject::PEASHOOTER;
+}
+
+Peashooter::~Peashooter()
+{
+    std::cout << "Растение погибло" << std::endl;
 }
 
 void Peashooter::isShooting(double dt)
@@ -56,7 +62,10 @@ void Peashooter::isShooting(double dt)
 void Peashooter::update(double dt, sf::RenderWindow& win)
 {
     isShooting(dt);
+    //std::cout << hp << std::endl;
 }
+
+
 void Peashooter::setPosition(Position pos_)
 {
     pos = pos_;
@@ -68,4 +77,19 @@ void Peashooter::setRect(sf::IntRect rect_)
 void Peashooter::setColor(sf::Color color_)
 {
     color = color_;
+}
+
+void Peashooter::ReceiveMsg(Message* msg)
+{
+    Manager* MGR = Manager::GetBorn();
+
+    if (msg->type == TypeMsg::DAMAGE and this == msg->damage.who_receive) {
+        hp -= msg->damage.damage;
+        if(hp<=0){
+            Message msg;
+            msg.type == TypeMsg::DEATH;
+            msg.death.creature = this;
+            MGR->addMessage(msg);
+        }
+    }
 }

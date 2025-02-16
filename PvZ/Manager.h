@@ -33,6 +33,7 @@ public:
 	static Manager* GetBorn();
 	void addMessage(Message msg);
 	void setMap(Map* map_);
+	Map* getMap();
 	void updateMessage(double dt); // сообщения
 	void updateObject(double dt, sf::RenderWindow& win); // физика объектов и рисуем объекты
 	void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename);

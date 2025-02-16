@@ -70,7 +70,6 @@ bool Map::addPlant(Message* message)
 	pos.height = height;
 	// убрать или добавить в дальнейшем (будут текстуры)
 	message->add_map.plant->setPosition({ double(pos.left), double(pos.top) });
-
 	fields[x][y] = { true, pos, color, /**texture*/ };
 
 	return true;
@@ -115,6 +114,7 @@ void Map::drawAllPlants(sf::RenderWindow& win) {
 }
 void Map::remove(int x, int y) {
 	fields[x][y] = Field();
+	//fields[x][y].color 
 }
 void Map::clear() {
 	for (int i = 0; i < amount_field_w; i++) {

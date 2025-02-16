@@ -29,15 +29,17 @@ public:
 	virtual ~GameObject();
 
 	void ReceiveDamage();
-	virtual void update(double dt, sf::RenderWindow& win);
+	virtual void update(double dt, sf::RenderWindow& win) = 0;
 	void UpdatePosition(double dt, double speed); // переименовать на move и скорее всего убрать
 	void Animation(double dt);
 	//void isLive();
-	void Collision();
+	//void Collision();
 
 	//Cделал пару нужных геттеров
 	TypeObject getType();
 	sf::IntRect getRect();
+	int getHp();
+	int getIdxLine();
 
 	//static int GetId();
 	Position getPosition();

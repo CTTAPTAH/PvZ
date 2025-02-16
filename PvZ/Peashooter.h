@@ -15,10 +15,12 @@ protected:
 public:
 	Peashooter(int idx_line_, TypeObject type_);
 	Peashooter();
+	~Peashooter();
 
 	void isShooting(double dt);
 	void update(double dt, sf::RenderWindow& win) override;
 	void setPosition(Position pos_);
 	void setRect(sf::IntRect rect_);
 	void setColor(sf::Color color_);
+	void ReceiveMsg(Message* msg)override;
 };

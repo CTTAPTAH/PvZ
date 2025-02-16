@@ -69,14 +69,10 @@ int main()
 		msg.add_map.color = { 0, 255, 0, 255 };
 		mng->addMessage(msg);
 	}
-	//Cоздание зомби
-	//for (int i = 0; i < 5; i++) {
-	//	Zombie* zombie = new Zombie(Random(0, 4), TypeObject::ZOMBIE, w_cell, h_cell);
-	//	Message zombie_msg;
-	//	zombie_msg.type = TypeMsg::CREATE;
-	//	zombie_msg.create.new_object = zombie;
-	//	mng->addMessage(zombie_msg);
-	//}
+	//Cоздание зомбb
+	
+
+	
 
 	const double set_time = 5;
 	double timer = set_time;
@@ -107,6 +103,7 @@ int main()
 		mng->updateObject(fps.dt, win); // объекты действуют и рисуются (можно разделить на действие и рисование)
 
 		win.display();
+		//mng->PrintObject();
 	}
 
 	win.close();

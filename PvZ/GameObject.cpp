@@ -32,9 +32,7 @@ void GameObject::ReceiveDamage()
 {
 
 }
-void GameObject::update(double dt, sf::RenderWindow& win)
-{
-}
+
 void GameObject::UpdatePosition(double dt, double speed)
 {
 
@@ -42,9 +40,9 @@ void GameObject::UpdatePosition(double dt, double speed)
 void GameObject::Animation(double dt)
 {
 }
-void GameObject::Collision()
-{
-}
+//void GameObject::Collision()
+//{
+//}
 TypeObject GameObject::getType()
 {
 	return type;
@@ -52,6 +50,14 @@ TypeObject GameObject::getType()
 sf::IntRect GameObject::getRect()
 {
 	return rect;
+}
+int GameObject::getHp()
+{
+	return hp;
+}
+int GameObject::getIdxLine()
+{
+	return idx_line;
 }
 Position GameObject::getPosition()
 {

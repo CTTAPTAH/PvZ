@@ -38,6 +38,10 @@ void Manager::addMessage(Message msg) {
 void Manager::setMap(Map* map_) {
 	map = map_;
 }
+Map* Manager::getMap()
+{
+	return map;
+}
 void Manager::updateMessage(double dt) {
 	for (auto obj : game_objects) {
 		obj->SendMsg(dt);
@@ -68,6 +72,7 @@ void Manager::updateMessage(double dt) {
 			}
 		}
 	}
+
 	//std::cout << game_objects.size() << std::endl;
 
 	message.clear();
@@ -105,15 +110,15 @@ void Manager::PrintObject()
 	int count = 0;
 	for (auto obj : game_objects) {
 		count++;
-		printf_s("%d: %lf-%lf\n", count, obj->getPosition().x,
-			obj->getPosition().y);
+		printf_s("%d: %d-%d\n", count, obj->getRect().left,
+			obj->getRect().top);
 	}
 }
 void Manager::addZombieOnLine(int idx_line)
 {
 	if (0 <= idx_line and idx_line <= 4) {
 		zombie_on_line[idx_line]++;
-		printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
+		//printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
 	}
 }
 void Manager::removeZombieOnLine(int idx_line)
@@ -121,7 +126,7 @@ void Manager::removeZombieOnLine(int idx_line)
 	if (0 <= idx_line and idx_line <= 4) {
 		if (zombie_on_line[idx_line] > 0)
 			zombie_on_line[idx_line]--;
-		printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
+		//printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
 	}
 }
 int Manager::getZombieOnLine(int idx_line)
