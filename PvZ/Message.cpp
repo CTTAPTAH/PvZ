@@ -22,9 +22,9 @@ Message::Message(const Message& msg) : object()
     case TypeMsg::MOVE:
         move = msg.move;
         break;
-    case TypeMsg::ADD_MAP:
-        add_map = msg.add_map;
-        break;
+    //case TypeMsg::ADD_MAP:
+    //    add_map = msg.add_map;
+    //    break;
     default:
         break;
     }

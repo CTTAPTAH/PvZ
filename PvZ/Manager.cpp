@@ -32,6 +32,24 @@ Manager* Manager::GetBorn() {
 	if (!born) born = new Manager;
 	return born;
 }
+bool Manager::addTexture(const std::string& name, const std::string& filename)
+{
+	sf::Texture texture;
+
+	if (!LoadTexture::loadFromFile(texture, filename)) {
+		return false; // Ошибка загрузки текстуры
+	}
+
+	textures[name] = std::move(texture); // перемещаем, а не копируем.
+	// У sf::Texture нет конструктора копирования
+
+	return true;
+}
+sf::Texture* Manager::GetTexture(const std::string& name) {
+	auto it = textures.find(name);
+	return (it != textures.end()) ? &it->second : nullptr;
+}
+
 void Manager::addMessage(Message msg) {
 	message.push_back(new Message(msg)); // Создаём копию сообщения в куче
 }
@@ -66,11 +84,11 @@ void Manager::updateMessage(double dt) {
 			}
 		}
 		// Сообщение для map
-		else if (msg->type == TypeMsg::ADD_MAP) {
-			if (map->addPlant(msg)) {
-				game_objects.push_back(msg->add_map.plant);
-			}
-		}
+		//else if (msg->type == TypeMsg::ADD_MAP) {
+		//	if (map->addPlant(msg)) {
+		//		game_objects.push_back(msg->add_map.plant);
+		//	}
+		//}
 	}
 
 	//std::cout << game_objects.size() << std::endl;
@@ -92,18 +110,18 @@ void Manager::updateObject(double dt, sf::RenderWindow& win) // Для позиции
 		obj->update(dt, win);
 	}
 }
-void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename) {
-	//texture = loader->LoadingRecieveMSG1(texture, rect, filename);
-	switch (id) {
-	case Identificate::PEA:
-		//Texture.plant = texture;
-		break;
-	case Identificate::ZOMBIE:
-		//Texture.zombie = texture;
-		break;
-	}
-	//ТУТ БУДУТ ВСЕ ОСТАЛЬНЫЕ УКАЗАТЕЛИ НА НУЖНЫЕ ТЕКСТУРЫ
-}
+//void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename) {
+//	//texture = loader->LoadingRecieveMSG1(texture, rect, filename);
+//	switch (id) {
+//	case Identificate::PEA:
+//		//Texture.plant = texture;
+//		break;
+//	case Identificate::ZOMBIE:
+//		//Texture.zombie = texture;
+//		break;
+//	}
+//	//ТУТ БУДУТ ВСЕ ОСТАЛЬНЫЕ УКАЗАТЕЛИ НА НУЖНЫЕ ТЕКСТУРЫ
+//}
 
 void Manager::PrintObject()
 {

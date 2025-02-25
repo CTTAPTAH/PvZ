@@ -26,6 +26,14 @@ Map::Map(int win_width_, int win_height_, int field_width_, int field_height_)
 Field Map::getField(int x, int y) {
 	return fields[x][y];
 }
+int Map::getFieldWidth()
+{
+	return field_width;
+}
+int Map::getFieldHeight()
+{
+	return field_height;
+}
 bool Map::isFieldTree(int x, int y) {
 	return fields[x][y].isPlaced;
 }
@@ -47,33 +55,33 @@ void Map::setMapY(int y) {
 }
 
 // методы
-bool Map::addPlant(Message* message)
-{
-	int x = message->add_map.x;
-	int y = message->add_map.y;
-	int disp_x = message->add_map.disp_x;
-	int disp_y = message->add_map.disp_y;
-	int width = message->add_map.width;
-	int height = message->add_map.height;
-	sf::Color color = message->add_map.color;
-	sf::Texture* texture = message->add_map.texture;
-
-	if (fields[x][y].isPlaced) {
-		return false;
-	}
-
-	sf::IntRect pos;
-	pos.left = x * field_width + disp_x;
-	pos.top = y * field_height + disp_y;
-	// убрать или добавить в дальнейшем (будут текстуры)
-	pos.width = width;
-	pos.height = height;
-	// убрать или добавить в дальнейшем (будут текстуры)
-	message->add_map.plant->setPosition({ double(pos.left), double(pos.top) });
-	fields[x][y] = { true, pos, color, /**texture*/ };
-
-	return true;
-}
+//bool Map::addPlant(Message* message)
+//{
+//	int x = message->add_map.x;
+//	int y = message->add_map.y;
+//	int disp_x = message->add_map.disp_x;
+//	int disp_y = message->add_map.disp_y;
+//	int width = message->add_map.width;
+//	int height = message->add_map.height;
+//	sf::Color color = message->add_map.color;
+//	sf::Texture* texture = message->add_map.texture;
+//
+//	if (fields[x][y].isPlaced) {
+//		return false;
+//	}
+//
+//	sf::IntRect pos;
+//	pos.left = x * field_width + disp_x;
+//	pos.top = y * field_height + disp_y;
+//	// убрать или добавить в дальнейшем (будут текстуры)
+//	pos.width = width;
+//	pos.height = height;
+//	// убрать или добавить в дальнейшем (будут текстуры)
+//	message->add_map.plant->setPosition({ double(pos.left), double(pos.top) });
+//	fields[x][y] = { true, pos, color, /**texture*/ };
+//
+//	return true;
+//}
 void Map::drawMap(sf::RenderWindow& win)
 {
 	sf::IntRect rect = { map_x, map_y, field_width, field_height };
@@ -96,22 +104,22 @@ void Map::drawMap(sf::RenderWindow& win)
 		}
 		rect.top += field_height;
 	}
-	drawAllPlants(win);
+	//drawAllPlants(win);
 }
-void Map::drawAllPlants(sf::RenderWindow& win) {
-	for (int i = 0; i < amount_field_w; i++) {
-		for (int j = 0; j < amount_field_h; j++) {
-			if (fields[i][j].isPlaced) {
-				sf::RectangleShape rectangle;
-				sf::IntRect rect = fields[i][j].pos;
-				rectangle.setPosition(rect.left, rect.top);
-				rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-				rectangle.setFillColor(fields[i][j].color);
-				win.draw(rectangle);
-			}
-		}
-	}
-}
+//void Map::drawAllPlants(sf::RenderWindow& win) {
+//	for (int i = 0; i < amount_field_w; i++) {
+//		for (int j = 0; j < amount_field_h; j++) {
+//			if (fields[i][j].isPlaced) {
+//				sf::RectangleShape rectangle;
+//				sf::IntRect rect = fields[i][j].pos;
+//				rectangle.setPosition(rect.left, rect.top);
+//				rectangle.setSize(sf::Vector2f(rect.width, rect.height));
+//				rectangle.setFillColor(fields[i][j].color);
+//				win.draw(rectangle);
+//			}
+//		}
+//	}
+//}
 void Map::remove(int x, int y) {
 	fields[x][y] = Field();
 	//fields[x][y].color 

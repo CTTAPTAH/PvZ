@@ -3,11 +3,13 @@
 Projectile::Projectile()
 {
 	pos.x = 0; pos.y = 0;
+	type = TypeObject::PROJECTILE;
 }
 Projectile::Projectile(sf::IntRect rect_, sf::Color color_)
 {
 	rect = rect_;
 	color = color_;
+	type = TypeObject::PROJECTILE;
 }
 void Projectile::move(double dt)
 {
@@ -40,7 +42,6 @@ void Projectile::collision()
 		mng->addMessage(msg);
 	}
 }
-
 void Projectile::CollisionWithGO()
 {
 	//Своя коллизия:
@@ -72,7 +73,6 @@ void Projectile::CollisionWithGO()
 		}
 	}
 }
-
 void Projectile::sendMsg()
 {
 

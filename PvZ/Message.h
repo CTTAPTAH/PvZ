@@ -3,7 +3,7 @@
 #include "Map.h"
 
 enum class TypeMsg { 
-	UNDEFINED, DAMAGE, DEATH, CREATE, MOVE, ADD_MAP };
+	UNDEFINED, DAMAGE, DEATH, CREATE, MOVE };
 class Message
 {
 public:
@@ -24,17 +24,17 @@ public:
 		struct {
 			Position old_pos;
 		} move;
-		struct {
-			GameObject* plant;
-			int x; 
-			int y;
-			int disp_x;
-			int disp_y;
-			int width;
-			int height;
-			sf::Color color;
-			sf::Texture* texture;
-		} add_map;
+		//struct {
+		//	GameObject* plant;
+		//	int x; 
+		//	int y;
+		//	int disp_x;
+		//	int disp_y;
+		//	int width;
+		//	int height;
+		//	sf::Color color;
+		//	sf::Texture* texture;
+		//} add_map;
 
 	};
 	Message();

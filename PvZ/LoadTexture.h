@@ -12,10 +12,12 @@ enum class Identificate {
 
 class LoadTexture
 {
+private:
 public:
+
 	LoadTexture();
 	LoadTexture(const LoadTexture&);
 	~LoadTexture();
 	sf::Texture* LoadingRecieveMSG(Message* msg);
-	sf::Texture* LoadingRecieveMSG1(sf::Texture* texture, sf::IntRect rect, const std::string filename);
+	static bool loadFromFile(sf::Texture& texture,  const std::string& filename);
 };

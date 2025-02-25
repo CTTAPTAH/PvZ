@@ -24,6 +24,8 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	Manager* mng = Manager::GetBorn();
 	mng->addZombieOnLine(_index_line);
 
+	// добавил
+	victim = nullptr;
 	//”брал pos!!!
 	//pos.x = 800 - w_cell / 2 - rect.width / 2;
 	//pos.y = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
@@ -40,9 +42,12 @@ Zombie::~Zombie()
 
 void Zombie::move(double dt)
 {
-	rect.left -= velocity_x * dt;
+	if (!victim) { // добавил условие
+		rect.left -= velocity_x * dt;
+	}
 	
-	std::cout << "Zombie moving, position x: " <<dt << "\n";
+	//std::cout << "Zombie moving, position x: " <<dt << "\n";
+	//std::cout << dt << " " << velocity_x << " " << velocity_x * dt << std::endl;
 }
 
 void Zombie::draw(sf::RenderWindow& win)
@@ -55,9 +60,16 @@ void Zombie::draw(sf::RenderWindow& win)
 }
 void Zombie::update(double dt, sf::RenderWindow& win) {
 	//ƒобавил update
+	FindVictimN2(dt);
+	// либо то, что ниже, либо выше
+	//if (!victim)
+	//	FindVictimN();
+	//if (victim)
+	//	EatingPlantsN(dt);
+
 	move(dt);
 	draw(win);
-	CollisionWithPlants(dt);
+	//CollisionWithPlants(dt);
 	//std::cout << hp << std::endl;
 }
 void Zombie::ReceiveMsg(Message* msg)
@@ -80,7 +92,6 @@ bool Zombie::Collision1()
 {
 	return rect.left <= 800 / 9;
 }
-
 void Zombie::EatingPlants(double dt, GameObject* current_object)
 {
 	Manager* MGR = Manager::GetBorn();
@@ -113,8 +124,6 @@ void Zombie::EatingPlants(double dt, GameObject* current_object)
 	}
 
 }
-
-
 void Zombie::CollisionWithPlants(double dt)
 {
 	Manager* MGR = Manager::GetBorn();
@@ -124,10 +133,82 @@ void Zombie::CollisionWithPlants(double dt)
 	for (auto obj : objects) {
 		if (obj->getType() == TypeObject::PEASHOOTER) {
 			if (Collision1() && idx_line == obj->getIdxLine()) {
-				std::cout << "Yes" << std::endl;
+				//std::cout << "Yes" << std::endl;
 				EatingPlants(dt, obj);
 				break;
 			}
+		}
+	}
+}
+
+// добавил
+void Zombie::FindVictimN()
+{
+	Manager* mng = Manager::GetBorn();
+	std::list<GameObject*> objects = mng->getListObject();
+	for (auto obj : objects) {
+		if (obj->getType() == TypeObject::PEASHOOTER) {
+			if (Collision1() and idx_line == obj->getIdxLine()) {
+				victim = obj;
+			}
+		}
+	}
+}
+void Zombie::EatingPlantsN(double dt)
+{
+	if (victim) {
+		reload -= dt;
+		if (reload <= 0) {
+			reload = time_reload;
+
+			Message msg;
+			msg.type = TypeMsg::DAMAGE;
+			msg.damage.damage = damage;
+			msg.damage.who_receive = victim;
+
+			Manager* mng = Manager::GetBorn();
+			mng->addMessage(msg);
+
+			if (victim->getHp() - damage <= 0) {
+				victim = nullptr;
+				reload = time_reload;
+			}
+		}
+	}
+}
+void Zombie::FindVictimN2(double dt)
+{
+	Manager* mng = Manager::GetBorn();
+	std::list<GameObject*> objects = mng->getListObject();
+	victim = nullptr;
+	for (auto obj : objects) {
+		if (obj->getType() == TypeObject::PEASHOOTER) {
+			if (Collision1() and idx_line == obj->getIdxLine()) {
+				victim = obj;
+				isEating = true;
+				break;
+			}
+		}
+	}
+
+	if (victim) {
+		reload -= dt;
+		if (reload <= 0) {
+			reload = time_reload;
+
+			Message msg;
+			msg.type = TypeMsg::DAMAGE;
+			msg.damage.damage = damage;
+			msg.damage.who_receive = victim;
+
+			Manager* mng = Manager::GetBorn();
+			mng->addMessage(msg);
+		}
+	}
+	else {
+		if (isEating) {
+			isEating = false;
+			reload = time_reload;
 		}
 	}
 }

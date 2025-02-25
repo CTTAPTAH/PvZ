@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Animation.h"
 class Message;
 
 enum class TypeObject {
-	UNDEFINED, PEASHOOTER, ZOMBIE
+	UNDEFINED, PEASHOOTER, ZOMBIE, PROJECTILE
 };
 struct Position {
 	double x = 0, y = 0;
@@ -12,6 +13,7 @@ struct Position {
 class GameObject
 {
 protected:
+	Animation animation;
 	// временно место текстуры
 	sf::IntRect rect;
 	sf::Color color;

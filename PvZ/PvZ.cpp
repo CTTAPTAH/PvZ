@@ -35,6 +35,11 @@ void FPS()
 int Random(int start, int end) {
 	return rand() % (end - start + 1) + start;
 }
+void LoadAllTextures()
+{
+	Manager* mng = Manager::GetBorn();
+	mng->addTexture("peashooter", "texture\\peashooter.png");
+}
 
 int main()
 {
@@ -43,6 +48,7 @@ int main()
 
 	Texture test_texture;
 	Manager* mng = Manager::GetBorn();
+	LoadAllTextures();
 	Map map(win_width, win_height, win_width / 9.0f, win_height / 5.0f);
 	mng->setMap(&map);
 
@@ -56,18 +62,25 @@ int main()
 	// —оздание гороха
 	for (int i = 0; i < 5; i++) {
 		Peashooter* pea = new Peashooter(i, TypeObject::PEASHOOTER);
+		IntRect rect = { 0 * map.getFieldWidth(),
+			i * map.getFieldHeight(),
+			50, 50 }; // 10 - это смещение относительно €чейки карты
+		pea->setRect(rect);
 		Message msg;
-		msg.type = TypeMsg::ADD_MAP;
-		msg.add_map.plant = pea;
-		msg.add_map.disp_x = 10;
-		msg.add_map.disp_y = 10;
-		msg.add_map.texture = nullptr;
-		msg.add_map.x = 0;
-		msg.add_map.y = i;
-		msg.add_map.width = 50;
-		msg.add_map.height = 50;
-		msg.add_map.color = { 0, 255, 0, 255 };
+		msg.type = TypeMsg::CREATE;
+		msg.create.new_object = pea;
 		mng->addMessage(msg);
+		//msg.type = TypeMsg::ADD_MAP;
+		//msg.add_map.plant = pea;
+		//msg.add_map.disp_x = 10;
+		//msg.add_map.disp_y = 10;
+		//msg.add_map.texture = nullptr;
+		//msg.add_map.x = 0;
+		//msg.add_map.y = i;
+		//msg.add_map.width = 50;
+		//msg.add_map.height = 50;
+		//msg.add_map.color = { 0, 255, 0, 255 };
+		//mng->addMessage(msg);
 	}
 	//Cоздание зомбb
 	

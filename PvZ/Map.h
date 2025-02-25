@@ -24,15 +24,17 @@ public:
 	Map(int win_width_, int win_height_, int field_width_, int field_height_);
 
 	Field getField(int x, int y);
+	int getFieldWidth();
+	int getFieldHeight();
 	bool isFieldTree(int x, int y);
 	sf::Vector2i getFieldIndex(int x, int y);
 	void setTexture(sf::Texture new_texture, int x, int y);
 	void setMapX(int x);
 	void setMapY(int y);
 
-	bool addPlant(Message* message);
+	//bool addPlant(Message* message);
 	void drawMap(sf::RenderWindow& win);
-	void drawAllPlants(sf::RenderWindow& win);
+	//void drawAllPlants(sf::RenderWindow& win);
 	void remove(int x, int y);
 	void clear();
 };

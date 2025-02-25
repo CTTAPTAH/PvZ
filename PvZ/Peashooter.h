@@ -18,6 +18,7 @@ public:
 	~Peashooter();
 
 	void isShooting(double dt);
+	void draw(sf::RenderWindow& win);
 	void update(double dt, sf::RenderWindow& win) override;
 	void setPosition(Position pos_);
 	void setRect(sf::IntRect rect_);

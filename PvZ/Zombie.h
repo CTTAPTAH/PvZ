@@ -18,6 +18,8 @@ private:
     const double time_reload = 1;
     double reload = 0;
    
+    //добавил при создании анмации
+    GameObject* victim;
 public:
     Zombie();
     Zombie(int _index_line, TypeObject _type, int w_cell, int h_cell);
@@ -33,4 +35,9 @@ public:
     void draw(sf::RenderWindow& win);
     void update(double dt, sf::RenderWindow& win) override;
     void ReceiveMsg(Message* msg) override;
+
+    // добавил при создании анмации
+    void FindVictimN(); // почему-то без ошибок
+    void EatingPlantsN(double dt); // почему-то без ошибок
+    void FindVictimN2(double dt); // менее производительно, но без потенциальных ошибок
 };

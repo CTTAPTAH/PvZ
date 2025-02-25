@@ -1,9 +1,7 @@
 #include "LoadTexture.h"
 
 LoadTexture::LoadTexture() {}
-
 LoadTexture::LoadTexture(const LoadTexture&) {}
-
 LoadTexture::~LoadTexture() {}
 
 //sf::Texture* LoadTexture::LoadingRecieveMSG(Message* msg) {
@@ -13,10 +11,10 @@ LoadTexture::~LoadTexture() {}
 //	}
 //	return msg->load.texture;
 //}
-sf::Texture* LoadTexture::LoadingRecieveMSG1(sf::Texture* texture, sf::IntRect rect, const std::string filename) {
-	if (!texture->loadFromFile(filename, rect)) {
+bool LoadTexture::loadFromFile(sf::Texture& texture, const std::string& filename) {
+	if (!texture.loadFromFile(filename)) {
 		std::cout << "Ошибка загрузки текстуры!" << std::endl;
-		return nullptr;
+		return false;
 	}
-	return texture;
+	return true;
 }
