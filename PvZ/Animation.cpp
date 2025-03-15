@@ -23,7 +23,7 @@ Animation::Animation(sf::Texture* texture_)
 	}
 	frame_width = frame_height = 100;
 	cur_frame = 0;
-	count_frame = 23;
+	count_frame = 36;
 	frametime = 0.085;
 	timer = 0;
 }
@@ -32,8 +32,8 @@ Animation::Animation()
 	texture = nullptr;
 	frame_width = frame_height = 100;
 	cur_frame = 0;
-	count_frame = 23;
-	frametime = 0.085;
+	count_frame = 28;//Кадров 36 но спрайт кривой, надо придумать как поправить
+	frametime = 0.055;
 	timer = 0;
 }
 void Animation::update(double dt)
@@ -54,7 +54,7 @@ void Animation::update(double dt)
 //			count_frame, frametime);
 }
 void Animation::draw(sf::RenderWindow& win)
-{
+{ 
 	win.draw(sprite);
 }
 void Animation::setTexture(sf::Texture* texture_)

@@ -18,7 +18,7 @@ Peashooter::Peashooter()
     rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
     color.r = 0; color.g = 255; color.b = 0; color.a = 255;
     reload = time_reload;
-    idx_line = -1; type = TypeObject::PEASHOOTER;
+    idx_line = -1; type = TypeObject::PLANT;
 
     animation.setTexture(Manager::GetBorn()->GetTexture("peashooter"));
 }

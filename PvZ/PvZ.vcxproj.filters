@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\Plants">
+      <UniqueIdentifier>{b86dca33-9d41-4297-9f0f-9d85680d4653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Zombies">
+      <UniqueIdentifier>{60a35b7e-f3ae-46e6-bd32-d9f4c7ef9426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\ZombiesH">
+      <UniqueIdentifier>{c4577cc2-fc6c-4ff8-bae5-95c142740cf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\PlantsH">
+      <UniqueIdentifier>{115e95f6-ec6b-4bbc-a4ab-3af3ba17cd5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PvZ.cpp">
@@ -34,15 +46,21 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Peashooter.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Plants</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Plants</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
+      <Filter>Исходные файлы\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Исходные файлы\Zombies</Filter>
+    </ClCompile>
+    <ClCompile Include="Sunflower.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Sun.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,16 +80,22 @@
     <ClInclude Include="Map.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Файлы заголовков\ZombiesH</Filter>
+    </ClInclude>
     <ClInclude Include="Peashooter.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\PlantsH</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\PlantsH</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
+      <Filter>Файлы заголовков\PlantsH</Filter>
+    </ClInclude>
+    <ClInclude Include="Sunflower.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Sun.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

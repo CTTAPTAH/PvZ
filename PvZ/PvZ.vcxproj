@@ -146,6 +146,8 @@
     <ClCompile Include="Peashooter.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="PvZ.cpp" />
+    <ClCompile Include="Sun.cpp" />
+    <ClCompile Include="Sunflower.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +159,8 @@
     <ClInclude Include="Message.h" />
     <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Sun.h" />
+    <ClInclude Include="Sunflower.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,8 @@
 #include "LoadTexture.h"
 
-LoadTexture::LoadTexture() {}
+LoadTexture::LoadTexture() {
+	LoadAllTextures();
+}
 LoadTexture::LoadTexture(const LoadTexture&) {}
 LoadTexture::~LoadTexture() {}
 
@@ -18,3 +20,27 @@ bool LoadTexture::loadFromFile(sf::Texture& texture, const std::string& filename
 	}
 	return true;
 }
+bool LoadTexture::addTexture(const std::string& name, const std::string& filename)
+{
+	sf::Texture texture;
+
+	if (!loadFromFile(texture, filename)) {
+		return false; // Ошибка загрузки текстуры
+	}
+
+	textures[name] = std::move(texture); // перемещаем, а не копируем.
+	// У sf::Texture нет конструктора копирования
+
+	return true;
+}
+
+void LoadTexture::LoadAllTextures(){
+	addTexture("peashooter", "texture\\peashooter.png");
+	addTexture("sun", "texture\\sun.png");
+	addTexture("sunflower", "texture\\Sunflower.png");
+}
+
+const std::map<std::string, sf::Texture>&LoadTexture::GetTexturesList() const {
+	return textures;
+}
+

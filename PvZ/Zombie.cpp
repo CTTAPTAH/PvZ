@@ -1,6 +1,7 @@
 #include "Zombie.h"
 #define DEFAULT_ZOMBIE_SPEED 100
-#define IDLE_ZOMMIE_SPEED 0
+#define IDLE_ZOMBIE_SPEED 0
+
 int Zombie::count = 0;
 
 Zombie::Zombie() {}
@@ -17,7 +18,7 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	color = { 255,255,255,255 };
 	velocity_x = 100;
 	current_index = count;
-	hp = 100;
+	hp = 2;
 	count++;
 
 	// увеличиваем количество зомби на указанной линии
@@ -65,8 +66,8 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 	//if (!victim)
 	//	FindVictimN();
 	//if (victim)
-	//	EatingPlantsN(dt);
 
+	//EatingPlantsN(dt);
 	move(dt);
 	draw(win);
 	//CollisionWithPlants(dt);
@@ -111,7 +112,7 @@ void Zombie::EatingPlants(double dt, GameObject* current_object)
 
 		reload -= dt;
 
-		velocity_x = IDLE_ZOMMIE_SPEED;
+		velocity_x = IDLE_ZOMBIE_SPEED;
 
 		if (reload <= 0) {
 			reload = time_reload;
@@ -131,7 +132,7 @@ void Zombie::CollisionWithPlants(double dt)
 	std::list<GameObject*> objects = MGR->getListObject();
 
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PEASHOOTER) {
+		if (obj->getType() == TypeObject::PLANT) {
 			if (Collision1() && idx_line == obj->getIdxLine()) {
 				//std::cout << "Yes" << std::endl;
 				EatingPlants(dt, obj);
@@ -147,7 +148,7 @@ void Zombie::FindVictimN()
 	Manager* mng = Manager::GetBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PEASHOOTER) {
+		if (obj->getType() == TypeObject::PLANT) {
 			if (Collision1() and idx_line == obj->getIdxLine()) {
 				victim = obj;
 			}
@@ -182,7 +183,7 @@ void Zombie::FindVictimN2(double dt)
 	std::list<GameObject*> objects = mng->getListObject();
 	victim = nullptr;
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PEASHOOTER) {
+		if (obj->getType() == TypeObject::PLANT) {
 			if (Collision1() and idx_line == obj->getIdxLine()) {
 				victim = obj;
 				isEating = true;

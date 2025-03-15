@@ -13,7 +13,7 @@ Projectile::Projectile(sf::IntRect rect_, sf::Color color_)
 }
 void Projectile::move(double dt)
 {
-	rect.left += speed * dt;
+	rect.left += speed * dt;	
 }
 void Projectile::draw(sf::RenderWindow& win)
 {

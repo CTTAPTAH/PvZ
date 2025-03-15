@@ -4,7 +4,7 @@
 class Message;
 
 enum class TypeObject {
-	UNDEFINED, PEASHOOTER, ZOMBIE, PROJECTILE
+	UNDEFINED, PLANT,ZOMBIE, PROJECTILE
 };
 struct Position {
 	double x = 0, y = 0;
@@ -40,7 +40,7 @@ public:
 	//Cделал пару нужных геттеров
 	TypeObject getType();
 	sf::IntRect getRect();
-	int getHp();
+	int getHp();												  
 	int getIdxLine();
 
 	//static int GetId();
