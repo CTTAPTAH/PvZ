@@ -4,10 +4,14 @@
 #include "Map.h"
 #include"Zombie.h"
 #include "Sunflower.h"
+#include"Car.h"
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
+
 
 using namespace std;
 using namespace sf;
+
 
 struct Dt
 {
@@ -47,6 +51,32 @@ int main()
 	srand(time(0));
 	system("chcp 1251>nul");
 
+	Music music;
+	if (!music.openFromFile("texture\\MUSIC.ogg")) {
+		cerr << "Ошибка загрузки музыки!" << endl;
+	}
+	else {
+		music.setLoop(true);
+		music.setVolume(40);
+		music.play();
+	}
+
+	SoundBuffer bufer;
+	Sound zombies_are_comming;
+	if (!bufer.loadFromFile("texture\\zombies.ogg")) {
+		cerr << "Ошибка воспроизведения звука" << endl;
+		return 0;
+	}
+
+
+	zombies_are_comming.setBuffer(bufer);
+
+	zombies_are_comming.setVolume(80);
+
+	bool sound_played = false;
+
+	
+
 	Texture test_texture;
 	Manager* mng = Manager::GetBorn();
 	//mng->LoadTextures();
@@ -62,6 +92,13 @@ int main()
     //Sprite sprite(*texture);
 	// Создание гороха
 	// 
+	for (int i = 0; i < 5; i++) {
+		Car* car = new Car(i, TypeObject::UNDEFINED, w_cell, h_cell);
+		Message msg;
+		msg.type = TypeMsg::CREATE;
+		msg.create.new_object = car;
+		mng->addMessage(msg);
+	}
 	for (int i= 0; i < 5; i++) {
 		Sunflower* sunflower = new Sunflower(i, TypeObject::PLANT,20, i*map.getFieldHeight());
 		IntRect rect = { 0 * map.getFieldWidth(), i * map.getFieldHeight(), 50,50 };
@@ -110,8 +147,12 @@ int main()
 	//mng->addMessage(msg);
 	//
 
-	const double set_time = 4;
+	const double set_time = 3;
 	double timer = set_time;
+
+	const double music_set_time = 5;
+	double music_timer = music_set_time;
+
 
 	Event ev;
 	while (win.isOpen()) {
@@ -122,9 +163,18 @@ int main()
 		}
 		// Спавнер зомби
 		timer -= fps.dt;
+		music_timer -= fps.dt;
+
+		if (!sound_played && music_timer <= music_set_time-3.5) {
+			zombies_are_comming.play();
+			sound_played = true;
+		}
+
 		if (timer <= 0) {
+			
 			timer = set_time;
 			Zombie* zombie = new Zombie(Random(0,4), TypeObject::ZOMBIE, w_cell, h_cell);
+			cout << "Create zombie" << endl;
 			Message zombie_msg;
 			zombie_msg.type = TypeMsg::CREATE;
 			zombie_msg.create.new_object = zombie;

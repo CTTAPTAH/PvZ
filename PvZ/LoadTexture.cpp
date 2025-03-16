@@ -38,6 +38,8 @@ void LoadTexture::LoadAllTextures(){
 	addTexture("peashooter", "texture\\peashooter.png");
 	addTexture("sun", "texture\\sun.png");
 	addTexture("sunflower", "texture\\Sunflower.png");
+	addTexture("zombie", "texture\\\zomsheet.png");
+	addTexture("car", "texture\\Machine.png");
 }
 
 const std::map<std::string, sf::Texture>&LoadTexture::GetTexturesList() const {

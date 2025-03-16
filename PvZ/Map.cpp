@@ -92,11 +92,11 @@ void Map::drawMap(sf::RenderWindow& win)
 			// Отрисовка красных квадратов (в будущем карта)
 			rectangle.setPosition(rect.left, rect.top);
 			rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-			rectangle.setFillColor(sf::Color::Red);
+			rectangle.setFillColor(sf::Color::White);
 			win.draw(rectangle);
 
 			// Отрисовка контуров (в будущем карта)
-			rectangle.setOutlineColor(sf::Color::White);
+			rectangle.setOutlineColor(sf::Color::Black);
 			rectangle.setOutlineThickness(2.0f);
 			win.draw(rectangle);
 

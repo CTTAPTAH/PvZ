@@ -1,16 +1,30 @@
 #include "Sun.h"
 
+
+sf::Vector2f right_up_angle{800,-200};
+
+float vectorlen(sf::Vector2f vector) {
+	return sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+void normolize(sf::Vector2f& vector) {
+	float len = vectorlen(vector);
+	if (len != 0) {
+		vector.x /= len;
+		vector.y /= len;
+	}
+}
+
 int Sun::collected_sun = 0;
 
 sf::Texture* Sun::texture = Manager::GetBorn()->GetTexture("sun");
-
-Sun::Sun(int pos_x, int pos_y)
+Sun::Sun(int pos_x, int pos_y, int index_line_)
 {
 	//texture = Manager::GetBorn()->GetTexture("sun");
 	sprite.setTexture(*texture);
 	rect.left = pos_x;rect.top = pos_y;
 	rect.width = 50; rect.height = 50;
-
+	idx_line = index_line_;
 	start_pos_y = pos_y;
 
 	ground_pos_y = pos_y + 25;
@@ -62,8 +76,10 @@ void Sun::draw(sf::RenderWindow& win)
 void Sun::update(double dt, sf::RenderWindow& win)
 {
 	draw(win);
-	move(dt);
-	TextureCollisionWithCursor(win);
+	if (!touch) {
+		move(dt);
+	}
+	TextureCollisionWithCursor(win, dt);
 }
 
 void Sun::ReceiveMsg(Message* msg)
@@ -95,7 +111,7 @@ void Sun::CollisionWithCursor(sf::RenderWindow& win)
 	}
 }
 
-void Sun::TextureCollisionWithCursor(sf::RenderWindow& win) {
+void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 
 	Manager* MGR = Manager::GetBorn();
 
@@ -103,7 +119,22 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win) {
 
 	sf::IntRect cursor_rect{ cursor_position.x, cursor_position.y, 1, 1 };
 
+	if (touch) {
+
+		sf::Vector2f direction = { right_up_angle.x - rect.left, right_up_angle.y - rect.top };
+
+		normolize(direction);
+
+		float speed = 500.0f;
+		rect.left += direction.x * dt * (speed*(float)(idx_line+1)/1.8f);
+		rect.top += direction.y * dt * (speed*(float)(idx_line+1)/1.8f);
+	}
+
 	if (rect.intersects(cursor_rect)) {
+		touch = true;
+	}
+
+	if (rect.left >= win_width || rect.top <= -40) {
 
 		collected_sun += 1;
 		std::cout << collected_sun << std::endl;
@@ -112,6 +143,8 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win) {
 		msg.type = TypeMsg::DEATH;
 		msg.death.creature = this;
 		MGR->addMessage(msg);
+
+		touch = false;
 	}
 }
 

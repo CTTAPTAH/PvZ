@@ -4,12 +4,17 @@
 
 int Zombie::count = 0;
 
+sf::Texture* Zombie::texture = Manager::GetBorn()->GetTexture("zombie");
+
 Zombie::Zombie() {}
 
 Zombie::Zombie(int _index_line, TypeObject _type,
 	int w_cell, int h_cell) :
 	GameObject(_index_line, _type)
 {
+
+	sprite.setTexture(*texture);
+	//if (!texture) { std::cout << "nooo"; }
 	rect.width = 50;
 	rect.height = 50;
 	rect.left = 800 - w_cell / 2 - rect.width/2;
@@ -24,7 +29,6 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	// увеличиваем количество зомби на указанной линии
 	Manager* mng = Manager::GetBorn();
 	mng->addZombieOnLine(_index_line);
-
 	// добавил
 	victim = nullptr;
 	//Убрал pos!!!
@@ -53,11 +57,15 @@ void Zombie::move(double dt)
 
 void Zombie::draw(sf::RenderWindow& win)
 {
-	sf::RectangleShape rectangle;
-	rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-	rectangle.setPosition(rect.left, rect.top);
-	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-	win.draw(rectangle);
+	if (texture) {
+		sprite.setPosition(rect.left, rect.top);
+		win.draw(sprite);
+	}
+	//sf::RectangleShape rectangle;
+	//rectangle.setSize(sf::Vector2f(rect.width, rect.height));
+	//rectangle.setPosition(rect.left, rect.top);
+	//rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+	//win.draw(rectangle);
 }
 void Zombie::update(double dt, sf::RenderWindow& win) {
 	//Добавил update
@@ -66,7 +74,6 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 	//if (!victim)
 	//	FindVictimN();
 	//if (victim)
-
 	//EatingPlantsN(dt);
 	move(dt);
 	draw(win);

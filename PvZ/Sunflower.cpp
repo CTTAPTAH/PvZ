@@ -10,7 +10,7 @@ Sunflower::Sunflower(int index_line_, TypeObject type_, int pos_x, int pos_y)
 
 	hp = 3;
 
-	time_to_reaper_sun = 6;
+	time_to_reaper_sun = 10;
 	animation.setTexture(Manager::GetBorn()->GetTexture("sunflower"));
 }
 Sunflower::Sunflower()
@@ -18,7 +18,7 @@ Sunflower::Sunflower()
 	rect.left = 0; rect.top = 0; rect.height = 50; rect.width = 50;
 	color.r = 0; color.g = 255; color.b = 0; color.a = 255;
 	hp = 3;
-	time_to_reaper_sun = 3;
+	time_to_reaper_sun = 10;
 	idx_line = -1;
 	type = TypeObject::PLANT;
 	animation.setTexture(Manager::GetBorn()->GetTexture("sunflower"));
@@ -34,7 +34,7 @@ void Sunflower::dropsun(double dt)
 	if (current_time >= time_to_reaper_sun) {
 		current_time = 0;
 
-		Sun* sun = new Sun(random(rect.left+rect.width/4.0, rect.left+rect.width/2.0), rect.top + rect.height / 4.0);
+		Sun* sun = new Sun(random(rect.left+rect.width/4.0, rect.left+rect.width/2.0), rect.top + rect.height / 4.0, this->getIdxLine());
 
 		Message msg;
 		msg.type = TypeMsg::CREATE;

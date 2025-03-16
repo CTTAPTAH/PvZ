@@ -13,11 +13,13 @@ private:
 	double ground_pos_y;
 	bool firstMove = true;
 
+	bool touch = false;
+
 	static sf::Texture* texture;
 	sf::Sprite sprite;
 
 public:
-	Sun(int pos_x, int pos_y);
+	Sun(int pos_x, int pos_y, int index_line_);
 	Sun();
 	~Sun();
 	void move(double dt);
@@ -25,6 +27,6 @@ public:
 	void update(double dt, sf::RenderWindow& win)override;
 	void ReceiveMsg(Message* msg)override;
 	void CollisionWithCursor(sf::RenderWindow& win);
-	void TextureCollisionWithCursor(sf::RenderWindow& win);
+	void TextureCollisionWithCursor(sf::RenderWindow& win, double dt);
 };
 

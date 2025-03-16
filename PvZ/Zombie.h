@@ -20,6 +20,9 @@ private:
    
     //добавил при создании анмации
     GameObject* victim;
+    static sf::Texture* texture;
+    sf::Sprite sprite;
+
 public:
     Zombie();
     Zombie(int _index_line, TypeObject _type, int w_cell, int h_cell);
