@@ -1,44 +1,61 @@
 #include "Peashooter.h"
-#include "Message.h"
 
-Peashooter::Peashooter(int idx_line_, TypeObject type_)
-    : GameObject(idx_line_, type_)
-{
-    // временно место текстуры
-    rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
-    color.r = 0; color.g = 255; color.b = 0; color.a = 255;
-    hp = 3;
-    // То, что было
-    reload = time_reload;
-
-    animation.setTexture(Manager::GetBorn()->GetTexture("peashooter"));
-}
+// конструкторы, деструкторы
 Peashooter::Peashooter()
+    : Peashooter({ 0, 0 }, -1)
 {
+<<<<<<< HEAD
     rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
     color.r = 0; color.g = 255; color.b = 0; color.a = 255;
     reload = time_reload;
     idx_line = -1; type = TypeObject::PLANT;
 
     animation.setTexture(Manager::GetBorn()->GetTexture("peashooter"));
+=======
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 }
-Peashooter::~Peashooter()
+Peashooter::Peashooter(sf::Vector2i pos, int idx_line_)
+    : GameObject(
+        Animation(LoadTexture::getBorn().getTexture("peashooter"),
+            Config::PEASHOOTER_FRAME_WIDTH,
+            Config::PEASHOOTER_FRAME_HEIGHT,
+            Config::PEASHOOTER_COUNT_FRAME,
+            Config::PEASHOOTER_FRAMETIME,
+            pos
+        ),
+        { pos.x, pos.y, Config::PEASHOOTER_FRAME_WIDTH, Config::PEASHOOTER_FRAME_HEIGHT },
+        Config::PEASHOOTER_HP,
+        idx_line_,
+        TypeObject::PLANT
+    ),
+    is_shooting(false),
+    damage(Config::PEASHOOTER_DAMAGE),
+    time_reload(Config::PEASHOOTER_TIME_RELOAD),
+    reload(0)
 {
-    //std::cout << "Растение погибло" << std::endl;
+    animation.setPosition(rect.left, rect.top);
 }
 
+// методы
+void Peashooter::update(double dt, sf::RenderWindow& win)
+{
+    isShooting(dt);
+    animation.update(dt);
+    draw(win);
+}
 void Peashooter::isShooting(double dt)
 {
-    Manager* manager = Manager::GetBorn();
+    Manager* manager = Manager::getBorn();
+    int zombies = manager->getZombieOnLine(idx_line);
 
-    if (!shooting and manager->getZombieOnLine(idx_line) > 0) {
-        shooting = true;
+    if (!is_shooting and zombies > 0) {
+        is_shooting = true;
         reload = time_reload;
     }
 
-    if (shooting) {
-        if (manager->getZombieOnLine(idx_line) == 0) {
-            shooting = false;
+    if (is_shooting) {
+        if (zombies == 0) {
+            is_shooting = false;
             reload = time_reload;
             return;
         }
@@ -50,57 +67,23 @@ void Peashooter::isShooting(double dt)
             Message msg;
             msg.type = TypeMsg::CREATE;
 
-            //Position pos_projectile{ pos.x, pos.y }; // Заменить на норм спавн
-            sf::IntRect rect_projectile{ (int)rect.left + 25,
-                (int)rect.top + 25,
-                10,
-                10 }; // Заменить на указываемые
-            sf::Color color(0, 0, 255, 255);
-
-            msg.create.new_object = new Projectile(rect_projectile, color);
+            sf::IntRect rect_projectile(
+                rect.left + Config::PEASHOOTER_PROJECTILE_OFFSET_X,
+                rect.top + Config::PEASHOOTER_PROJECTILE_OFFSET_Y,
+                Config::PEA_PROJECTILE_FRAME_WIDTH,
+                Config::PEA_PROJECTILE_FRAME_HEIGHT
+            );
+            msg.create.new_object = new PeaProjectile(rect_projectile, idx_line, damage);
             manager->addMessage(msg);
         }
     }
 }
-//void Peashooter::draw(sf::RenderWindow& win) {
-//    sf::RectangleShape rectangle;
-//    rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-//    rectangle.setPosition(rect.left, rect.top);
-//    rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-//    win.draw(rectangle);
-//}
 void Peashooter::draw(sf::RenderWindow& win) {
     animation.draw(win);
 }
-void Peashooter::update(double dt, sf::RenderWindow& win)
+void Peashooter::receiveMsg(Message* msg)
 {
-    isShooting(dt);
-    //std::cout << rect.left << " " << rect.top << " ";
-    //std::cout << rect.width << " " << rect.height << " ";
-    //std::cout << (int)color.r << " " << (int)color.g << " ";
-    //std::cout << (int)color.b << " " << (int)color.a << " ";
-    //std::cout << std::endl;
-    //draw(win);
-    animation.update(dt);
-    draw(win);
-    //std::cout << hp << std::endl;
-}
-void Peashooter::setPosition(Position pos_)
-{
-    pos = pos_;
-}
-void Peashooter::setRect(sf::IntRect rect_)
-{
-    rect = rect_;
-    animation.setPosition(rect.left, rect.top);
-}
-void Peashooter::setColor(sf::Color color_)
-{
-    color = color_;
-}
-void Peashooter::ReceiveMsg(Message* msg)
-{
-    Manager* MGR = Manager::GetBorn();
+    Manager* MGR = Manager::getBorn();
     if (msg->type == TypeMsg::DAMAGE and this == msg->damage.who_receive) {
         hp -= msg->damage.damage;
         if (hp <= 0) {
@@ -110,4 +93,11 @@ void Peashooter::ReceiveMsg(Message* msg)
             MGR->addMessage(msg);
         }
     }
+}
+
+// геттеры, сеттеры
+void Peashooter::setRect(sf::IntRect rect_)
+{
+    rect = rect_;
+    animation.setPosition(rect.left, rect.top);
 }

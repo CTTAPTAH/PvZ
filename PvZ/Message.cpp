@@ -1,15 +1,13 @@
 #include "Message.h"
 
-Message::Message() : object(), type(TypeMsg::UNDEFINED)
-{
+Message::Message() : type(TypeMsg::UNDEFINED) {
+    // чтобы убрать предупреждени€ компил€тора о инициализации
+    memset(&damage, 0, sizeof(damage)); // «аполн€ем нул€ми
 }
-Message::Message(const Message& msg) : object()
-{
+Message::Message(const Message& msg) {
     type = msg.type;
     switch (type)
     {
-    case TypeMsg::UNDEFINED:
-        break;
     case TypeMsg::DAMAGE:
         damage = msg.damage;
         break;
@@ -22,10 +20,9 @@ Message::Message(const Message& msg) : object()
     case TypeMsg::MOVE:
         move = msg.move;
         break;
-    //case TypeMsg::ADD_MAP:
-    //    add_map = msg.add_map;
-    //    break;
     default:
+        // чтобы убрать предупреждени€ компил€тора о инициализации
+        memset(&damage, 0, sizeof(damage)); // «аполн€ем нул€ми
         break;
     }
 }

@@ -2,26 +2,28 @@
 
 #include "Manager.h"
 #include "GameObject.h"
-#include "Projectile.h"
+#include "PeaProjectile.h"
+#include "Message.h"
 
 class Peashooter : public GameObject
 {
 protected:
-	bool shooting = false;
-	const int amount_hp = 10; // в config
-	const double damage = 1; // в config
-	const double time_reload = 2; // в config
+	bool is_shooting;
+	double damage;
+	double time_reload;
 	double reload;
 public:
-	Peashooter(int idx_line_, TypeObject type_);
+	// конструкторы, деструкторы
 	Peashooter();
-	~Peashooter();
+	Peashooter(sf::Vector2i pos, int idx_line_);
+	~Peashooter() = default;
 
+	// методы
+	void update(double dt, sf::RenderWindow& win) override;
 	void isShooting(double dt);
 	void draw(sf::RenderWindow& win);
-	void update(double dt, sf::RenderWindow& win) override;
-	void setPosition(Position pos_);
+	void receiveMsg(Message* msg) override;
+
+	// геттеры, сеттеры
 	void setRect(sf::IntRect rect_);
-	void setColor(sf::Color color_);
-	void ReceiveMsg(Message* msg)override;
 };

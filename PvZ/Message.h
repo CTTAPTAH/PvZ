@@ -1,13 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include "Map.h"
 
 enum class TypeMsg { 
 	UNDEFINED, DAMAGE, DEATH, CREATE, MOVE };
 class Message
 {
 public:
-	GameObject* object;
 	TypeMsg type;
 
 	union {
@@ -22,19 +20,8 @@ public:
 			GameObject* new_object;
 		} create;
 		struct {
-			Position old_pos;
+			sf::IntRect old_pos; // возможно будет не IntRect
 		} move;
-		//struct {
-		//	GameObject* plant;
-		//	int x; 
-		//	int y;
-		//	int disp_x;
-		//	int disp_y;
-		//	int width;
-		//	int height;
-		//	sf::Color color;
-		//	sf::Texture* texture;
-		//} add_map;
 
 	};
 	Message();

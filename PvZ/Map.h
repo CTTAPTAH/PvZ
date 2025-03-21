@@ -1,40 +1,38 @@
 #pragma once
+#include "config.h"
 #include <SFML/Graphics.hpp>
 
 class Message;
 
-struct Field {
-	bool isPlaced = false;
-	// Замена текстуры
-	sf::IntRect pos{ 0, 0, 0, 0 };
-	sf::Color color{ 0, 0, 0, 0 };
-	//sf::Texture texture;
-};
-
 class Map
 {
 private:
-	const int amount_field_w = 9, amount_field_h = 5;
-	int map_x, map_y; // в какой точке на экране начинается карта
+	sf::Sprite sprite;
+	sf::Texture* texture;
+	int amount_field_w, amount_field_h;
+	sf::IntRect rect;
 	int field_width, field_height;
-	int win_width, win_height;
-	Field fields[9][5];
+	bool isPlaced[Config::AMOUNT_FIELD_W][Config::AMOUNT_FIELD_H] = { false };
+
+	// при изменении размера карты, меняем и размер ячейки
+	void resizeGrid(sf::IntRect rect_map);
+	bool isValidIndex(int i, int j) const;
 public:
+	// конструкторы, деструкторы
 	Map();
-	Map(int win_width_, int win_height_, int field_width_, int field_height_);
+	Map(sf::IntRect rect_map);
+	~Map() = default;
 
-	Field getField(int x, int y);
-	int getFieldWidth();
-	int getFieldHeight();
-	bool isFieldTree(int x, int y);
-	sf::Vector2i getFieldIndex(int x, int y);
-	void setTexture(sf::Texture new_texture, int x, int y);
-	void setMapX(int x);
-	void setMapY(int y);
-
-	//bool addPlant(Message* message);
-	void drawMap(sf::RenderWindow& win);
-	//void drawAllPlants(sf::RenderWindow& win);
-	void remove(int x, int y);
+	// методы
+	void drawMap(sf::RenderWindow& win) const;
+	void remove(int i, int j);
 	void clear();
+
+	// геттеры, сеттеры
+	bool getIsPlaced(int i, int j) const;
+	int getFieldWidth() const;
+	int getFieldHeight() const;
+	sf::Vector2i getFieldPosition(int i, int j) const;
+	void setRectMap(sf::IntRect rect_map);
+	void setTexture(sf::Texture* texture_);
 };

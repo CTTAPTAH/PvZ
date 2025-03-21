@@ -12,13 +12,18 @@ private:
 	double frametime; // время обновления кадров
 	double timer; // сколько времени прошло
 public:
-	Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime);
+	// конструкторы, деструкторы
+	Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime, sf::Vector2i position);
 	Animation(sf::Texture* texture_);
 	Animation();
+	Animation(const Animation& other);
 
+	// методы
 	void update(double dt);
 	void draw(sf::RenderWindow& win);
+
+	// геттеры, сеттеры
 	void setTexture(sf::Texture* texture_);
-	void setPosition(int x, int y);
-	void setScale(double x, double y);
+	void setPosition(float x, float y);
+	void setScale(float x, float y);
 };

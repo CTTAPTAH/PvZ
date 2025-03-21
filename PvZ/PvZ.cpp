@@ -17,12 +17,13 @@ struct Dt
 {
 	Clock clock;
 	const double fps = 60.0;
-	double newtime, lasttime = clock.getElapsedTime().asSeconds();
-	double dt;
+	double newtime = 0;
+	double lasttime = clock.getElapsedTime().asSeconds();
+	double dt = 0;
 
 };
-int win_width = 800, win_height = 600;// в конфиг
-int w_cell = win_width / 9, h_cell = win_height / 5;// в конфиг
+int win_width = Config::WIN_WIDTH, win_height = Config::WIN_HEIGHT;
+//int w_cell = win_width / 9, h_cell = win_height / 5;// в конфиг
 Dt fps;
 
 void FPS()
@@ -40,17 +41,21 @@ void FPS()
 int Random(int start, int end) {
 	return rand() % (end - start + 1) + start;
 }
+<<<<<<< HEAD
 //void LoadAllTextures()
 //{
 //	Manager* mng = Manager::GetBorn();
 //	mng->addTexture("peashooter", "texture\\peashooter.png");
 //}
+=======
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 
 int main()
 {
 	srand(time(0));
 	system("chcp 1251>nul");
 
+<<<<<<< HEAD
 	Music music;
 	if (!music.openFromFile("texture\\MUSIC.ogg")) {
 		cerr << "Ошибка загрузки музыки!" << endl;
@@ -83,16 +88,27 @@ int main()
 	//LoadAllTextures();
 	Map map(win_width, win_height, win_width / 9.0f, win_height / 5.0f);
 	mng->setMap(&map);
+=======
+	Manager* mng = Manager::getBorn();
+	LoadTexture& loader = LoadTexture::getBorn();
+	loader.loadAllTexture();
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 
-	RenderWindow win(VideoMode(win_width, win_height), "PVZ");
+	Map map({ 258, 81, 732, 493 });
 
+<<<<<<< HEAD
 	//Texture* texture;
 	IntRect rect;
 	//MGR->LoadTextures(Identificate::PEA, texture, rect, "file.png");
     //Sprite sprite(*texture);
+=======
+	RenderWindow win(VideoMode(win_width, win_height), "PVZ");
+
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	// Создание гороха
 	// 
 	for (int i = 0; i < 5; i++) {
+<<<<<<< HEAD
 		Car* car = new Car(i, TypeObject::UNDEFINED, w_cell, h_cell);
 		Message msg;
 		msg.type = TypeMsg::CREATE;
@@ -103,6 +119,10 @@ int main()
 		Sunflower* sunflower = new Sunflower(i, TypeObject::PLANT,20, i*map.getFieldHeight());
 		IntRect rect = { 0 * map.getFieldWidth(), i * map.getFieldHeight(), 50,50 };
 		sunflower->setRect(rect);
+=======
+		Peashooter* pea = new Peashooter(map.getFieldPosition(i, 0), i);
+		//pea->setRect(rect);
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 		Message msg;
 		msg.type = TypeMsg::CREATE;
 		msg.create.new_object = sunflower;
@@ -171,10 +191,17 @@ int main()
 		}
 
 		if (timer <= 0) {
+<<<<<<< HEAD
 			
 			timer = set_time;
 			Zombie* zombie = new Zombie(Random(0,4), TypeObject::ZOMBIE, w_cell, h_cell);
 			cout << "Create zombie" << endl;
+=======
+			timer = Random(0, (int)set_time);
+			int w_cell = map.getFieldWidth();
+			int h_cell = map.getFieldHeight();
+			Zombie* zombie = new Zombie(Random(0, 4), TypeObject::ZOMBIE, w_cell, h_cell);
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 			Message zombie_msg;
 			zombie_msg.type = TypeMsg::CREATE;
 			zombie_msg.create.new_object = zombie;

@@ -10,24 +10,35 @@ Zombie::Zombie() {}
 
 Zombie::Zombie(int _index_line, TypeObject _type,
 	int w_cell, int h_cell) :
-	GameObject(_index_line, _type)
+	GameObject()
 {
+<<<<<<< HEAD
 
 	sprite.setTexture(*texture);
 	//if (!texture) { std::cout << "nooo"; }
+=======
+	idx_line = _index_line;
+	type = _type;
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	rect.width = 50;
 	rect.height = 50;
-	rect.left = 800 - w_cell / 2 - rect.width/2;
-	rect.top = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
+	rect.left = (732 + 258 + w_cell) - w_cell / 2 - rect.width/2;
+	// Было: rect.left = 800 - w_cell / 2 - rect.width/2;
+	rect.top = (_index_line * h_cell) + (h_cell / 2) + (rect.height);
+	// Было: rect.top = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
 
 	color = { 255,255,255,255 };
 	velocity_x = 100;
 	current_index = count;
+<<<<<<< HEAD
 	hp = 2;
+=======
+	hp = 1;
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	count++;
 
 	// увеличиваем количество зомби на указанной линии
-	Manager* mng = Manager::GetBorn();
+	Manager* mng = Manager::getBorn();
 	mng->addZombieOnLine(_index_line);
 	// добавил
 	victim = nullptr;
@@ -41,7 +52,7 @@ Zombie::~Zombie()
 	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
 
 	// уменьшаем количество зомби на указанной линии
-	Manager* mng = Manager::GetBorn();
+	Manager* mng = Manager::getBorn();
 	mng->removeZombieOnLine(idx_line);
 }
 
@@ -80,7 +91,7 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 	//CollisionWithPlants(dt);
 	//std::cout << hp << std::endl;
 }
-void Zombie::ReceiveMsg(Message* msg)
+void Zombie::receiveMsg(Message* msg)
 {
 	if (msg->type == TypeMsg::DAMAGE and
 		this == msg->damage.who_receive) {
@@ -91,7 +102,7 @@ void Zombie::ReceiveMsg(Message* msg)
 			Message msg;
 			msg.type = TypeMsg::DEATH;
 			msg.death.creature = this;
-			Manager* MGR = Manager::GetBorn();
+			Manager* MGR = Manager::getBorn();
 			MGR->addMessage(msg);
 		}
 	}
@@ -102,7 +113,7 @@ bool Zombie::Collision1()
 }
 void Zombie::EatingPlants(double dt, GameObject* current_object)
 {
-	Manager* MGR = Manager::GetBorn();
+	Manager* MGR = Manager::getBorn();
 
 	if (!isEating) {
 		isEating = true;
@@ -134,7 +145,7 @@ void Zombie::EatingPlants(double dt, GameObject* current_object)
 }
 void Zombie::CollisionWithPlants(double dt)
 {
-	Manager* MGR = Manager::GetBorn();
+	Manager* MGR = Manager::getBorn();
 
 	std::list<GameObject*> objects = MGR->getListObject();
 
@@ -152,7 +163,7 @@ void Zombie::CollisionWithPlants(double dt)
 // добавил
 void Zombie::FindVictimN()
 {
-	Manager* mng = Manager::GetBorn();
+	Manager* mng = Manager::getBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	for (auto obj : objects) {
 		if (obj->getType() == TypeObject::PLANT) {
@@ -174,7 +185,7 @@ void Zombie::EatingPlantsN(double dt)
 			msg.damage.damage = damage;
 			msg.damage.who_receive = victim;
 
-			Manager* mng = Manager::GetBorn();
+			Manager* mng = Manager::getBorn();
 			mng->addMessage(msg);
 
 			if (victim->getHp() - damage <= 0) {
@@ -186,7 +197,7 @@ void Zombie::EatingPlantsN(double dt)
 }
 void Zombie::FindVictimN2(double dt)
 {
-	Manager* mng = Manager::GetBorn();
+	Manager* mng = Manager::getBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	victim = nullptr;
 	for (auto obj : objects) {
@@ -209,7 +220,7 @@ void Zombie::FindVictimN2(double dt)
 			msg.damage.damage = damage;
 			msg.damage.who_receive = victim;
 
-			Manager* mng = Manager::GetBorn();
+			Manager* mng = Manager::getBorn();
 			mng->addMessage(msg);
 		}
 	}

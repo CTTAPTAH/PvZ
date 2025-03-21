@@ -2,88 +2,66 @@
 #include "Message.h"
 #include "Peashooter.h"
 
-// конструктор
+// конструкторы, деструктор
 Map::Map()
+	: sprite(),
+	amount_field_w(Config::AMOUNT_FIELD_W),
+	amount_field_h(Config::AMOUNT_FIELD_H)
 {
-	win_width = 800;
-	win_height = 600;
-	map_x = map_y = 0;
+	setTexture(LoadTexture::getBorn().getTexture("map"));
 
-	field_width = win_width / 9.0f;
-	field_height = win_height / 5.0f;
+	Manager* mng = Manager::getBorn();
+	resizeGrid({ 0, 0, mng->getWinWidth(), mng->getWinHeight() });
 }
-Map::Map(int win_width_, int win_height_, int field_width_, int field_height_)
+Map::Map(sf::IntRect rect_map)
+	: sprite(),
+	amount_field_w(Config::AMOUNT_FIELD_W),
+	amount_field_h(Config::AMOUNT_FIELD_H)
 {
-	win_width = win_width_;
-	win_height = win_height_;
-	map_x = map_y = 0;
+	setTexture(LoadTexture::getBorn().getTexture("map"));
+	resizeGrid(rect_map);
+}
 
-	field_width = field_width_;
-	field_height = field_height_;
+// методы 
+void Map::resizeGrid(sf::IntRect rect_map)
+{
+	rect = rect_map;
+	field_width = rect.width / amount_field_w;
+	field_height = rect.height / amount_field_h;
+
+	//sprite.setTextureRect(rect);
+}
+bool Map::isValidIndex(int i, int j) const
+{
+	if (i < 0 or i >= amount_field_h or j < 0 or j >= amount_field_w) {
+		return false;
+	}
+	return true;
+}
+
+void Map::drawMap(sf::RenderWindow& win) const
+{
+	if (texture) {
+		win.draw(sprite);
+	}
+}
+void Map::remove(int i, int j)
+{
+	if (!isValidIndex(i, j)) {
+		std::cout << "Ошибка класса map, метода remove: указан неверный индекс" << std::endl;
+		return;
+	}
+	isPlaced[i][j] = false;
+}
+void Map::clear()
+{
+	memset(isPlaced, false, sizeof(isPlaced));
 }
 
 // геттеры, сеттеры
-Field Map::getField(int x, int y) {
-	return fields[x][y];
-}
-int Map::getFieldWidth()
+bool Map::getIsPlaced(int i, int j) const
 {
-	return field_width;
-}
-int Map::getFieldHeight()
-{
-	return field_height;
-}
-bool Map::isFieldTree(int x, int y) {
-	return fields[x][y].isPlaced;
-}
-sf::Vector2i Map::getFieldIndex(int x, int y) {
-	int i = x / field_width;
-	int j = y / field_height;
-
-	return { i, j };
-}
-void Map::setTexture(sf::Texture new_texture, int x, int y)
-{
-	//fields[x][y].texture = new_texture;
-}
-void Map::setMapX(int x) {
-	map_x = x;
-}
-void Map::setMapY(int y) {
-	map_y = y;
-}
-
-// методы
-//bool Map::addPlant(Message* message)
-//{
-//	int x = message->add_map.x;
-//	int y = message->add_map.y;
-//	int disp_x = message->add_map.disp_x;
-//	int disp_y = message->add_map.disp_y;
-//	int width = message->add_map.width;
-//	int height = message->add_map.height;
-//	sf::Color color = message->add_map.color;
-//	sf::Texture* texture = message->add_map.texture;
-//
-//	if (fields[x][y].isPlaced) {
-//		return false;
-//	}
-//
-//	sf::IntRect pos;
-//	pos.left = x * field_width + disp_x;
-//	pos.top = y * field_height + disp_y;
-//	// убрать или добавить в дальнейшем (будут текстуры)
-//	pos.width = width;
-//	pos.height = height;
-//	// убрать или добавить в дальнейшем (будут текстуры)
-//	message->add_map.plant->setPosition({ double(pos.left), double(pos.top) });
-//	fields[x][y] = { true, pos, color, /**texture*/ };
-//
-//	return true;
-//}
-void Map::drawMap(sf::RenderWindow& win)
-{
+<<<<<<< HEAD
 	sf::IntRect rect = { map_x, map_y, field_width, field_height };
 	sf::RectangleShape rectangle;
 	for (int i = 0; i < 5; i++) {
@@ -103,31 +81,36 @@ void Map::drawMap(sf::RenderWindow& win)
 			rect.left += field_width;
 		}
 		rect.top += field_height;
+=======
+	if (!isValidIndex(i, j)) {
+		std::cout << "Ошибка класса map, метода getIsPlaced: указан неверный индекс" << std::endl;
+		return false;
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	}
-	//drawAllPlants(win);
+	return isPlaced[i][j];
 }
-//void Map::drawAllPlants(sf::RenderWindow& win) {
-//	for (int i = 0; i < amount_field_w; i++) {
-//		for (int j = 0; j < amount_field_h; j++) {
-//			if (fields[i][j].isPlaced) {
-//				sf::RectangleShape rectangle;
-//				sf::IntRect rect = fields[i][j].pos;
-//				rectangle.setPosition(rect.left, rect.top);
-//				rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-//				rectangle.setFillColor(fields[i][j].color);
-//				win.draw(rectangle);
-//			}
-//		}
-//	}
-//}
-void Map::remove(int x, int y) {
-	fields[x][y] = Field();
-	//fields[x][y].color 
+int Map::getFieldWidth() const
+{
+	return field_width;
 }
-void Map::clear() {
-	for (int i = 0; i < amount_field_w; i++) {
-		for (int j = 0; j < amount_field_h; j++) {
-			fields[i][j] = Field();
-		}
+int Map::getFieldHeight() const
+{
+	return field_height;
+}
+sf::Vector2i Map::getFieldPosition(int i, int j) const
+{
+	if (!isValidIndex(i, j)) {
+		std::cout << "Ошибка класса map, метода getFieldPosition: указан неверный индекс" << std::endl;
+		return { -1, -1 };
 	}
+	return { rect.left + j * field_width, rect.top + i * field_height };
+}
+void Map::setRectMap(sf::IntRect rect_map)
+{
+	resizeGrid(rect_map);
+}
+void Map::setTexture(sf::Texture* texture_)
+{
+	texture = texture_;
+	if (texture) sprite.setTexture(*texture);
 }

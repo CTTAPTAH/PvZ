@@ -2,6 +2,7 @@
 
 Manager* Manager::born = nullptr;
 
+<<<<<<< HEAD
 Manager::Manager() : game_objects(), message(), loader(new LoadTexture) {
 	win_wid = 800; win_hei = 600;
 	born = nullptr;
@@ -12,23 +13,32 @@ Manager::Manager() : game_objects(), message(), loader(new LoadTexture) {
 	Texture.zombie;
 
 	Font.newRoman;
+=======
+// конструкторы, деструкторы
+Manager::Manager() : game_objects(), messages() {
+	win_wid = Config::WIN_WIDTH; win_hei = Config::WIN_HEIGHT;
+	born = nullptr;
+	for (int i = 0; i < Config::AMOUNT_LINES_MAP; i++) {
+		zombie_on_line[i] = 0;
+	}
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 }
-//Manager::Manager(const Manager&) {}
 Manager::~Manager() {
-	for (auto obj : game_objects) {
+	for (auto& obj : game_objects) {
 		delete obj;
 	}
 	game_objects.clear();
 
-	for (auto msg : message) {
+	for (auto& msg : messages) {
 		delete msg;
 	}
-	message.clear();
+	messages.clear();
 
 	delete born;
 	born = nullptr;
 }
 
+<<<<<<< HEAD
 Manager* Manager::GetBorn() {
 	if (!born) born = new Manager;
 	return born;
@@ -51,22 +61,14 @@ sf::Texture* Manager::GetTexture(const std::string& name) {
 	return (it != textures.end()) ? &it->second : nullptr;
 }
 
+=======
+// методы
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 void Manager::addMessage(Message msg) {
-	message.push_back(new Message(msg)); // Создаём копию сообщения в куче
-}
-void Manager::setMap(Map* map_) {
-	map = map_;
-}
-Map* Manager::getMap()
-{
-	return map;
+	messages.push_back(new Message(msg)); // Создаём копию сообщения в куче
 }
 void Manager::updateMessage(double dt) {
-	for (auto obj : game_objects) {
-		obj->SendMsg(dt);
-	}
-
-	for (auto msg : message) {
+	for (auto& msg : messages) {
 		// Сообщение для manager
 		if (msg->type == TypeMsg::DEATH) {
 			auto res = std::find(game_objects.begin(), game_objects.end(), msg->death.creature);
@@ -81,77 +83,87 @@ void Manager::updateMessage(double dt) {
 		if (msg->type == TypeMsg::DAMAGE or
 			msg->type == TypeMsg::MOVE) {
 			for (auto obj : game_objects) {
-				obj->ReceiveMsg(msg);
+				obj->receiveMsg(msg);
 			}
 		}
-		// Сообщение для map
-		//else if (msg->type == TypeMsg::ADD_MAP) {
-		//	if (map->addPlant(msg)) {
-		//		game_objects.push_back(msg->add_map.plant);
-		//	}
-		//}
 	}
-
-	//std::cout << game_objects.size() << std::endl;
-
-	message.clear();
-} // Для сообщений
+	messages.clear();
+}
 void Manager::updateObject(double dt, sf::RenderWindow& win) // Для позиции
 {
-	for (auto obj : game_objects) {
-		//// Проверяем, может ли объект стрелять
-		//Peashooter* pea = dynamic_cast<Peashooter*>(obj);
-		//if (pea) {
-		//	pea->isShooting(dt);  // Если объект - Peashooter, вызываем его метод shoot()
-		//}
-		//Projectile* projectile = dynamic_cast<Projectile*>(obj);
-		//if (projectile) {
-		//	projectile->move(dt);
-		//}
+	for (auto& obj : game_objects) {
 		obj->update(dt, win);
 	}
+	// интересная тонкость в языке C++:
+	// интересно то, что в ДАННОМ цикле auto* и auto - это одно и то же
 }
-//void Manager::LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename) {
-//	//texture = loader->LoadingRecieveMSG1(texture, rect, filename);
-//	switch (id) {
-//	case Identificate::PEA:
-//		//Texture.plant = texture;
-//		break;
-//	case Identificate::ZOMBIE:
-//		//Texture.zombie = texture;
-//		break;
-//	}
-//	//ТУТ БУДУТ ВСЕ ОСТАЛЬНЫЕ УКАЗАТЕЛИ НА НУЖНЫЕ ТЕКСТУРЫ
-//}
 
-void Manager::PrintObject()
-{
-	int count = 0;
-	for (auto obj : game_objects) {
-		count++;
-		printf_s("%d: %d-%d\n", count, obj->getRect().left,
-			obj->getRect().top);
-	}
-}
 void Manager::addZombieOnLine(int idx_line)
 {
-	if (0 <= idx_line and idx_line <= 4) {
+	if (0 <= idx_line and idx_line <= Config::AMOUNT_LINES_MAP) {
 		zombie_on_line[idx_line]++;
-		//printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
 	}
 }
 void Manager::removeZombieOnLine(int idx_line)
 {
-	if (0 <= idx_line and idx_line <= 4) {
+	if (0 <= idx_line and idx_line <= Config::AMOUNT_LINES_MAP) {
 		if (zombie_on_line[idx_line] > 0)
 			zombie_on_line[idx_line]--;
-		//printf_s("Количество зомби на %d линии: %d\n", idx_line, zombie_on_line[idx_line]);
 	}
 }
-int Manager::getZombieOnLine(int idx_line)
+
+// для откладки
+void Manager::printObjects() const
 {
-	return zombie_on_line[idx_line];
+	int count = 0;
+	for (auto& obj : game_objects) {
+		count++;
+		printf_s("%d: Позиция: %d-%d\n", count, obj->getRect().left,
+			obj->getRect().top);
+	}
 }
+void Manager::printMessages() const
+{
+	int count = 0;
+	for (auto& msg : messages) {
+		count++;
+		printf_s("%d: Сообщение типа: ", count);
+		switch (msg->type) {
+		case TypeMsg::DAMAGE:
+			printf_s("damage"); break;
+		case TypeMsg::CREATE:
+			printf_s("create"); break;
+		case TypeMsg::DEATH:
+			printf_s("death"); break;
+		case TypeMsg::MOVE:
+			printf_s("move"); break;
+		default:
+			printf_s("undefind"); break;
+		}
+		printf_s("\n");
+	}
+}
+void Manager::printWinSize() const
+{
+	printf_s("win width: %d\nwin_height: %d\n", win_wid, win_hei);
+}
+void Manager::printZombieOnLine() const
+{
+	for (int i = 0; i < Config::AMOUNT_LINES_MAP; i++) {
+		printf_s("Линия %d: %d\n", i, zombie_on_line[i]);
+	}
+}
+
+// геттеры, сеттеры
+Manager* Manager::getBorn() {
+	if (!born) born = new Manager;
+	return born;
+}
+int Manager::getWinWidth()
+{
+	return win_wid;
+}
+<<<<<<< HEAD
 //void Manager::LoadTextures()
 //{
 //	if (loader) {
@@ -159,9 +171,15 @@ int Manager::getZombieOnLine(int idx_line)
 //	}
 //}
 std::list<GameObject*> Manager::getListObject() {
+=======
+int Manager::getWinHeight()
+{
+	return win_hei;
+}
+std::list<GameObject*> Manager::getListObject() const {
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	return game_objects;
 }
-
 //Функция для создания списка ректов исключительно зомби
 std::vector<sf::IntRect> Manager::getZombieRects() const {
     std::vector<sf::IntRect> zombieRects;
@@ -171,4 +189,8 @@ std::vector<sf::IntRect> Manager::getZombieRects() const {
         }
     }
     return zombieRects;
+}
+int Manager::getZombieOnLine(int idx_line) const
+{
+	return zombie_on_line[idx_line];
 }

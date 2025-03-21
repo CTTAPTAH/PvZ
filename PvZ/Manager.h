@@ -1,4 +1,5 @@
 #pragma once
+#include "Config.h"
 #include "Message.h"
 #include "Map.h"
 #include "LoadTexture.h"
@@ -10,6 +11,7 @@ class Manager
 private:
 	int win_wid;
 	int win_hei;
+<<<<<<< HEAD
 
 
 	static Manager* born;
@@ -28,12 +30,19 @@ private:
 	struct {
 		sf::Font newRoman;
 	} Font;
+=======
+	static Manager* born;
+	std::list<GameObject*> game_objects;
+	std::list<Message*> messages;
+	int zombie_on_line[Config::AMOUNT_LINES_MAP];
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 
 	Manager();
-	Manager(Map* map_);
-	//Manager(const Manager&);
 	~Manager();
+	Manager(const Manager&) = delete;
+	Manager& operator=(const Manager&) = delete;
 public:
+<<<<<<< HEAD
 	static Manager* GetBorn();
 
 	//bool addTexture(const std::string& name, const std::string& filename);
@@ -41,17 +50,26 @@ public:
 	void LoadTextures();
 	sf::Texture* GetTexture(const std::string& name);
 
+=======
+>>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	void addMessage(Message msg);
-	void setMap(Map* map_);
-	Map* getMap();
-	void updateMessage(double dt); // сообщения
-	void updateObject(double dt, sf::RenderWindow& win); // физика объектов и рисуем объекты
-	//void LoadTextures(Identificate id, sf::Texture* texture, sf::IntRect rect, const std::string filename);
-	std::list<GameObject*> getListObject();
-	std::vector<sf::IntRect> getZombieRects() const;
-	void PrintObject();
+	void updateMessage(double dt);
+	void updateObject(double dt, sf::RenderWindow& win);
 
 	void addZombieOnLine(int idx_line);
 	void removeZombieOnLine(int idx_line);
-	int getZombieOnLine(int idx_line);
+
+	//для откладки
+	void printObjects() const;
+	void printMessages() const;
+	void printWinSize() const;
+	void printZombieOnLine() const;
+
+	// геттеры, сеттеры
+	static Manager* getBorn();
+	int getWinWidth();
+	int getWinHeight();
+	std::list<GameObject*> getListObject() const;
+	std::vector<sf::IntRect> getZombieRects() const;
+	int getZombieOnLine(int idx_line) const;
 };

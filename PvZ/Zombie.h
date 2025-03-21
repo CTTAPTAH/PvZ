@@ -8,6 +8,7 @@
 class Zombie : public GameObject
 {
 private:
+    sf::Color color;
     double velocity_x;
     static int count;
     int current_index;
@@ -37,7 +38,7 @@ public:
     void move(double dt);
     void draw(sf::RenderWindow& win);
     void update(double dt, sf::RenderWindow& win) override;
-    void ReceiveMsg(Message* msg) override;
+    void receiveMsg(Message* msg) override;
 
     // добавил при создании анмации
     void FindVictimN(); // почему-то без ошибок
