@@ -18,7 +18,7 @@ private:
 
     const double time_reload = 1;
     double reload = 0;
-   
+
     //добавил при создании анмации
     GameObject* victim;
     static sf::Texture* texture;

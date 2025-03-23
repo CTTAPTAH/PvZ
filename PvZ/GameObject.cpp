@@ -5,7 +5,7 @@ GameObject::GameObject()
 	: animation(),
 	rect{ 0, 0, 0, 0 },
 	hp(0),
-	idx_line(-1),
+	idx_line(0),
 	type(TypeObject::UNDEFINED)
 {
 }

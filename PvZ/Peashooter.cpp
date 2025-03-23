@@ -2,17 +2,8 @@
 
 // конструкторы, деструкторы
 Peashooter::Peashooter()
-    : Peashooter({ 0, 0 }, -1)
+    : Peashooter({ 0, 0 }, 0)
 {
-<<<<<<< HEAD
-    rect.left = 0; rect.top = 0; rect.width = 50; rect.height = 50;
-    color.r = 0; color.g = 255; color.b = 0; color.a = 255;
-    reload = time_reload;
-    idx_line = -1; type = TypeObject::PLANT;
-
-    animation.setTexture(Manager::GetBorn()->GetTexture("peashooter"));
-=======
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 }
 Peashooter::Peashooter(sf::Vector2i pos, int idx_line_)
     : GameObject(
@@ -83,14 +74,14 @@ void Peashooter::draw(sf::RenderWindow& win) {
 }
 void Peashooter::receiveMsg(Message* msg)
 {
-    Manager* MGR = Manager::getBorn();
+    Manager* mng = Manager::getBorn();
     if (msg->type == TypeMsg::DAMAGE and this == msg->damage.who_receive) {
         hp -= msg->damage.damage;
         if (hp <= 0) {
             Message msg;
             msg.type = TypeMsg::DEATH;
             msg.death.creature = this;
-            MGR->addMessage(msg);
+            mng->addMessage(msg);
         }
     }
 }

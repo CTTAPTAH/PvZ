@@ -4,7 +4,8 @@
 
 int Zombie::count = 0;
 
-sf::Texture* Zombie::texture = Manager::GetBorn()->GetTexture("zombie");
+//sf::Texture* Zombie::texture = Manager::GetBorn()->GetTexture("zombie");
+sf::Texture* Zombie::texture = LoadTexture::getBorn().getTexture("zombie");
 
 Zombie::Zombie() {}
 
@@ -12,35 +13,26 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	int w_cell, int h_cell) :
 	GameObject()
 {
-<<<<<<< HEAD
-
-	sprite.setTexture(*texture);
+	//sprite.setTexture(*texture);
 	//if (!texture) { std::cout << "nooo"; }
-=======
 	idx_line = _index_line;
 	type = _type;
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	rect.width = 50;
 	rect.height = 50;
 	rect.left = (732 + 258 + w_cell) - w_cell / 2 - rect.width/2;
 	// Было: rect.left = 800 - w_cell / 2 - rect.width/2;
 	rect.top = (_index_line * h_cell) + (h_cell / 2) + (rect.height);
 	// Было: rect.top = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
-
 	color = { 255,255,255,255 };
 	velocity_x = 100;
 	current_index = count;
-<<<<<<< HEAD
-	hp = 2;
-=======
-	hp = 1;
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
+	hp = 100;
 	count++;
 
 	// увеличиваем количество зомби на указанной линии
 	Manager* mng = Manager::getBorn();
 	mng->addZombieOnLine(_index_line);
-	// добавил
+	// добавил Н
 	victim = nullptr;
 	//Убрал pos!!!
 	//pos.x = 800 - w_cell / 2 - rect.width / 2;
@@ -61,22 +53,22 @@ void Zombie::move(double dt)
 	if (!victim) { // добавил условие
 		rect.left -= velocity_x * dt;
 	}
-	
+
 	//std::cout << "Zombie moving, position x: " <<dt << "\n";
 	//std::cout << dt << " " << velocity_x << " " << velocity_x * dt << std::endl;
 }
 
 void Zombie::draw(sf::RenderWindow& win)
 {
-	if (texture) {
-		sprite.setPosition(rect.left, rect.top);
-		win.draw(sprite);
-	}
-	//sf::RectangleShape rectangle;
-	//rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-	//rectangle.setPosition(rect.left, rect.top);
-	//rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-	//win.draw(rectangle);
+	//if (texture) {
+	//	sprite.setPosition(rect.left, rect.top);
+	//	win.draw(sprite);
+	//}
+	sf::RectangleShape rectangle;
+	rectangle.setSize(sf::Vector2f(rect.width, rect.height));
+	rectangle.setPosition(rect.left, rect.top);
+	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+	win.draw(rectangle);
 }
 void Zombie::update(double dt, sf::RenderWindow& win) {
 	//Добавил update
@@ -96,7 +88,7 @@ void Zombie::receiveMsg(Message* msg)
 	if (msg->type == TypeMsg::DAMAGE and
 		this == msg->damage.who_receive) {
 		if (hp > 0) {
-			hp-=msg->damage.damage;
+			hp -= msg->damage.damage;
 		}
 		else {
 			Message msg;
@@ -160,7 +152,7 @@ void Zombie::CollisionWithPlants(double dt)
 	}
 }
 
-// добавил
+// добавил Н
 void Zombie::FindVictimN()
 {
 	Manager* mng = Manager::getBorn();

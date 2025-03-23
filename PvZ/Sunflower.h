@@ -8,6 +8,8 @@
 class Sunflower: public GameObject
 {
 private:
+
+	sf::Color color; // Ќикита добавил, потому что больше не наследуем
 	int time_to_reaper_sun;
 	double current_time = 0;
 public:
@@ -16,7 +18,7 @@ public:
 	~Sunflower();
 	void dropsun(double dt);
 	void draw(sf::RenderWindow& win);
-	void ReceiveMsg(Message* msg) override;
+	void receiveMsg(Message* msg) override;
 	void update(double dt, sf::RenderWindow& win) override;
 	void setRect(sf::IntRect rect_);
 	int random(int a, int b);

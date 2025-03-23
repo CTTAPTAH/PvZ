@@ -61,31 +61,9 @@ void Map::clear()
 // геттеры, сеттеры
 bool Map::getIsPlaced(int i, int j) const
 {
-<<<<<<< HEAD
-	sf::IntRect rect = { map_x, map_y, field_width, field_height };
-	sf::RectangleShape rectangle;
-	for (int i = 0; i < 5; i++) {
-		rect.left = map_x;
-		for (int j = 0; j < 9; j++) {
-			// Отрисовка красных квадратов (в будущем карта)
-			rectangle.setPosition(rect.left, rect.top);
-			rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-			rectangle.setFillColor(sf::Color::White);
-			win.draw(rectangle);
-
-			// Отрисовка контуров (в будущем карта)
-			rectangle.setOutlineColor(sf::Color::Black);
-			rectangle.setOutlineThickness(2.0f);
-			win.draw(rectangle);
-
-			rect.left += field_width;
-		}
-		rect.top += field_height;
-=======
 	if (!isValidIndex(i, j)) {
 		std::cout << "Ошибка класса map, метода getIsPlaced: указан неверный индекс" << std::endl;
 		return false;
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	}
 	return isPlaced[i][j];
 }

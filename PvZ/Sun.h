@@ -6,6 +6,7 @@
 class Sun:public GameObject
 {
 private:
+	sf::Color color; // Ќ добавил, потому что больше не наследуем
 	static int collected_sun;
 	int velocity_x = 100;
 	double velocity_y;
@@ -24,8 +25,8 @@ public:
 	~Sun();
 	void move(double dt);
 	void draw(sf::RenderWindow& win);
-	void update(double dt, sf::RenderWindow& win)override;
-	void ReceiveMsg(Message* msg)override;
+	void update(double dt, sf::RenderWindow& win) override;
+	void receiveMsg(Message* msg) override;
 	void CollisionWithCursor(sf::RenderWindow& win);
 	void TextureCollisionWithCursor(sf::RenderWindow& win, double dt);
 };

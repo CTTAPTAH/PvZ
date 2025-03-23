@@ -1,7 +1,12 @@
 #include "Sunflower.h"
 
 Sunflower::Sunflower(int index_line_, TypeObject type_, int pos_x, int pos_y)
-	:GameObject(index_line_, type_)
+	:GameObject(Animation(),
+		{pos_x, pos_y, 100, 100},
+		3,
+		index_line_,
+		type_
+	)
 {
 	rect.left = pos_x; rect.top = pos_y+25;
 	rect.height = 50; rect.width = 50;
@@ -11,7 +16,10 @@ Sunflower::Sunflower(int index_line_, TypeObject type_, int pos_x, int pos_y)
 	hp = 3;
 
 	time_to_reaper_sun = 10;
-	animation.setTexture(Manager::GetBorn()->GetTexture("sunflower"));
+	//time_to_reaper_sun = 10;
+	time_to_reaper_sun = 5;
+	animation.setTexture(LoadTexture::getBorn().getTexture("sunflower"));// Добавил Н
+	animation.setPosition(float(pos_x), float(pos_y)); // Добавил Н
 }
 Sunflower::Sunflower()
 {
@@ -21,13 +29,13 @@ Sunflower::Sunflower()
 	time_to_reaper_sun = 10;
 	idx_line = -1;
 	type = TypeObject::PLANT;
-	animation.setTexture(Manager::GetBorn()->GetTexture("sunflower"));
+	animation.setTexture(LoadTexture::getBorn().getTexture("sunflower")); // Добавил Н
 }
 Sunflower::~Sunflower(){}
 
 void Sunflower::dropsun(double dt)
 {
-	Manager* MGR = Manager::GetBorn();
+	Manager* MGR = Manager::getBorn();
 
 	current_time += dt;
 
@@ -54,9 +62,9 @@ void Sunflower::draw(sf::RenderWindow& win)
 	animation.draw(win);
 }
 
-void Sunflower::ReceiveMsg(Message* msg)
+void Sunflower::receiveMsg(Message* msg)
 {
-	Manager* MGR = Manager::GetBorn();
+	Manager* MGR = Manager::getBorn();
 
 	if (msg->type == TypeMsg::DAMAGE && this == msg->damage.who_receive) {
 		hp -= msg->damage.damage;

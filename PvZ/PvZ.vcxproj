@@ -138,11 +138,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Car.cpp" />
-=======
     <ClCompile Include="Config.cpp" />
->>>>>>> Добавлено:
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -157,24 +154,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-<<<<<<< HEAD
     <ClInclude Include="Car.h" />
-=======
     <ClInclude Include="Config.h" />
->>>>>>> Добавлено:
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Peashooter.h" />
-<<<<<<< HEAD
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Sunflower.h" />
-=======
     <ClInclude Include="PeaProjectile.h" />
->>>>>>> Добавлено:
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>

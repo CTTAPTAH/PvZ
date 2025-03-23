@@ -2,18 +2,6 @@
 
 Manager* Manager::born = nullptr;
 
-<<<<<<< HEAD
-Manager::Manager() : game_objects(), message(), loader(new LoadTexture) {
-	win_wid = 800; win_hei = 600;
-	born = nullptr;
-	map = nullptr;
-	textures = loader->GetTexturesList();
-	//textures = loader->GetTexturesList();
-	Texture.plant;
-	Texture.zombie;
-
-	Font.newRoman;
-=======
 // конструкторы, деструкторы
 Manager::Manager() : game_objects(), messages() {
 	win_wid = Config::WIN_WIDTH; win_hei = Config::WIN_HEIGHT;
@@ -21,7 +9,6 @@ Manager::Manager() : game_objects(), messages() {
 	for (int i = 0; i < Config::AMOUNT_LINES_MAP; i++) {
 		zombie_on_line[i] = 0;
 	}
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 }
 Manager::~Manager() {
 	for (auto& obj : game_objects) {
@@ -38,32 +25,7 @@ Manager::~Manager() {
 	born = nullptr;
 }
 
-<<<<<<< HEAD
-Manager* Manager::GetBorn() {
-	if (!born) born = new Manager;
-	return born;
-}
-//bool Manager::addTexture(const std::string& name, const std::string& filename)
-//{
-//	sf::Texture texture;
-//
-//	if (!LoadTexture::loadFromFile(texture, filename)) {
-//		return false; // Ошибка загрузки текстуры
-//	}
-//
-//	textures[name] = std::move(texture); // перемещаем, а не копируем.
-//	// У sf::Texture нет конструктора копирования
-//
-//	return true;
-//}
-sf::Texture* Manager::GetTexture(const std::string& name) {
-	auto it = textures.find(name);
-	return (it != textures.end()) ? &it->second : nullptr;
-}
-
-=======
 // методы
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 void Manager::addMessage(Message msg) {
 	messages.push_back(new Message(msg)); // Создаём копию сообщения в куче
 }
@@ -163,32 +125,22 @@ int Manager::getWinWidth()
 {
 	return win_wid;
 }
-<<<<<<< HEAD
-//void Manager::LoadTextures()
-//{
-//	if (loader) {
-//		textures = loader->GetTexturesList();
-//	}
-//}
-std::list<GameObject*> Manager::getListObject() {
-=======
 int Manager::getWinHeight()
 {
 	return win_hei;
 }
 std::list<GameObject*> Manager::getListObject() const {
->>>>>>> Р”РѕР±Р°РІР»РµРЅРѕ:
 	return game_objects;
 }
 //Функция для создания списка ректов исключительно зомби
 std::vector<sf::IntRect> Manager::getZombieRects() const {
-    std::vector<sf::IntRect> zombieRects;
-    for (auto obj : game_objects) {
-        if (obj->getType() == TypeObject::ZOMBIE) {
-            zombieRects.push_back(obj->getRect());
-        }
-    }
-    return zombieRects;
+	std::vector<sf::IntRect> zombieRects;
+	for (auto obj : game_objects) {
+		if (obj->getType() == TypeObject::ZOMBIE) {
+			zombieRects.push_back(obj->getRect());
+		}
+	}
+	return zombieRects;
 }
 int Manager::getZombieOnLine(int idx_line) const
 {

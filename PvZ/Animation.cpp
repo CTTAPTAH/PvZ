@@ -1,7 +1,8 @@
 #include "Animation.h"
 
 // конструкторы, деструкторы
-Animation::Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime_, sf::Vector2i position) : sprite()
+Animation::Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime_, sf::Vector2i position)
+	: sprite()
 {
 	texture = texture_;
 	if (texture) { // Проверяем, загружена ли текстура

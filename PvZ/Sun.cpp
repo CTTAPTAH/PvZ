@@ -17,13 +17,18 @@ void normolize(sf::Vector2f& vector) {
 
 int Sun::collected_sun = 0;
 
-sf::Texture* Sun::texture = Manager::GetBorn()->GetTexture("sun");
+//sf::Texture* Sun::texture = LoadTexture::getBorn().getTexture("sun");
 Sun::Sun(int pos_x, int pos_y, int index_line_)
 {
 	//texture = Manager::GetBorn()->GetTexture("sun");
-	sprite.setTexture(*texture);
+	//sprite.setTexture(*texture);
+	animation.setTexture(LoadTexture::getBorn().getTexture("sun"));
+
 	rect.left = pos_x;rect.top = pos_y;
 	rect.width = 50; rect.height = 50;
+
+	animation.setPosition(rect.left, rect.top);
+
 	idx_line = index_line_;
 	start_pos_y = pos_y;
 
@@ -63,14 +68,16 @@ void Sun::move(double dt)
 		velocity_y = 0;
 	}
 
+	animation.setPosition(float(rect.left), float(rect.top)); // Добавил Н
 }
 
 void Sun::draw(sf::RenderWindow& win)
 {
-	if (texture) {
-		sprite.setPosition(rect.left, rect.top);
-		win.draw(sprite);
-	}
+	//if (texture) {
+	//	sprite.setPosition(rect.left, rect.top);
+	//	win.draw(sprite);
+	//}
+	animation.draw(win); // Добавил Н
 }
 
 void Sun::update(double dt, sf::RenderWindow& win)
@@ -82,14 +89,13 @@ void Sun::update(double dt, sf::RenderWindow& win)
 	TextureCollisionWithCursor(win, dt);
 }
 
-void Sun::ReceiveMsg(Message* msg)
+void Sun::receiveMsg(Message* msg)
 {
-	
 }
 
 void Sun::CollisionWithCursor(sf::RenderWindow& win)
 {
-	Manager* MGR = Manager::GetBorn();
+	Manager* MGR = Manager::getBorn();
 
 	sf::Vector2i cursor_position = sf::Mouse::getPosition(win);
 
@@ -113,7 +119,7 @@ void Sun::CollisionWithCursor(sf::RenderWindow& win)
 
 void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 
-	Manager* MGR = Manager::GetBorn();
+	Manager* MGR = Manager::getBorn();
 
 	sf::Vector2i cursor_position = sf::Mouse::getPosition(win);
 
@@ -134,7 +140,7 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 		touch = true;
 	}
 
-	if (rect.left >= win_width || rect.top <= -40) {
+	if (rect.left >= MGR->getWinWidth() || rect.top <= -40) {
 
 		collected_sun += 1;
 		std::cout << collected_sun << std::endl;
