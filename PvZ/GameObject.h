@@ -4,7 +4,7 @@
 class Message;
 
 enum class TypeObject {
-	PLANT, ZOMBIE, PROJECTILE, UNDEFINED
+	PLANT, ZOMBIE, PROJECTILE, UNDEFINED, PEASHOOTER, SUNFLOWER
 };
 
 class GameObject

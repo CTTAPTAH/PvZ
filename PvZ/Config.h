@@ -1,4 +1,5 @@
 #pragma once
+
 class Config
 {
 public:
@@ -7,6 +8,22 @@ public:
 	// т.к. размеры окна могут меняться
 	static constexpr int WIN_WIDTH = 1399;
 	static constexpr int WIN_HEIGHT = 600;
+
+	// Игрок
+	static constexpr int PLANT_COUNT = 5;
+
+	// Интерфейс
+	static constexpr int FRAME_ICON_OFFSET_X = -4;
+	static constexpr int FRAME_ICON_OFFSET_Y = -1;
+	static constexpr int ICON_OFFSET_X = 15;
+	static constexpr int ICON_OFFSET_Y = 0;
+	static constexpr int ICON_SPACING = 5;
+
+	static constexpr int BOARD_POS_X = 150;
+	static constexpr int BOARD_POS_Y = 0;
+
+	static constexpr int SHOVEL_POS_X = 333;
+	static constexpr int SHOVEL_POS_Y = 0;
 
 	// Карта
 	// Количество линий на карте

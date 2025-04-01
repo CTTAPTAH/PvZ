@@ -17,7 +17,7 @@ Sunflower::Sunflower(int index_line_, TypeObject type_, int pos_x, int pos_y)
 
 	time_to_reaper_sun = 10;
 	//time_to_reaper_sun = 10;
-	time_to_reaper_sun = 5;
+	time_to_reaper_sun = 500;
 	animation.setTexture(LoadTexture::getBorn().getTexture("sunflower"));// Добавил Н
 	animation.setPosition(float(pos_x), float(pos_y)); // Добавил Н
 }

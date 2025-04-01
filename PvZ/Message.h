@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 enum class TypeMsg { 
-	UNDEFINED, DAMAGE, DEATH, CREATE, MOVE };
+	UNDEFINED, DAMAGE, DEATH, CREATE, MOVE, ADD_PLANT };
 class Message
 {
 public:
@@ -22,6 +22,11 @@ public:
 		struct {
 			sf::IntRect old_pos; // возможно будет не IntRect
 		} move;
+		struct {
+			sf::Vector2f mousePos;
+			TypeObject type;
+			int cost;
+		} add_plant;
 
 	};
 	Message();

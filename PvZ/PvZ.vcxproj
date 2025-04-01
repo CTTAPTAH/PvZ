@@ -147,9 +147,11 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Peashooter.cpp" />
     <ClCompile Include="PeaProjectile.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PvZ.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Sunflower.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,10 +164,11 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Peashooter.h" />
-    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Sunflower.h" />
     <ClInclude Include="PeaProjectile.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,6 @@ Peashooter::Peashooter(sf::Vector2i pos, int idx_line_)
     time_reload(Config::PEASHOOTER_TIME_RELOAD),
     reload(0)
 {
-    animation.setPosition(rect.left, rect.top);
 }
 
 // методы
@@ -58,13 +57,17 @@ void Peashooter::isShooting(double dt)
             Message msg;
             msg.type = TypeMsg::CREATE;
 
-            sf::IntRect rect_projectile(
+            sf::Vector2i vect_projectile(
                 rect.left + Config::PEASHOOTER_PROJECTILE_OFFSET_X,
-                rect.top + Config::PEASHOOTER_PROJECTILE_OFFSET_Y,
-                Config::PEA_PROJECTILE_FRAME_WIDTH,
-                Config::PEA_PROJECTILE_FRAME_HEIGHT
+                rect.top + Config::PEASHOOTER_PROJECTILE_OFFSET_Y
             );
-            msg.create.new_object = new PeaProjectile(rect_projectile, idx_line, damage);
+            msg.create.new_object = new PeaProjectile(
+                { rect.left + Config::PEASHOOTER_PROJECTILE_OFFSET_X,
+                rect.top + Config::PEASHOOTER_PROJECTILE_OFFSET_Y
+                },
+                idx_line,
+                damage
+            );
             manager->addMessage(msg);
         }
     }

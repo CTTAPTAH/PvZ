@@ -20,6 +20,9 @@ Message::Message(const Message& msg) {
     case TypeMsg::MOVE:
         move = msg.move;
         break;
+    case TypeMsg::ADD_PLANT:
+        add_plant = msg.add_plant;
+        break;
     default:
         // чтобы убрать предупреждени€ компил€тора о инициализации
         memset(&damage, 0, sizeof(damage)); // «аполн€ем нул€ми

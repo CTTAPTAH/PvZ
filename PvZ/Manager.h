@@ -1,9 +1,12 @@
 #pragma once
+#include "Player.h"
+#include "UIManager.h"
 #include "Config.h"
 #include "Message.h"
 #include "Map.h"
 #include "LoadTexture.h"
 #include "Peashooter.h"
+#include "Sunflower.h"
 #include <list>
 
 class Manager
@@ -12,6 +15,7 @@ private:
 	int win_wid;
 	int win_hei;
 	static Manager* born;
+	Map map;
 	std::list<GameObject*> game_objects;
 	std::list<Message*> messages;
 	int zombie_on_line[Config::AMOUNT_LINES_MAP];
@@ -36,8 +40,9 @@ public:
 
 	// геттеры, сеттеры
 	static Manager* getBorn();
-	int getWinWidth();
-	int getWinHeight();
+	Map& getMap();
+	int getWinWidth() const;
+	int getWinHeight() const;
 	std::list<GameObject*> getListObject() const;
 	std::vector<sf::IntRect> getZombieRects() const;
 	int getZombieOnLine(int idx_line) const;

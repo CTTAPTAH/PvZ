@@ -31,13 +31,6 @@ void Map::resizeGrid(sf::IntRect rect_map)
 
 	//sprite.setTextureRect(rect);
 }
-bool Map::isValidIndex(int i, int j) const
-{
-	if (i < 0 or i >= amount_field_h or j < 0 or j >= amount_field_w) {
-		return false;
-	}
-	return true;
-}
 
 void Map::drawMap(sf::RenderWindow& win) const
 {
@@ -57,15 +50,67 @@ void Map::clear()
 {
 	memset(isPlaced, false, sizeof(isPlaced));
 }
+bool Map::isValidIndex(int row, int col) const
+{
+	if (row < 0 or row >= amount_field_h or col < 0 or col >= amount_field_w) {
+		return false;
+	}
+	return true;
+}
+bool Map::isValidIndex(sf::Vector2i vect) const
+{
+	return isValidIndex(vect.x, vect.y);
+}
+void Map::receiveMsg(Message* msg)
+{
+	if (msg->type == TypeMsg::ADD_PLANT) {
+		sf::Vector2i mousePos(int(msg->add_plant.mousePos.x), int(msg->add_plant.mousePos.y));
+		sf::Vector2i idxPlant = getFieldIdx(mousePos);
+
+		// Мышку тыкнули на карту или нет. Занята ли ячейка
+		if ((idxPlant.y < 0 or idxPlant.y >= amount_field_w) or
+			(idxPlant.x < 0 or idxPlant.x >= amount_field_h)
+			or getIsPlaced(idxPlant.x, idxPlant.y)) {
+			return;
+		}
+
+		Manager* mng = Manager::getBorn();
+		Message new_msg;
+		new_msg.type = TypeMsg::CREATE;
+
+		if (msg->add_plant.type == TypeObject::PEASHOOTER) {
+			Peashooter* pea = new Peashooter(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
+			new_msg.create.new_object = pea;
+		}
+		else if (msg->add_plant.type == TypeObject::SUNFLOWER) {
+			Sunflower* sunflower = new Sunflower(idxPlant.x,
+				TypeObject::PLANT,
+				getFieldPosition(idxPlant.x, idxPlant.y).x,
+				getFieldPosition(idxPlant.x, idxPlant.y).y);
+			new_msg.create.new_object = sunflower;
+		}
+		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
+
+		}
+		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
+
+		}
+		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
+
+		}
+		mng->addMessage(new_msg);
+		setIsPlaced(idxPlant.x, idxPlant.y, true);
+	}
+}
 
 // геттеры, сеттеры
-bool Map::getIsPlaced(int i, int j) const
+bool Map::getIsPlaced(int row, int col) const
 {
-	if (!isValidIndex(i, j)) {
+	if (!isValidIndex(row, col)) {
 		std::cout << "Ошибка класса map, метода getIsPlaced: указан неверный индекс" << std::endl;
 		return false;
 	}
-	return isPlaced[i][j];
+	return isPlaced[row][col];
 }
 int Map::getFieldWidth() const
 {
@@ -79,9 +124,29 @@ sf::Vector2i Map::getFieldPosition(int i, int j) const
 {
 	if (!isValidIndex(i, j)) {
 		std::cout << "Ошибка класса map, метода getFieldPosition: указан неверный индекс" << std::endl;
-		return { -1, -1 };
+		return { 0, 0 };
 	}
 	return { rect.left + j * field_width, rect.top + i * field_height };
+}
+sf::Vector2i Map::getFieldPosition(sf::Vector2i vect) const
+{
+	return getFieldPosition(vect.x, vect.y);
+}
+sf::Vector2i Map::getFieldIdx(sf::Vector2i point) const {
+	// Проверяем, находится ли точка внутри границ карты
+	if (!rect.contains(point)) {
+		return sf::Vector2i(-1, -1); // Точка вне карты
+	}
+
+	// Вычисляем индексы ячейки
+	int col = (point.x - rect.left) / field_width;
+	int row = (point.y - rect.top) / field_height;
+
+	return sf::Vector2i(row, col);
+}
+sf::IntRect Map::getRect() const
+{
+	return rect;
 }
 void Map::setRectMap(sf::IntRect rect_map)
 {
@@ -91,4 +156,13 @@ void Map::setTexture(sf::Texture* texture_)
 {
 	texture = texture_;
 	if (texture) sprite.setTexture(*texture);
+}
+void Map::setIsPlaced(int row, int col, bool isPlaced_)
+{
+	if (!isValidIndex(row, col)) {
+		std::cout << "Ошибка класса map, метода setIsPlaced: указан неверный индекс" << std::endl;
+		return;
+	}
+
+	isPlaced[row][col] = isPlaced_;
 }

@@ -21,8 +21,6 @@ struct Dt
 	double dt = 0;
 
 };
-int win_width = Config::WIN_WIDTH, win_height = Config::WIN_HEIGHT;
-//int w_cell = win_width / 9, h_cell = win_height / 5;// в конфиг
 Dt fps;
 
 void FPS()
@@ -52,7 +50,7 @@ int main()
 	}
 	else {
 		music.setLoop(true);
-		music.setVolume(40);
+		music.setVolume(0);
 		music.play();
 	}
 
@@ -63,49 +61,67 @@ int main()
 		return 0;
 	}
 	zombies_are_comming.setBuffer(bufer);
-	zombies_are_comming.setVolume(80);
+	zombies_are_comming.setVolume(0);
 	bool sound_played = false;
 
-	Manager* mng = Manager::getBorn();
 	LoadTexture& loader = LoadTexture::getBorn();
 	loader.loadAllTexture();
+	Manager* mng = Manager::getBorn();
 
-	Map map({ 258, 81, 732, 493 });
+	//Map map({ 258, 81, 732, 493 });
 
-	RenderWindow win(VideoMode(win_width, win_height), "PVZ");
+	RenderWindow win(VideoMode(mng->getWinWidth(), mng->getWinHeight()), "PVZ");
 
-	// создание машин
-	for (int i = 0; i < 5; i++) {
-		Car * car = new Car(i, TypeObject::UNDEFINED, map.getFieldWidth(), map.getFieldHeight());
-		Message msg;
-		msg.type = TypeMsg::CREATE;
-		msg.create.new_object = car;
-		mng->addMessage(msg);
-	}
+	//// создание машин
+	//for (int i = 0; i < 5; i++) {
+	//	Manager* mng = Manager::getBorn();
+	//	Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
+	//	Message msg;
+	//	msg.type = TypeMsg::CREATE;
+	//	msg.create.new_object = car;
+	//	mng->addMessage(msg);
+	//}
 
-	// создание подсолнуха
-	for (int i = 0; i < 5; i++) {
-		Vector2i pos = map.getFieldPosition(i, 0);
-		Sunflower* sun_flower = new Sunflower(
-			i,
-			TypeObject::PLANT,
-			pos.x,
-			pos.y
-		);
-		Message msg;
-		msg.type = TypeMsg::CREATE;
-		msg.create.new_object = sun_flower;
-		mng->addMessage(msg);
-	}
+	//// создание подсолнуха
+	//for (int i = 0; i < 5; i++) {
+	//	Vector2i pos = mng->getMap().getFieldPosition(i, 0);
+	//	Sunflower* sun_flower = new Sunflower(
+	//		i,
+	//		TypeObject::PLANT,
+	//		pos.x,
+	//		pos.y
+	//	);
+	//	Message msg;
+	//	msg.type = TypeMsg::CREATE;
+	//	msg.create.new_object = sun_flower;
+	//	mng->addMessage(msg);
+	//}
 
-	// Создание гороха
-	for (int i = 0; i < 5; i++) {
-		Peashooter* pea = new Peashooter(map.getFieldPosition(i, 1), i);
-		Message msg;
-		msg.type = TypeMsg::CREATE;
-		msg.create.new_object = pea;
-		mng->addMessage(msg);
-	}
+	//// Создание гороха
+	//for (int i = 0; i < 5; i++) {
+	//	Peashooter* pea = new Peashooter(mng->getMap().getFieldPosition(i, 1), i);
+	//	Message msg;
+	//	msg.type = TypeMsg::CREATE;
+	//	msg.create.new_object = pea;
+	//	mng->addMessage(msg);
+	//}
+
+	// создание интерфейса
+	vector<PlantInfo> plant_slots;
+	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeObject::PEASHOOTER);
+	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeObject::SUNFLOWER);
+	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeObject::UNDEFINED);
+	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeObject::UNDEFINED);
+	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeObject::UNDEFINED);
+	plant_slots.push_back(pea_info);
+	plant_slots.push_back(sunflower_info);
+	plant_slots.push_back(wallnut_info);
+	plant_slots.push_back(snow_pea_info);
+	plant_slots.push_back(cabbage_info);
+
+	Player player(plant_slots);
+	UIManager ui;
+	ui.createPlantSelection(plant_slots);
 
 	const double set_time = 3;
 	double timer = set_time;
@@ -119,6 +135,18 @@ int main()
 		while (win.pollEvent(ev)) {
 			if (ev.type == Event::Closed)
 				win.close();
+			if (ev.type == sf::Event::MouseButtonPressed) {
+				if (ev.mouseButton.button == sf::Mouse::Left) {
+					sf::Vector2f mousePos = win.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
+					ui.handleMousePress(mousePos);
+				}
+			}
+			if (ev.type == sf::Event::MouseButtonReleased) {
+				if (ev.mouseButton.button == sf::Mouse::Left) {
+					sf::Vector2f mousePos = win.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
+					ui.handleMouseRelease(mousePos);
+				}
+			}
 		}
 
 		music_timer -= fps.dt;
@@ -128,11 +156,11 @@ int main()
 		}
 
 		// Спавнер зомби
-		timer -= fps.dt;
+		timer += fps.dt;
 		if (timer <= 0) {
 			timer = Random(0, (int)set_time);
-			int w_cell = map.getFieldWidth();
-			int h_cell = map.getFieldHeight();
+			int w_cell = mng->getMap().getFieldWidth();
+			int h_cell = mng->getMap().getFieldHeight();
 			Zombie* zombie = new Zombie(Random(0, 4), TypeObject::ZOMBIE, w_cell, h_cell);
 			Message zombie_msg;
 			zombie_msg.type = TypeMsg::CREATE;
@@ -141,10 +169,11 @@ int main()
 		}
 
 		win.clear();
-		map.drawMap(win); // сначала рисуем карту
+		mng->getMap().drawMap(win); // сначала рисуем карту
 
 		mng->updateMessage(fps.dt); // обрабатываем сообщения
 		mng->updateObject(fps.dt, win); // объекты действуют и рисуются (можно разделить на действие и рисование)
+		ui.draw(win);
 
 		win.display();
 	}

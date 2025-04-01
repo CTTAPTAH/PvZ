@@ -3,24 +3,26 @@
 // конструкторы, деструкторы
 PeaProjectile::PeaProjectile()
 	: PeaProjectile(
-		{0, 0, Config::PEA_PROJECTILE_FRAME_WIDTH, Config::PEA_PROJECTILE_FRAME_HEIGHT },
+		{ 0, 0 },
 		0,
 		0)
 {
 	
 }
-PeaProjectile::PeaProjectile(sf::IntRect rect_, int idx_line_, double damage_)
+PeaProjectile::PeaProjectile(sf::Vector2i vect, int idx_line_, double damage_)
 	: GameObject(
 		Animation(LoadTexture::getBorn().getTexture("pea_projectile"),
 			Config::PEA_PROJECTILE_FRAME_WIDTH,
 			Config::PEA_PROJECTILE_FRAME_HEIGHT,
 			Config::PEA_PROJECTILE_COUNT_FRAME,
 			Config::PEA_PROJECTILE_FRAMETIME,
-			{ rect_.left, rect_.top }),
-		rect_,
+			vect
+		),
+		{ vect.x, vect.y, Config::PEA_PROJECTILE_FRAME_WIDTH, Config::PEA_PROJECTILE_FRAME_HEIGHT },
 		Config::PEA_PROJECTILE_HP,
 		idx_line_,
-		TypeObject::PROJECTILE),
+		TypeObject::PROJECTILE
+	),
 	speed(Config::PEA_PROJECTILE_SPEED),
 	damage(damage_),
 	is_dead(false)

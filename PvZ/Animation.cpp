@@ -2,41 +2,48 @@
 
 // конструкторы, деструкторы
 Animation::Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime_, sf::Vector2i position)
-	: sprite()
+	: sprite(),
+	texture(texture_),
+	frame_width(frame_width_),
+	frame_height(frame_height_),
+	cur_frame(0),
+	count_frame(count_frame_),
+	frametime(frametime_),
+	timer(0)
 {
-	texture = texture_;
 	if (texture) { // ѕровер€ем, загружена ли текстура
 		sprite.setTexture(*texture);
-		sprite.setPosition(position.x, position.y); // ”станавливаем позицию спрайта
+		sprite.setPosition(position.x, position.y); // ”станавливаем позицию спрайта;
+		sprite.setTextureRect(sf::IntRect(0, 0, frame_width, frame_height));
 	}
-	frame_width = frame_width_;
-	frame_height = frame_height_;
-	cur_frame = 0;
-	count_frame = count_frame_;
-	frametime = frametime_;
-	timer = 0;
 }
-Animation::Animation(sf::Texture* texture_) : sprite()
+Animation::Animation(sf::Texture* texture_) // лучше не использовать. ћожно только ради быстроты написани€ кода
+	: sprite(),
+	texture(texture_),
+	frame_width(100),
+	frame_height(100),
+	cur_frame(0),
+	count_frame(5),
+	frametime(0.085),
+	timer(0)
 {
-	texture = texture_;
 	if (texture) { // ѕровер€ем, загружена ли текстура
 		sprite.setTexture(*texture);
 		sprite.setPosition(0, 0); // ”станавливаем позицию спрайта
+		sprite.setTextureRect(sf::IntRect(0, 0, frame_width, frame_height));
 	}
-	frame_width = frame_height = 100;
-	cur_frame = 0;
-	count_frame = 36;
-	frametime = 0.085;
-	timer = 0;
 }
-Animation::Animation() : sprite()
+Animation::Animation()
+	: sprite(),
+	texture(nullptr),
+	frame_width(100),
+	frame_height(100),
+	cur_frame(0),
+	count_frame(1),
+	frametime(0.085),
+	timer(0)
 {
-	texture = nullptr;
-	frame_width = frame_height = 100;
-	cur_frame = 0;
-	count_frame = 28;// адров 36 но спрайт кривой, надо придумать как поправить
-	frametime = 0.055;
-	timer = 0;
+	sprite.setTextureRect(sf::IntRect(0, 0, frame_width, frame_height));
 }
 Animation::Animation(const Animation& other)
 {

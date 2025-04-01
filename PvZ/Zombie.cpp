@@ -26,7 +26,7 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 	color = { 255,255,255,255 };
 	velocity_x = 100;
 	current_index = count;
-	hp = 100;
+	hp = 1;
 	count++;
 
 	// увеличиваем количество зомби на указанной линии
@@ -41,7 +41,7 @@ Zombie::Zombie(int _index_line, TypeObject _type,
 
 Zombie::~Zombie()
 {
-	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
+	//std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
 
 	// уменьшаем количество зомби на указанной линии
 	Manager* mng = Manager::getBorn();

@@ -13,7 +13,7 @@ private:
 public:
 	// конструкторы, деструкторы
 	PeaProjectile();
-	PeaProjectile(sf::IntRect rect_, int idx_line_, double damage);
+	PeaProjectile(sf::Vector2i vect, int idx_line_, double damage);
 	~PeaProjectile() = default;
 
 	// методы

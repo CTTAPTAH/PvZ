@@ -3,7 +3,11 @@
 Manager* Manager::born = nullptr;
 
 // конструкторы, деструкторы
-Manager::Manager() : game_objects(), messages() {
+Manager::Manager()
+	: game_objects(),
+	messages(),
+	map({ 258, 81, 732, 493 })
+{
 	win_wid = Config::WIN_WIDTH; win_hei = Config::WIN_HEIGHT;
 	born = nullptr;
 	for (int i = 0; i < Config::AMOUNT_LINES_MAP; i++) {
@@ -28,6 +32,7 @@ Manager::~Manager() {
 // методы
 void Manager::addMessage(Message msg) {
 	messages.push_back(new Message(msg)); // Создаём копию сообщения в куче
+
 }
 void Manager::updateMessage(double dt) {
 	for (auto& msg : messages) {
@@ -47,6 +52,11 @@ void Manager::updateMessage(double dt) {
 			for (auto obj : game_objects) {
 				obj->receiveMsg(msg);
 			}
+		}
+
+		// сообщение для map
+		if (msg->type == TypeMsg::ADD_PLANT) {
+			map.receiveMsg(msg);
 		}
 	}
 	messages.clear();
@@ -121,11 +131,15 @@ Manager* Manager::getBorn() {
 	if (!born) born = new Manager;
 	return born;
 }
-int Manager::getWinWidth()
+Map& Manager::getMap()
+{
+	return map;
+}
+int Manager::getWinWidth() const
 {
 	return win_wid;
 }
-int Manager::getWinHeight()
+int Manager::getWinHeight() const
 {
 	return win_hei;
 }
