@@ -3,10 +3,15 @@
 #include "GameObject.h"
 #include "Manager.h"
 #include <cmath>
-class Sun:public GameObject
+
+#define IDLE_SUN 0
+#define MOVE_SUN 1
+
+class Sun :public GameObject
 {
 private:
-	sf::Color color; // Ќ добавил, потому что больше не наследуем
+
+	int current_motion = MOVE_SUN;
 	static int collected_sun;
 	int velocity_x = 100;
 	double velocity_y;
@@ -23,7 +28,7 @@ public:
 	Sun(int pos_x, int pos_y, int index_line_);
 	Sun();
 	~Sun();
-	void move(double dt);
+	void move_from_sunflower(double dt);
 	void draw(sf::RenderWindow& win);
 	void update(double dt, sf::RenderWindow& win) override;
 	void receiveMsg(Message* msg) override;

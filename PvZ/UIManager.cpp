@@ -52,6 +52,9 @@ void UIManager::draw(sf::RenderWindow& win)
 		Map map = mng->getMap();
 		sf::Vector2i cursor_position = sf::Mouse::getPosition(win);
 		sf::Vector2i idx_field = map.getFieldIdx(cursor_position);
+		if (map.getIsPlaced(idx_field.x, idx_field.y)) {
+			return;
+		}
 		if (!map.isValidIndex(idx_field)) { // курсор вне карты
 			return;
 		}

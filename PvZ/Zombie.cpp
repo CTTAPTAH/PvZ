@@ -1,47 +1,42 @@
 #include "Zombie.h"
-#define DEFAULT_ZOMBIE_SPEED 100
+
 #define IDLE_ZOMBIE_SPEED 0
 
 int Zombie::count = 0;
 
-//sf::Texture* Zombie::texture = Manager::GetBorn()->GetTexture("zombie");
-sf::Texture* Zombie::texture = LoadTexture::getBorn().getTexture("zombie");
-
 Zombie::Zombie() {}
 
-Zombie::Zombie(int _index_line, TypeObject _type,
-	int w_cell, int h_cell) :
-	GameObject()
+Zombie::Zombie(int _index_line) :
+	GameObject(
+		Animation(
+			LoadTexture::getBorn().getTexture("zombie"),
+			Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT,
+			Config::ZOMBIE_FRAME_COUNT,
+			Config::ZOMBIE_FRAME_TIME,
+			{ Config::WIN_WIDTH + Config::W_CELL * 2, (_index_line * Config::H_CELL) + (Config::H_CELL / 2) - (rect.height) }
+		),
+		{ Config::WIN_WIDTH + Config::W_CELL * 2, (_index_line * Config::H_CELL) + (Config::H_CELL / 2) - (rect.height), Config::ZOMBIE_FRAME_WIDTH, Config::ZOMBIE_FRAME_HEIGHT },
+		Config::DEFAULT_ZOMBIE_HP,
+		_index_line,
+		TypeObject::ZOMBIE
+	),
+	velocity_x(Config::DEFAULT_ZOMBIE_SPEED),
+	damage(Config::DEFAULT_ZOMBIE_DAMAGE),
+	reload(Config::DEFAULT_ZOMBIE_RELOAD),
+	time_reload(Config::DEFAULT_ZOMBIE_TIME_RELOAD),
+	victim(nullptr),
+	current_index(count + 1)
 {
-	//sprite.setTexture(*texture);
-	//if (!texture) { std::cout << "nooo"; }
-	idx_line = _index_line;
-	type = _type;
-	rect.width = 50;
-	rect.height = 50;
-	rect.left = (732 + 258 + w_cell) - w_cell / 2 - rect.width/2;
-	// Было: rect.left = 800 - w_cell / 2 - rect.width/2;
-	rect.top = (_index_line * h_cell) + (h_cell / 2) + (rect.height);
-	// Было: rect.top = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
-	color = { 255,255,255,255 };
-	velocity_x = 100;
-	current_index = count;
-	hp = 1;
-	count++;
+	std::cout << "Zombie number " << current_index << " cr" << std::endl;
 
-	// увеличиваем количество зомби на указанной линии
-	Manager* mng = Manager::getBorn();
-	mng->addZombieOnLine(_index_line);
-	// добавил Н
-	victim = nullptr;
-	//Убрал pos!!!
-	//pos.x = 800 - w_cell / 2 - rect.width / 2;
-	//pos.y = (_index_line * h_cell) + (h_cell / 2) - (rect.height);
+	Manager::getBorn()->addZombieOnLine(_index_line);
+	count++;
 }
 
 Zombie::~Zombie()
 {
-	//std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
+	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
 
 	// уменьшаем количество зомби на указанной линии
 	Manager* mng = Manager::getBorn();
@@ -52,6 +47,7 @@ void Zombie::move(double dt)
 {
 	if (!victim) { // добавил условие
 		rect.left -= velocity_x * dt;
+		animation.setPosition(rect.left, rect.top);
 	}
 
 	//std::cout << "Zombie moving, position x: " <<dt << "\n";
@@ -64,11 +60,13 @@ void Zombie::draw(sf::RenderWindow& win)
 	//	sprite.setPosition(rect.left, rect.top);
 	//	win.draw(sprite);
 	//}
-	sf::RectangleShape rectangle;
-	rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-	rectangle.setPosition(rect.left, rect.top);
-	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-	win.draw(rectangle);
+	//sf::RectangleShape rectangle;
+	//rectangle.setSize(sf::Vector2f(rect.width, rect.height));
+	//rectangle.setPosition(rect.left, rect.top);
+	////rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+	//win.draw(rectangle);
+
+	animation.draw(win);
 }
 void Zombie::update(double dt, sf::RenderWindow& win) {
 	//Добавил update
@@ -85,6 +83,11 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 }
 void Zombie::receiveMsg(Message* msg)
 {
+	if (msg->type == TypeMsg::DEATH && msg->death.creature->getType() == TypeObject::PLANT) {
+		if (victim == msg->death.creature) {
+			victim = nullptr;
+		}
+	}
 	if (msg->type == TypeMsg::DAMAGE and
 		this == msg->damage.who_receive) {
 		if (hp > 0) {
@@ -115,14 +118,14 @@ void Zombie::EatingPlants(double dt, GameObject* current_object)
 		int cur_plant_hp = current_object->getHp();
 
 		if (cur_plant_hp <= 0) {
-			velocity_x = DEFAULT_ZOMBIE_SPEED;
+			velocity_x = Config::DEFAULT_ZOMBIE_SPEED;
 			isEating = false;
 			return;
 		}
 
 		reload -= dt;
 
-		velocity_x = IDLE_ZOMBIE_SPEED;
+		velocity_x = Config::DEFAULT_ZOMBIE_IDLE_SPEED;
 
 		if (reload <= 0) {
 			reload = time_reload;
@@ -193,8 +196,8 @@ void Zombie::FindVictimN2(double dt)
 	std::list<GameObject*> objects = mng->getListObject();
 	victim = nullptr;
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PLANT) {
-			if (Collision1() and idx_line == obj->getIdxLine()) {
+		if (obj->getType() == TypeObject::PLANT and !obj->getIsDead()) {
+			if (rect.intersects(obj->getRect()) and idx_line == obj->getIdxLine()) {
 				victim = obj;
 				isEating = true;
 				break;

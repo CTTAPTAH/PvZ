@@ -106,8 +106,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <Filter>Файлы заголовков</Filter>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

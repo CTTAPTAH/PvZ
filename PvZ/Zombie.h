@@ -8,25 +8,21 @@
 class Zombie : public GameObject
 {
 private:
-    sf::Color color;
+
     double velocity_x;
     static int count;
     int current_index;
-    int damage = 1;
-    int time_to_eat_plant;
+    int damage;
     bool isEating = false;
 
     const double time_reload = 1;
     double reload = 0;
 
-    //добавил при создании анмации
     GameObject* victim;
-    static sf::Texture* texture;
-    sf::Sprite sprite;
 
 public:
     Zombie();
-    Zombie(int _index_line, TypeObject _type, int w_cell, int h_cell);
+    Zombie(int _index_line);
     ~Zombie();
 
     //Процессы

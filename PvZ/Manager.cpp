@@ -39,8 +39,10 @@ void Manager::updateMessage(double dt) {
 		// Сообщение для manager
 		if (msg->type == TypeMsg::DEATH) {
 			auto res = std::find(game_objects.begin(), game_objects.end(), msg->death.creature);
-			delete* res; // удаляем сам объект
-			game_objects.erase(res); // удаляем указатель на объект в списке
+			if (res != game_objects.end()) {
+				delete* res; // удаляем сам объект
+				game_objects.erase(res);
+			}// удаляем указатель на объект в списке
 		}
 		else if (msg->type == TypeMsg::CREATE) {
 			game_objects.push_back(msg->create.new_object);

@@ -13,6 +13,7 @@ protected:
 	Animation animation;
 	sf::IntRect rect;
 	int hp;
+	bool isdead = false;
 	int idx_line;
 	TypeObject type;
 public:
@@ -34,5 +35,6 @@ public:
 	sf::IntRect getRect() const;
 	int getHp() const;
 	int getIdxLine() const;
+	bool getIsDead() const;
 	TypeObject getType() const;
 };

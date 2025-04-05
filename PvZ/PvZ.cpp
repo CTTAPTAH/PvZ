@@ -73,16 +73,16 @@ int main()
 	RenderWindow win(VideoMode(mng->getWinWidth(), mng->getWinHeight()), "PVZ");
 
 	//// создание машин
-	//for (int i = 0; i < 5; i++) {
-	//	Manager* mng = Manager::getBorn();
-	//	Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
-	//	Message msg;
-	//	msg.type = TypeMsg::CREATE;
-	//	msg.create.new_object = car;
-	//	mng->addMessage(msg);
-	//}
+	for (int i = 0; i < 5; i++) {
+		Manager* mng = Manager::getBorn();
+		Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
+		Message msg;
+		msg.type = TypeMsg::CREATE;
+		msg.create.new_object = car;
+		mng->addMessage(msg);
+	}
 
-	//// создание подсолнуха
+	// создание подсолнуха
 	//for (int i = 0; i < 5; i++) {
 	//	Vector2i pos = mng->getMap().getFieldPosition(i, 0);
 	//	Sunflower* sun_flower = new Sunflower(
@@ -97,7 +97,7 @@ int main()
 	//	mng->addMessage(msg);
 	//}
 
-	//// Создание гороха
+	// Создание гороха
 	//for (int i = 0; i < 5; i++) {
 	//	Peashooter* pea = new Peashooter(mng->getMap().getFieldPosition(i, 1), i);
 	//	Message msg;
@@ -123,7 +123,7 @@ int main()
 	UIManager ui;
 	ui.createPlantSelection(plant_slots);
 
-	const double set_time = 3;
+	const double set_time = 4;
 	double timer = set_time;
 
 	const double music_set_time = 5;
@@ -149,6 +149,7 @@ int main()
 			}
 		}
 
+
 		music_timer -= fps.dt;
 		if (!sound_played && music_timer <= music_set_time-3.5) {
 			zombies_are_comming.play();
@@ -156,12 +157,10 @@ int main()
 		}
 
 		// Спавнер зомби
-		timer += fps.dt;
+		timer -= fps.dt;
 		if (timer <= 0) {
 			timer = Random(0, (int)set_time);
-			int w_cell = mng->getMap().getFieldWidth();
-			int h_cell = mng->getMap().getFieldHeight();
-			Zombie* zombie = new Zombie(Random(0, 4), TypeObject::ZOMBIE, w_cell, h_cell);
+			Zombie* zombie = new Zombie(Random(0,4));
 			Message zombie_msg;
 			zombie_msg.type = TypeMsg::CREATE;
 			zombie_msg.create.new_object = zombie;

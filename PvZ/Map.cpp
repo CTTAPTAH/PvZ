@@ -83,10 +83,7 @@ void Map::receiveMsg(Message* msg)
 			new_msg.create.new_object = pea;
 		}
 		else if (msg->add_plant.type == TypeObject::SUNFLOWER) {
-			Sunflower* sunflower = new Sunflower(idxPlant.x,
-				TypeObject::PLANT,
-				getFieldPosition(idxPlant.x, idxPlant.y).x,
-				getFieldPosition(idxPlant.x, idxPlant.y).y);
+			Sunflower* sunflower = new Sunflower(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
 			new_msg.create.new_object = sunflower;
 		}
 		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
@@ -107,7 +104,7 @@ void Map::receiveMsg(Message* msg)
 bool Map::getIsPlaced(int row, int col) const
 {
 	if (!isValidIndex(row, col)) {
-		std::cout << "Ошибка класса map, метода getIsPlaced: указан неверный индекс" << std::endl;
+		//std::cout << "Ошибка класса map, метода getIsPlaced: указан неверный индекс" << std::endl;
 		return false;
 	}
 	return isPlaced[row][col];

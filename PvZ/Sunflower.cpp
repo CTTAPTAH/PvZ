@@ -1,37 +1,39 @@
 #include "Sunflower.h"
 
-Sunflower::Sunflower(int index_line_, TypeObject type_, int pos_x, int pos_y)
-	:GameObject(Animation(),
-		{pos_x, pos_y, 100, 100},
-		3,
+Sunflower::Sunflower(sf::Vector2i pos, int index_line_)
+	:GameObject(
+		Animation(
+			LoadTexture::getBorn().getTexture("sunflower"),
+			Config::SUNFLOWER_FRAME_WIDTH,
+			Config::SUNFLOWER_FRAME_HEIGHT,
+			Config::SUNFLOWER_FRAME_COUNT,
+			Config::SUNFLOWER_FRAME_TIME,
+			pos
+		),
+		{ pos.x, pos.y, Config::SUNFLOWER_FRAME_WIDTH, Config::SUNFLOWER_FRAME_HEIGHT },
+		Config::SUNFLOWER_HP,
 		index_line_,
-		type_
-	)
-{
-	rect.left = pos_x; rect.top = pos_y+25;
-	rect.height = 50; rect.width = 50;
-
-	color.r = 0; color.g = 255; color.b = 0; color.a = 255;
-
-	hp = 3;
-
-	time_to_reaper_sun = 10;
-	//time_to_reaper_sun = 10;
-	time_to_reaper_sun = 500;
-	animation.setTexture(LoadTexture::getBorn().getTexture("sunflower"));// Добавил Н
-	animation.setPosition(float(pos_x), float(pos_y)); // Добавил Н
+		TypeObject::PLANT
+	),
+	time_to_reaper_sun(Config::TIME_TO_REAPEAR_SUN)
+{ // Добавил Н
 }
 Sunflower::Sunflower()
 {
-	rect.left = 0; rect.top = 0; rect.height = 50; rect.width = 50;
-	color.r = 0; color.g = 255; color.b = 0; color.a = 255;
-	hp = 3;
-	time_to_reaper_sun = 10;
-	idx_line = -1;
-	type = TypeObject::PLANT;
-	animation.setTexture(LoadTexture::getBorn().getTexture("sunflower")); // Добавил Н
+	//rect.left = 0; rect.top = 0; rect.height = 50; rect.width = 50;
+	////color.r = 0; color.g = 255; color.b = 0; color.a = 255;
+	//hp = 3;
+	//time_to_reaper_sun = 10;
+	//idx_line = -1;
+	//type = TypeObject::PLANT;
+	//animation.setTexture(LoadTexture::getBorn().getTexture("sunflower")); // Добавил Н
 }
-Sunflower::~Sunflower(){}
+Sunflower::~Sunflower() {}
+
+int random(int a, int b)
+{
+	return rand() % (b - a + 1) + a;
+}
 
 void Sunflower::dropsun(double dt)
 {
@@ -42,7 +44,7 @@ void Sunflower::dropsun(double dt)
 	if (current_time >= time_to_reaper_sun) {
 		current_time = 0;
 
-		Sun* sun = new Sun(random(rect.left+rect.width/4.0, rect.left+rect.width/2.0), rect.top + rect.height / 4.0, this->getIdxLine());
+		Sun* sun = new Sun(random(rect.left + rect.width / 4.0, rect.left + rect.width / 2.0), rect.top + rect.height / 4.0, this->getIdxLine());
 
 		Message msg;
 		msg.type = TypeMsg::CREATE;
@@ -69,19 +71,24 @@ void Sunflower::receiveMsg(Message* msg)
 	if (msg->type == TypeMsg::DAMAGE && this == msg->damage.who_receive) {
 		hp -= msg->damage.damage;
 		if (hp <= 0) {
+			isdead = true;
 			Message MSG;
 			MSG.type = TypeMsg::DEATH;
 			MSG.death.creature = this;
 			MGR->addMessage(MSG);
+			sf::Vector2i vect = MGR->getMap().getFieldIdx({ rect.left, rect.top });
+			MGR->getMap().setIsPlaced(vect.x, vect.y, false);
 		}
 	}
 }
 
 void Sunflower::update(double dt, sf::RenderWindow& win)
 {
-	dropsun(dt);
-	animation.update(dt);
-	draw(win);
+	if (!isdead) {
+		dropsun(dt);
+		animation.update(dt);
+		draw(win);
+	}
 }
 
 void Sunflower::setRect(sf::IntRect rect_)
@@ -90,7 +97,4 @@ void Sunflower::setRect(sf::IntRect rect_)
 	animation.setPosition(rect.left, rect.top);
 }
 
-int Sunflower::random(int a, int b)
-{
-    return rand() % (b - a + 1) + a;
-}
+

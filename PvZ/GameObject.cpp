@@ -41,3 +41,7 @@ int GameObject::getIdxLine() const
 {
 	return idx_line;
 }
+bool GameObject::getIsDead() const
+{
+	return isdead;
+}
