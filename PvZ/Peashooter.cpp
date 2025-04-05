@@ -17,7 +17,8 @@ Peashooter::Peashooter(sf::Vector2i pos, int idx_line_)
         { pos.x, pos.y, Config::PEASHOOTER_FRAME_WIDTH, Config::PEASHOOTER_FRAME_HEIGHT },
         Config::PEASHOOTER_HP,
         idx_line_,
-        TypeObject::PLANT
+        TypeObject::PLANT,
+        TypeEntity::PEASHOOTER
     ),
     is_shooting(false),
     damage(Config::PEASHOOTER_DAMAGE),

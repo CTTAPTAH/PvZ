@@ -6,25 +6,23 @@ GameObject::GameObject()
 	rect{ 0, 0, 0, 0 },
 	hp(0),
 	idx_line(0),
-	type(TypeObject::UNDEFINED)
+	type_obj(TypeObject::UNDEFINED),
+	type_ent(TypeEntity::UNDEFINED)
 {
 }
-GameObject::GameObject(Animation animation_, sf::IntRect rect_, int hp_, int idx_line_, TypeObject type_)
+GameObject::GameObject(Animation animation_, sf::IntRect rect_, int hp_, int idx_line_, TypeObject type_obj_, TypeEntity type_ent_)
 	: animation(animation_),
 	rect(rect_),
 	hp(hp_),
 	idx_line(idx_line_),
-	type(type_)
+	type_obj(type_obj_),
+	type_ent(type_ent_)
 {
 }
 
 // методы
 
 // геттеры, сеттеры
-TypeObject GameObject::getType() const
-{
-	return type;
-}
 Animation GameObject::getAnimetion() const
 {
 	return animation;
@@ -44,4 +42,12 @@ int GameObject::getIdxLine() const
 bool GameObject::getIsDead() const
 {
 	return isdead;
+}
+TypeObject GameObject::getTypeObj() const
+{
+	return type_obj;
+}
+TypeEntity GameObject::getTypeEnt() const
+{
+	return type_ent;
 }

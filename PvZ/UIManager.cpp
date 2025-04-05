@@ -52,7 +52,7 @@ void UIManager::draw(sf::RenderWindow& win)
 		Map map = mng->getMap();
 		sf::Vector2i cursor_position = sf::Mouse::getPosition(win);
 		sf::Vector2i idx_field = map.getFieldIdx(cursor_position);
-		if (map.getIsPlaced(idx_field.x, idx_field.y)) {
+		if (map.getIsPlaced(idx_field.x, idx_field.y) and !chosen_shovel) {
 			return;
 		}
 		if (!map.isValidIndex(idx_field)) { // курсор вне карты
@@ -76,6 +76,7 @@ void UIManager::draw(sf::RenderWindow& win)
 }
 void UIManager::handleMousePress(sf::Vector2f mousePos)
 {
+	isPreviewing = true;
 	// иконка растений
 	for (int i = 0; i < plant_icons.size(); i++) {
 		if (plant_icons[i].getGlobalBounds().contains(mousePos)) {
@@ -86,11 +87,10 @@ void UIManager::handleMousePress(sf::Vector2f mousePos)
 			frame_icon.setPosition(pos);
 
 			if (chosen_shovel) chosen_shovel = false;
-			isPreviewing = true;
+			
 			return;
 		}
 	}
-	if (chosenPlantIdx != -1) isPreviewing = true;
 
 	// иконка лопаты
 	if (shovel.getGlobalBounds().contains(mousePos)) {
@@ -130,6 +130,21 @@ void UIManager::handleMouseRelease(sf::Vector2f mousePos)
 	if (!shovel.getGlobalBounds().contains(mousePos) and chosen_shovel) {
 		chosen_shovel = false; // если выбрана лопата и кнопку отпустили не на ней,
 		// то обнуляем выбор лопаты
+		Manager* mng = Manager::getBorn();
+		std::list<GameObject*> list_obj = mng->getListObject();
+		sf::Vector2i mousePosI = { static_cast<int>(mousePos.x), static_cast<int>(mousePos.y) };
+
+		for (const auto& obj : list_obj) {
+			if (obj->getTypeObj() == TypeObject::PLANT and obj->getRect().contains(mousePosI)) {
+				Message msg;
+				msg.type = TypeMsg::DEATH;
+				msg.death.creature = obj;
+				mng->addMessage(msg);
+				
+				sf::Vector2i vect = mng->getMap().getFieldIdx(mousePosI);
+				mng->getMap().setIsPlaced(vect, false);
+			}
+		}
 	}
 }
 

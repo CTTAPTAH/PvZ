@@ -19,7 +19,8 @@ Zombie::Zombie(int _index_line) :
 		{ Config::WIN_WIDTH + Config::W_CELL * 2, (_index_line * Config::H_CELL) + (Config::H_CELL / 2) - (rect.height), Config::ZOMBIE_FRAME_WIDTH, Config::ZOMBIE_FRAME_HEIGHT },
 		Config::DEFAULT_ZOMBIE_HP,
 		_index_line,
-		TypeObject::ZOMBIE
+		TypeObject::ZOMBIE,
+		TypeEntity::ZOMBIE
 	),
 	velocity_x(Config::DEFAULT_ZOMBIE_SPEED),
 	damage(Config::DEFAULT_ZOMBIE_DAMAGE),
@@ -28,7 +29,7 @@ Zombie::Zombie(int _index_line) :
 	victim(nullptr),
 	current_index(count + 1)
 {
-	std::cout << "Zombie number " << current_index << " cr" << std::endl;
+	//std::cout << "Zombie number " << current_index << " cr" << std::endl;
 
 	Manager::getBorn()->addZombieOnLine(_index_line);
 	count++;
@@ -36,7 +37,7 @@ Zombie::Zombie(int _index_line) :
 
 Zombie::~Zombie()
 {
-	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
+	//std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
 
 	// уменьшаем количество зомби на указанной линии
 	Manager* mng = Manager::getBorn();
@@ -83,7 +84,7 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 }
 void Zombie::receiveMsg(Message* msg)
 {
-	if (msg->type == TypeMsg::DEATH && msg->death.creature->getType() == TypeObject::PLANT) {
+	if (msg->type == TypeMsg::DEATH && msg->death.creature->getTypeObj() == TypeObject::PLANT) {
 		if (victim == msg->death.creature) {
 			victim = nullptr;
 		}
@@ -145,7 +146,7 @@ void Zombie::CollisionWithPlants(double dt)
 	std::list<GameObject*> objects = MGR->getListObject();
 
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PLANT) {
+		if (obj->getTypeObj() == TypeObject::PLANT) {
 			if (Collision1() && idx_line == obj->getIdxLine()) {
 				//std::cout << "Yes" << std::endl;
 				EatingPlants(dt, obj);
@@ -161,7 +162,7 @@ void Zombie::FindVictimN()
 	Manager* mng = Manager::getBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PLANT) {
+		if (obj->getTypeObj() == TypeObject::PLANT) {
 			if (Collision1() and idx_line == obj->getIdxLine()) {
 				victim = obj;
 			}
@@ -196,7 +197,7 @@ void Zombie::FindVictimN2(double dt)
 	std::list<GameObject*> objects = mng->getListObject();
 	victim = nullptr;
 	for (auto obj : objects) {
-		if (obj->getType() == TypeObject::PLANT and !obj->getIsDead()) {
+		if (obj->getTypeObj() == TypeObject::PLANT and !obj->getIsDead()) {
 			if (rect.intersects(obj->getRect()) and idx_line == obj->getIdxLine()) {
 				victim = obj;
 				isEating = true;

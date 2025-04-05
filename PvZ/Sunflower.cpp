@@ -13,7 +13,8 @@ Sunflower::Sunflower(sf::Vector2i pos, int index_line_)
 		{ pos.x, pos.y, Config::SUNFLOWER_FRAME_WIDTH, Config::SUNFLOWER_FRAME_HEIGHT },
 		Config::SUNFLOWER_HP,
 		index_line_,
-		TypeObject::PLANT
+		TypeObject::PLANT,
+		TypeEntity::SUNFLOWER
 	),
 	time_to_reaper_sun(Config::TIME_TO_REAPEAR_SUN)
 { // Добавил Н

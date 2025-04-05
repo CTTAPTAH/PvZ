@@ -16,7 +16,8 @@ Car::Car(int index_line_, TypeObject type, int w_cell, int h_cell)
 		{ 200, int((index_line_ * h_cell) + rect.height / 2.0f)+90, Config::CAR_FRAME_WIDTH, Config::CAR_FRAME_HEIGHT},
 		INFINITY,
 		index_line_,
-		type
+		type,
+		TypeEntity::CAR
 		)
 {
 	//animation.setTexture(LoadTexture::getBorn().getTexture("car"));
@@ -34,7 +35,7 @@ Car::Car(int index_line_, TypeObject type, int w_cell, int h_cell)
 	//hp = INFINITY;
 }
 Car::Car(){}
-Car::~Car() { std::cout << "Car was deleted" << std::endl; }
+Car::~Car() { /*std::cout << "Car was deleted" << std::endl;*/ }
 
 void Car::update(double dt, sf::RenderWindow& win)
 {
@@ -76,7 +77,7 @@ void Car::CollisionWithZombie(double dt)
 	auto object_list = MGR->getListObject();
 
 	for (auto elem : object_list) {
-		if (elem->getType() == TypeObject::ZOMBIE and rect.intersects(elem->getRect())) {
+		if (elem->getTypeObj() == TypeObject::ZOMBIE and rect.intersects(elem->getRect())) {
 			if (this->idx_line == elem->getIdxLine()) {
 				touch = true;
 				Message msg;

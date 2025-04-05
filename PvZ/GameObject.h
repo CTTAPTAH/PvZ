@@ -4,7 +4,25 @@
 class Message;
 
 enum class TypeObject {
-	PLANT, ZOMBIE, PROJECTILE, UNDEFINED, PEASHOOTER, SUNFLOWER, WALLNUT
+	UNDEFINED, PLANT, ZOMBIE, PROJECTILE
+};
+enum class TypeEntity {
+	UNDEFINED,
+
+	// растения
+	PEASHOOTER,
+	SUNFLOWER,
+	WALLNUT,
+
+	// зомби
+	ZOMBIE,
+
+	// пульки
+	PEA_PROJECTILE,
+
+	// другое
+	CAR,
+	SUN
 };
 
 class GameObject
@@ -15,13 +33,14 @@ protected:
 	int hp;
 	bool isdead = false;
 	int idx_line;
-	TypeObject type;
+	TypeObject type_obj;
+	TypeEntity type_ent;
 public:
 	// конструкторы, деструкторы
 	GameObject();
 	GameObject(Animation animation_, sf::IntRect rect_,
 		int hp_, int idx_line_,
-		TypeObject type_);
+		TypeObject type_obj_, TypeEntity type_ent_);
 	GameObject(const GameObject&) = default;
 	virtual ~GameObject() = default;
 
@@ -36,5 +55,6 @@ public:
 	int getHp() const;
 	int getIdxLine() const;
 	bool getIsDead() const;
-	TypeObject getType() const;
+	TypeObject getTypeObj() const;
+	TypeEntity getTypeEnt() const;
 };

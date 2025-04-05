@@ -74,32 +74,50 @@ void Map::receiveMsg(Message* msg)
 			or getIsPlaced(idxPlant.x, idxPlant.y)) {
 			return;
 		}
+		if (msg->add_plant.type == TypeEntity::UNDEFINED) {
+			return;
+		}
 
 		Manager* mng = Manager::getBorn();
 		Message new_msg;
 		new_msg.type = TypeMsg::CREATE;
 
-		if (msg->add_plant.type == TypeObject::PEASHOOTER) {
+		if (msg->add_plant.type == TypeEntity::PEASHOOTER) {
 			Peashooter* pea = new Peashooter(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
 			new_msg.create.new_object = pea;
 		}
-		else if (msg->add_plant.type == TypeObject::SUNFLOWER) {
+		else if (msg->add_plant.type == TypeEntity::SUNFLOWER) {
 			Sunflower* sunflower = new Sunflower(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
 			new_msg.create.new_object = sunflower;
 		}
-		else if (msg->add_plant.type == TypeObject::WALLNUT) {
+		else if (msg->add_plant.type == TypeEntity::WALLNUT) {
 			Nut* nut = new Nut(idxPlant.x, getFieldPosition(idxPlant.x, idxPlant.y));
 			new_msg.create.new_object = nut;
 		}
-		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
+		else if (msg->add_plant.type == TypeEntity::UNDEFINED) {
 
 		}
-		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
+		else if (msg->add_plant.type == TypeEntity::UNDEFINED) {
 
 		}
 		mng->addMessage(new_msg);
 		setIsPlaced(idxPlant.x, idxPlant.y, true);
 	}
+}
+
+// для откладки
+void Map::printIsPlaced()
+{
+	for (int i = 0; i < amount_field_h; i++) {
+		for (int j = 0; j < amount_field_h; j++) {
+			if (isPlaced[i][j])
+				std::cout << "1 " << std::endl;
+			else
+				std::cout << "0 " << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "-----------------" << std::endl;
 }
 
 // геттеры, сеттеры
@@ -164,4 +182,8 @@ void Map::setIsPlaced(int row, int col, bool isPlaced_)
 	}
 
 	isPlaced[row][col] = isPlaced_;
+}
+void Map::setIsPlaced(sf::Vector2i vect, bool isPlaced_)
+{
+	setIsPlaced(vect.x, vect.y, isPlaced_);
 }
