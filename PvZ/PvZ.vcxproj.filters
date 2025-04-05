@@ -49,6 +49,7 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Nut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Car.h">
@@ -96,6 +97,7 @@
     <ClInclude Include="UIManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Nut.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Исходные файлы">

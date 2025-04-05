@@ -5,6 +5,7 @@
 #include"Zombie.h"
 #include "Sunflower.h"
 #include"Car.h"
+#include "Nut.h"
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
@@ -50,7 +51,7 @@ int main()
 	}
 	else {
 		music.setLoop(true);
-		music.setVolume(0);
+		music.setVolume(100);
 		music.play();
 	}
 
@@ -61,7 +62,7 @@ int main()
 		return 0;
 	}
 	zombies_are_comming.setBuffer(bufer);
-	zombies_are_comming.setVolume(0);
+	zombies_are_comming.setVolume(100);
 	bool sound_played = false;
 
 	LoadTexture& loader = LoadTexture::getBorn();
@@ -110,7 +111,7 @@ int main()
 	vector<PlantInfo> plant_slots;
 	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeObject::PEASHOOTER);
 	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeObject::SUNFLOWER);
-	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeObject::UNDEFINED);
+	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeObject::WALLNUT);
 	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeObject::UNDEFINED);
 	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeObject::UNDEFINED);
 	plant_slots.push_back(pea_info);
@@ -123,7 +124,7 @@ int main()
 	UIManager ui;
 	ui.createPlantSelection(plant_slots);
 
-	const double set_time = 4;
+	const double set_time = 8;
 	double timer = set_time;
 
 	const double music_set_time = 5;
@@ -160,7 +161,7 @@ int main()
 		timer -= fps.dt;
 		if (timer <= 0) {
 			timer = Random(0, (int)set_time);
-			Zombie* zombie = new Zombie(Random(0,4));
+			Zombie* zombie = new Zombie(3);
 			Message zombie_msg;
 			zombie_msg.type = TypeMsg::CREATE;
 			zombie_msg.create.new_object = zombie;

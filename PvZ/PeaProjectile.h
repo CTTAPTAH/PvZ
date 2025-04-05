@@ -17,7 +17,7 @@ public:
 	~PeaProjectile() = default;
 
 	// методы
-	void update(double dt, sf::RenderWindow& win);
+	void update(double dt, sf::RenderWindow& win)override;
 	void move(double dt);
 	void draw(sf::RenderWindow& win);
 	void checkOutOfBounds();

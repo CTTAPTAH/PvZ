@@ -21,6 +21,11 @@ void LoadTexture::loadAllTexture()
 	addTexture("sunflower", "textures\\Sunflower.png");
 	addTexture("zombie", "textures\\zomsheet.png");
 
+	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
+	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
+	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
+
+
 	// иконки
 	addTexture("peashooter_icon", "textures\\peasooter_icon.png");
 	addTexture("sunflower_icon", "textures\\sunflower_icon.png");

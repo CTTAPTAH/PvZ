@@ -83,6 +83,19 @@ public:
 	static constexpr int SUN_FRAME_COUNT = 1;
 	static constexpr int SUN_FRAME_TIME = 0;
 
+	//Орех
+	static constexpr int NUT_FRAME_WIDTH = 100;
+	static constexpr int NUT_FRAME_HEIGHT = 100;
+	static constexpr int NUT_FRAME_COUNT = 1;
+	static constexpr int NUT_FRAME_TIME = 0;
+
+	static constexpr int NUT_HP = 12;
+
+
+
+
+
+
 	//Машинки
 	static constexpr int CAR_FRAME_WIDTH = 100;
 	static constexpr int CAR_FRAME_HEIGHT = 60;

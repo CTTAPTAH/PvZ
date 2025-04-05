@@ -85,7 +85,7 @@ void Animation::setTexture(sf::Texture* texture_)
 	if (texture) { // Проверяем, загружена ли текстура
 		sprite.setTexture(*texture);
 		cur_frame = 0;
-		sprite.setPosition(0, 0); // Устанавливаем позицию спрайта
+		sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y); // Устанавливаем позицию спрайта
 	}
 }
 void Animation::setPosition(float x, float y)

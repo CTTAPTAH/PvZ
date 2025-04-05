@@ -145,6 +145,7 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Message.cpp" />
+    <ClCompile Include="Nut.cpp" />
     <ClCompile Include="Peashooter.cpp" />
     <ClCompile Include="PeaProjectile.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Message.h" />
+    <ClInclude Include="Nut.h" />
     <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sun.h" />

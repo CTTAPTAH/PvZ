@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Message.h"
 #include "Peashooter.h"
+#include "Nut.h"
 
 // конструкторы, деструктор
 Map::Map()
@@ -86,8 +87,9 @@ void Map::receiveMsg(Message* msg)
 			Sunflower* sunflower = new Sunflower(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
 			new_msg.create.new_object = sunflower;
 		}
-		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
-
+		else if (msg->add_plant.type == TypeObject::WALLNUT) {
+			Nut* nut = new Nut(idxPlant.x, getFieldPosition(idxPlant.x, idxPlant.y));
+			new_msg.create.new_object = nut;
 		}
 		else if (msg->add_plant.type == TypeObject::UNDEFINED) {
 
