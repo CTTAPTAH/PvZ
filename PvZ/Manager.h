@@ -21,8 +21,6 @@ private:
 	std::list<Message*> messages;
 	int zombie_on_line[Config::AMOUNT_LINES_MAP];
 
-
-
 	Manager();
 	~Manager();
 	Manager(const Manager&) = delete;

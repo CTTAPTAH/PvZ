@@ -69,7 +69,8 @@ void Melonpult::isShooting(double dt)
             int coord_zm_y = 0;
             double zm_speed = 0;
             for (const auto& obj : manager->getListObject()) {
-                if (obj->getTypeObj() == TypeObject::ZOMBIE and
+                if (obj and
+                    obj->getTypeObj() == TypeObject::ZOMBIE and
                     obj->getIdxLine() == idx_line and
                     obj->getRect().left < coord_zm_x) {
 

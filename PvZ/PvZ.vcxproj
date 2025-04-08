@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="ConusZombie.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="ConusZombie.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Manager.h" />

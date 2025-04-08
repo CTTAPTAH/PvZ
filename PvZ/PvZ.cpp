@@ -8,12 +8,12 @@
 #include "Nut.h"
 #include "NewspaperZombie.h"
 #include "RaZombie.h"
+#include"ConusZombie.h"
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
 using namespace std;
 using namespace sf;
-
 
 struct Dt
 {
@@ -62,6 +62,11 @@ void RandomSpawn(int random) {
 	else if (random == 3) {
 		NewspaperZombie* zombie = static_cast<NewspaperZombie*>(object);
         zombie = new NewspaperZombie(Random(0, 4), 100, 100);
+		object = zombie;
+	}
+	else if (random == 4) {
+		ConusZombie* zombie = static_cast<ConusZombie*>(object);
+		zombie = new ConusZombie(Random(0, 4));
 		object = zombie;
 	}
 	Message msg;
@@ -220,7 +225,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(2);
+			RandomSpawn(4);
 		}
 	
 		win.clear();

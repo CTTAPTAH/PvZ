@@ -19,19 +19,20 @@ void LoadTexture::loadAllTexture()
 	// растения
 	addTexture("peashooter", "textures\\peashooter.png");
 	addTexture("sunflower", "textures\\Sunflower.png");
+	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
+	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
+	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
+	addTexture("melonpult", "textures\\melonpult.png");
+
+	// зомби
 	addTexture("zombie", "textures\\zomsheet.png");
 	addTexture("newszombie", "textures\\Zombies\\NewspaperZomb.png");
 	addTexture("wnewszombie", "textures\\Zombies\\WithoutNewspaper.png");
 	addTexture("razombie", "textures\\Zombies\\Ra_zombie.png");
 	addTexture("razombie_tr", "textures\\Zombies\\RaZombieCAP.png");
-
-
-
-
-	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
-	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
-	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
-	addTexture("melonpult", "textures\\melonpult.png");
+	addTexture("conus_zombie1", "textures\\Zombies\\conus_zombie1.png");
+	addTexture("conus_zombie2", "textures\\Zombies\\conus_zombie2.png");
+	addTexture("conus_zombie3", "textures\\Zombies\\conus_zombie3.png");
 
 	// иконки
 	addTexture("peashooter_icon", "textures\\peasooter_icon.png");
