@@ -1,5 +1,5 @@
 #include "Sun.h"
-
+#include "RaZombie.h"
 
 int Sun::collected_sun = 0;
 
@@ -15,6 +15,9 @@ void normolize(sf::Vector2f& vector) {
 		vector.x /= len;
 		vector.y /= len;
 	}
+	else {
+		vector = {0.f, 0.f};
+	}
 }
 Sun::Sun(int pos_x, int pos_y, int index_line_) :
 	GameObject(
@@ -29,7 +32,7 @@ Sun::Sun(int pos_x, int pos_y, int index_line_) :
 		{ pos_x,pos_y,Config::SUN_FRAME_WIDTH, Config::SUN_FRAME_HEIGHT },
 		hp = 0,
 		idx_line = index_line_,
-		TypeObject::UNDEFINED
+		TypeObject::SUN
 	)
 {
 	start_pos_y = pos_y;
@@ -62,29 +65,31 @@ void Sun::move_from_sunflower(double dt)
 		rect.top = ground_pos_y;
 		velocity_y = 0;
 		current_motion = IDLE_SUN;
+		onGround = true;
 	}
 }
 
 void Sun::draw(sf::RenderWindow& win)
 {
-	if (current_motion == MOVE_SUN) {
+	if (current_motion == MOVE_SUN || SunTrappedByZombie) {
 		animation.setPosition(float(rect.left), float(rect.top));
 	}
-	animation.draw(win); // Добавил Н
+	animation.draw(win);
 }
 
 void Sun::update(double dt, sf::RenderWindow& win)
 {
 	draw(win);
-	if (!touch) {
+	if (!touch && !SunTrappedByZombie) {
 		move_from_sunflower(dt);
+	}
+	if (SunTrappedByZombie) {
+		checkTimer();
 	}
 	TextureCollisionWithCursor(win, dt);
 }
 
-void Sun::receiveMsg(Message* msg)
-{
-}
+void Sun::receiveMsg(Message* msg){}
 
 void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 
@@ -120,8 +125,91 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 		msg.type = TypeMsg::DEATH;
 		msg.death.creature = this;
 		MGR->addMessage(msg);
-
+		isdead = true;
 		touch = false;
 		current_motion = IDLE_SUN;
 	}
 }
+
+void Sun::SetSunTrapped(bool isHappend)
+{
+	SunTrappedByZombie = isHappend;
+}
+
+bool Sun::GetSunTrapped()
+{
+	return SunTrappedByZombie;
+}
+
+void Sun::SetOwnerSun(RaZombie* owner) {
+	owner_zombie = owner;
+}
+void Sun::MoveToZombie(double dt)
+{
+	if (!owner_zombie) return;
+
+	if (!touch) {
+
+		zombie_timer += dt;
+
+		sf::Vector2f position = {
+			(float)owner_zombie->getRect().left,
+			(float)owner_zombie->getRect().top
+		};
+
+		sf::Vector2f direction = { position.x - rect.left, position.y - rect.top };
+
+		normolize(direction);
+
+		rect.left += direction.x * dt * variable_speed;
+		rect.top += direction.y * dt * variable_speed;
+
+		if (rect.intersects(owner_zombie->getRect())) {
+
+			SunTrappedByZombie = false;
+			owner_zombie->setIsTakeSuns(false);
+			owner_zombie->currentSunNullable(owner_zombie);
+			owner_zombie = nullptr;
+
+			Message msg;
+			msg.type = TypeMsg::DEATH;
+			msg.death.creature = this;
+			Manager::getBorn()->addMessage(msg);
+
+			isdead = true;
+		}
+	}
+	else {
+		SunTrappedByZombie = false;
+		owner_zombie->setIsTakeSuns(false);
+		owner_zombie->currentSunNullable(owner_zombie);
+		owner_zombie = nullptr;
+	}
+}
+
+
+void Sun::checkTimer()
+{
+	if (zombie_timer < 0.5) {
+		variable_speed = 100;
+	}
+	if (zombie_timer >= 0.5 && zombie_timer<1) {
+		variable_speed = 200;
+	}
+	else if (zombie_timer >= 1 && zombie_timer < 2) {
+		variable_speed = 400;
+	}
+	else if (zombie_timer >= 2) {
+		variable_speed = 600;
+	}
+}
+
+bool Sun::getOnGround()
+{
+	return onGround;
+}
+bool Sun::isTouched() const {
+	return touch;
+}
+
+

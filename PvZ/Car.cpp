@@ -76,7 +76,7 @@ void Car::CollisionWithZombie(double dt)
 	auto object_list = MGR->getListObject();
 
 	for (auto elem : object_list) {
-		if (elem->getType() == TypeObject::ZOMBIE and rect.intersects(elem->getRect())) {
+		if ((elem->getType() == TypeObject::ZOMBIE or elem->getType() == TypeObject::RAZOMBIE) and rect.intersects(elem->getRect())) {
 			if (this->idx_line == elem->getIdxLine()) {
 				touch = true;
 				Message msg;

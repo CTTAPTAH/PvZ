@@ -26,4 +26,5 @@ public:
 	void setTexture(sf::Texture* texture_);
 	void setPosition(float x, float y);
 	void setScale(float x, float y);
+	void setFrameSize(int frame_w, int frame_h);
 };

@@ -6,6 +6,8 @@
 #include "Sunflower.h"
 #include"Car.h"
 #include "Nut.h"
+#include "NewspaperZombie.h"
+#include "RaZombie.h"
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
@@ -22,6 +24,7 @@ struct Dt
 	double dt = 0;
 
 };
+
 Dt fps;
 
 void FPS()
@@ -40,6 +43,35 @@ int Random(int start, int end) {
 	return rand() % (end - start + 1) + start;
 }
 
+void RandomSpawn(int random) {
+
+	GameObject* object = nullptr;
+
+	cout << random;
+
+	if (random == 1) {
+		Zombie* zombie = static_cast<Zombie*>(object);
+		zombie = new Zombie(Random(0, 4), 60, 100);
+		object = zombie;
+	}
+	else if (random == 2) {
+		RaZombie* zombie = static_cast<RaZombie*>(object);
+		zombie = new RaZombie(Random(0, 4), 100, 100);
+		object = zombie;
+	}
+	else if (random == 3) {
+		NewspaperZombie* zombie = static_cast<NewspaperZombie*>(object);
+        zombie = new NewspaperZombie(Random(0, 4), 100, 100);
+		object = zombie;
+	}
+	Message msg;
+	msg.type = TypeMsg::CREATE;
+	msg.create.new_object = object;
+	Manager::getBorn()->addMessage(msg);
+
+	object = nullptr;
+}
+
 int main()
 {
 	srand(time(0));
@@ -54,7 +86,6 @@ int main()
 		music.setVolume(100);
 		music.play();
 	}
-
 	SoundBuffer bufer;
 	Sound zombies_are_comming;
 	if (!bufer.loadFromFile("sounds\\zombies.ogg")) {
@@ -82,6 +113,13 @@ int main()
 		msg.create.new_object = car;
 		mng->addMessage(msg);
 	}
+	//for (int i = 0; i < 2; i++) {
+	//	RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
+	//	Message zombie_msg;
+	//	zombie_msg.type = TypeMsg::CREATE;
+	//	zombie_msg.create.new_object = zombie;
+	//	mng->addMessage(zombie_msg);
+	//}
 
 	// создание подсолнуха
 	//for (int i = 0; i < 5; i++) {
@@ -107,6 +145,15 @@ int main()
 	//	mng->addMessage(msg);
 	//}
 
+
+
+
+	//Zombie* zombies = new Zombie(2, 60, 100);
+	//Message zombe_msg;
+	//zombe_msg.type = TypeMsg::CREATE;
+	//zombe_msg.create.new_object = zombies;
+	//mng->addMessage(zombe_msg);
+
 	// создание интерфейса
 	vector<PlantInfo> plant_slots;
 	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeObject::PEASHOOTER);
@@ -120,15 +167,18 @@ int main()
 	plant_slots.push_back(snow_pea_info);
 	plant_slots.push_back(cabbage_info);
 
+
 	Player player(plant_slots);
 	UIManager ui;
 	ui.createPlantSelection(plant_slots);
 
-	const double set_time = 8;
+	const double set_time = 4;
 	double timer = set_time;
 
 	const double music_set_time = 5;
 	double music_timer = music_set_time;
+
+	int counter_z = 0;
 
 	Event ev;
 	while (win.isOpen()) {
@@ -160,14 +210,19 @@ int main()
 		// Спавнер зомби
 		timer -= fps.dt;
 		if (timer <= 0) {
-			timer = Random(0, (int)set_time);
-			Zombie* zombie = new Zombie(3);
-			Message zombie_msg;
-			zombie_msg.type = TypeMsg::CREATE;
-			zombie_msg.create.new_object = zombie;
-			mng->addMessage(zombie_msg);
-		}
+			timer = Random(2, (int)set_time+2);
 
+			/*if (counter_z < 6) {
+				RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
+				Message zombie_msg;
+				zombie_msg.type = TypeMsg::CREATE;
+				zombie_msg.create.new_object = zombie;
+				mng->addMessage(zombie_msg);
+				counter_z++;
+			}*/
+			RandomSpawn(Random(1,3));
+		}
+	
 		win.clear();
 		mng->getMap().drawMap(win); // сначала рисуем карту
 

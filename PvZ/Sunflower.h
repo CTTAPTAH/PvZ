@@ -8,8 +8,6 @@
 class Sunflower : public GameObject
 {
 private:
-
-	//sf::Color color; // Ќикита добавил, потому что больше не наследуем
 	int time_to_reaper_sun;
 	double current_time = 0;
 public:

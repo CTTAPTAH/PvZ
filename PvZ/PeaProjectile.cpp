@@ -64,7 +64,7 @@ void PeaProjectile::collisionWithZombies()
 	Manager* mng = Manager::getBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	for (auto& zombie : objects) {
-		if (zombie->getType() == TypeObject::ZOMBIE) {
+		if (zombie->getType() == TypeObject::ZOMBIE or zombie->getType() == TypeObject::RAZOMBIE) {
 			if (rect.intersects(zombie->getRect())) {
 				// удаляем снаряд
 				Message msg;

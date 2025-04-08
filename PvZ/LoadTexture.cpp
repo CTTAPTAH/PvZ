@@ -20,6 +20,13 @@ void LoadTexture::loadAllTexture()
 	addTexture("peashooter", "textures\\peashooter.png");
 	addTexture("sunflower", "textures\\Sunflower.png");
 	addTexture("zombie", "textures\\zomsheet.png");
+	addTexture("newszombie", "textures\\Zombies\\NewspaperZomb.png");
+	addTexture("wnewszombie", "textures\\Zombies\\WithoutNewspaper.png");
+	addTexture("razombie", "textures\\Zombies\\Ra_zombie.png");
+	addTexture("razombie_tr", "textures\\Zombies\\RaZombieCAP.png");
+
+
+
 
 	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
 	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");

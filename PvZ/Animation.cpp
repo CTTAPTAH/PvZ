@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include <iostream>
 
 // конструкторы, деструкторы
 Animation::Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime_, sf::Vector2i position)
@@ -96,3 +97,10 @@ void Animation::setScale(float x, float y)
 {
 	sprite.setScale(x, y);
 }
+
+void Animation::setFrameSize(int frame_w, int frame_h)
+{
+	frame_width = frame_w;
+	frame_height = frame_h;
+}
+

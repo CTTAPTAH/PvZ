@@ -7,6 +7,8 @@
 #define IDLE_SUN 0
 #define MOVE_SUN 1
 
+class RaZombie;
+
 class Sun :public GameObject
 {
 private:
@@ -19,10 +21,15 @@ private:
 	double ground_pos_y;
 	bool firstMove = true;
 
+	double variable_speed;
+	double zombie_timer = 0;
+
+	bool onGround = false;
+	bool SunTrappedByZombie = false;
+
 	bool touch = false;
 
-	static sf::Texture* texture;
-	sf::Sprite sprite;
+	RaZombie* owner_zombie = nullptr;
 
 public:
 	Sun(int pos_x, int pos_y, int index_line_);
@@ -34,5 +41,12 @@ public:
 	void receiveMsg(Message* msg) override;
 	void CollisionWithCursor(sf::RenderWindow& win);
 	void TextureCollisionWithCursor(sf::RenderWindow& win, double dt);
+	void SetSunTrapped(bool isHappend);
+	void SetOwnerSun(RaZombie* owner);
+	bool GetSunTrapped();
+	void MoveToZombie(double dt);
+	void checkTimer();
+	bool getOnGround();
+	bool isTouched() const;
 };
 

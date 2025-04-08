@@ -2,16 +2,17 @@
 
 #define IDLE_ZOMBIE_SPEED 0
 
+
 int Zombie::count = 0;
 
 Zombie::Zombie() {}
 
-Zombie::Zombie(int _index_line) :
+Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 	GameObject(
 		Animation(
 			LoadTexture::getBorn().getTexture("zombie"),
-			Config::ZOMBIE_FRAME_WIDTH,
-			Config::ZOMBIE_FRAME_HEIGHT,
+			frame_w,
+			frame_h,
 			Config::ZOMBIE_FRAME_COUNT,
 			Config::ZOMBIE_FRAME_TIME,
 			{ Config::WIN_WIDTH + Config::W_CELL * 2, (_index_line * Config::H_CELL) + (Config::H_CELL / 2) - (rect.height) }

@@ -54,7 +54,7 @@ public:
 	static constexpr int PEA_PROJECTILE_COUNT_FRAME = 1;
 	static constexpr double PEA_PROJECTILE_FRAMETIME = 0;
 	//Зомби
-	static constexpr int ZOMBIE_FRAME_WIDTH = 60;
+	static constexpr int ZOMBIE_FRAME_WIDTH = 100;
 	static constexpr int ZOMBIE_FRAME_HEIGHT = 100;
 	static constexpr int ZOMBIE_FRAME_COUNT = 1;
 	static constexpr int ZOMBIE_FRAME_TIME = 0;
@@ -74,7 +74,7 @@ public:
 	static constexpr double SUNFLOWER_FRAME_TIME = 0.085;
 
 	static constexpr int SUNFLOWER_HP = 4;
-	static constexpr int TIME_TO_REAPEAR_SUN = 8;
+	static constexpr int TIME_TO_REAPEAR_SUN = 7;
 
 	//Солнца
 

@@ -5,9 +5,10 @@
 #include <iostream>
 #include "Map.h"
 
+
 class Zombie : public GameObject
 {
-private:
+protected:
 
     double velocity_x;
     static int count;
@@ -22,7 +23,7 @@ private:
 
 public:
     Zombie();
-    Zombie(int _index_line);
+    Zombie(int _index_line, int frame_w, int frame_h);
     ~Zombie();
 
     //Процессы
@@ -31,8 +32,8 @@ public:
     //Механики
     void EatingPlants(double dt, GameObject* current_object);
     void CollisionWithPlants(double dt);
-    void move(double dt);
-    void draw(sf::RenderWindow& win);
+    virtual void move(double dt);
+    virtual void draw(sf::RenderWindow& win);
     void update(double dt, sf::RenderWindow& win) override;
     void receiveMsg(Message* msg) override;
 
