@@ -9,7 +9,8 @@ RaZombie::RaZombie(int idx_line, int frame_w, int frame_h):
 	animation.setTexture(LoadTexture::getBorn().getTexture("razombie"));
 	hp = 5;
 	velocity_x = 10;
-	type = TypeObject::RAZOMBIE;
+	type_obj = TypeObject::ZOMBIE;
+	type_ent = TypeEntity::RAZOMBIE;
 }
 
 RaZombie::~RaZombie()
@@ -101,7 +102,7 @@ void RaZombie::MagnetSun(double dt)
 	Sun* sun = nullptr;
 
 	for (auto& elem : objlist) {
-		if (elem->getType() == TypeObject::SUN) {
+		if (elem->getTypeEnt() == TypeEntity::SUN) {
 			sun = static_cast<Sun*>(elem);
 			if (sun->getOnGround() && !sun->GetSunTrapped()) {
 				sun->SetSunTrapped(true);

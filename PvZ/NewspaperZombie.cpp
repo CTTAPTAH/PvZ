@@ -24,7 +24,7 @@ void NewspaperZombie::move(double dt)
 }
 void NewspaperZombie::receiveMsg(Message* msg)
 {
-	if (msg->type == TypeMsg::DEATH && msg->death.creature->getType() == TypeObject::PLANT) {
+	if (msg->type == TypeMsg::DEATH && msg->death.creature->getTypeObj() == TypeObject::PLANT) {
 		if (victim == msg->death.creature) {
 			victim = nullptr;
 		}

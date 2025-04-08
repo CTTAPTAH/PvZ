@@ -220,7 +220,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(Random(1,3));
+			RandomSpawn(2);
 		}
 	
 		win.clear();
