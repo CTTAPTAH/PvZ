@@ -3,14 +3,12 @@
 
 class ConusZombie : public Zombie
 {
-private:
-	bool isHavePaper = true;
 public:
-	// геттеры, сеттеры
+	// конструкторы, декструкторы
 	ConusZombie(int idx_line);
-
-	// методыb
 	virtual ~ConusZombie() = default;
+
+	// методы
 	void receiveMsg(Message* msg) override;
 };
 

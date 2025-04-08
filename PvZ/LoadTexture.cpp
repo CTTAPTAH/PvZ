@@ -33,6 +33,7 @@ void LoadTexture::loadAllTexture()
 	addTexture("conus_zombie1", "textures\\Zombies\\conus_zombie1.png");
 	addTexture("conus_zombie2", "textures\\Zombies\\conus_zombie2.png");
 	addTexture("conus_zombie3", "textures\\Zombies\\conus_zombie3.png");
+	addTexture("disco_zombie", "textures\\Zombies\\disco_zombie.png");
 
 	// иконки
 	addTexture("peashooter_icon", "textures\\peasooter_icon.png");

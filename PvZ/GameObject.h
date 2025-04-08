@@ -19,6 +19,7 @@ enum class TypeEntity {
 	ZOMBIE,
 	RAZOMBIE,
 	CONUS_ZOMBIE,
+	DISCO_ZOMBIE,
 
 	// пульки
 	PEA_PROJECTILE,

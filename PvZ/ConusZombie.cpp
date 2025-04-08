@@ -1,5 +1,6 @@
 #include "ConusZombie.h"
 
+// конструкторы, декструкторы
 ConusZombie::ConusZombie(int idx_line)
 	: Zombie(idx_line,
 		Config::CONUS_ZOMBIE_FRAME_WIDTH,
@@ -13,6 +14,7 @@ ConusZombie::ConusZombie(int idx_line)
 	type_ent = TypeEntity::CONUS_ZOMBIE;
 }
 
+// методы
 void ConusZombie::receiveMsg(Message* msg)
 {
 	if (msg->type == TypeMsg::DEATH and msg->death.creature->getTypeObj() == TypeObject::PLANT) {

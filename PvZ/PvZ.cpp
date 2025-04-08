@@ -8,7 +8,8 @@
 #include "Nut.h"
 #include "NewspaperZombie.h"
 #include "RaZombie.h"
-#include"ConusZombie.h"
+#include "ConusZombie.h"
+#include "DiscoZombie.h"
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
@@ -67,6 +68,11 @@ void RandomSpawn(int random) {
 	else if (random == 4) {
 		ConusZombie* zombie = static_cast<ConusZombie*>(object);
 		zombie = new ConusZombie(Random(0, 4));
+		object = zombie;
+	}
+	else if (random == 5) {
+		DiscoZombie* zombie = static_cast<DiscoZombie*>(object);
+		zombie = new DiscoZombie(Random(0, 4));
 		object = zombie;
 	}
 	Message msg;
@@ -225,7 +231,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(4);
+			RandomSpawn(5);
 		}
 	
 		win.clear();
