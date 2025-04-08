@@ -13,7 +13,8 @@ Nut::Nut(int idx_line, sf::Vector2i pos) :
 		{pos.x, pos.y, Config::NUT_FRAME_WIDTH, Config::NUT_FRAME_HEIGHT},
 		Config::NUT_HP,
 		idx_line,
-		TypeObject::PLANT
+		TypeObject::PLANT,
+		TypeEntity::WALLNUT
 	)
 {
 }

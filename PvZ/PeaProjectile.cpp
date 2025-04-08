@@ -21,7 +21,8 @@ PeaProjectile::PeaProjectile(sf::Vector2i vect, int idx_line_, double damage_)
 		{ vect.x, vect.y, Config::PEA_PROJECTILE_FRAME_WIDTH, Config::PEA_PROJECTILE_FRAME_HEIGHT },
 		Config::PEA_PROJECTILE_HP,
 		idx_line_,
-		TypeObject::PROJECTILE
+		TypeObject::PROJECTILE,
+		TypeEntity::PEA_PROJECTILE
 	),
 	speed(Config::PEA_PROJECTILE_SPEED),
 	damage(damage_),
@@ -64,7 +65,7 @@ void PeaProjectile::collisionWithZombies()
 	Manager* mng = Manager::getBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	for (auto& zombie : objects) {
-		if (zombie->getType() == TypeObject::ZOMBIE or zombie->getType() == TypeObject::RAZOMBIE) {
+		if (zombie->getTypeObj() == TypeObject::ZOMBIE) {
 			if (rect.intersects(zombie->getRect())) {
 				// удаляем снаряд
 				Message msg;

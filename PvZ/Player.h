@@ -4,14 +4,14 @@
 #include <SFML/Graphics.hpp>
 #include "manager.h"
 
-enum class TypeObject;
+enum class TypeEntity;
 
 struct PlantInfo {
 	sf::Texture* icon = nullptr;
 	int cost = 0;
-	TypeObject type;
+	TypeEntity type;
 
-	PlantInfo(sf::Texture* icon_, int cost_, TypeObject type_);
+	PlantInfo(sf::Texture* icon_, int cost_, TypeEntity type_);
 };
 
 class Player

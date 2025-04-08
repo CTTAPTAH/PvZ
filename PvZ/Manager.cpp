@@ -152,7 +152,7 @@ std::list<GameObject*> Manager::getListObject() const {
 std::vector<sf::IntRect> Manager::getZombieRects() const {
 	std::vector<sf::IntRect> zombieRects;
 	for (auto obj : game_objects) {
-		if (obj->getType() == TypeObject::ZOMBIE) {
+		if (obj->getTypeObj() == TypeObject::ZOMBIE) {
 			zombieRects.push_back(obj->getRect());
 		}
 	}

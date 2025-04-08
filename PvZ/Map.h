@@ -29,6 +29,9 @@ public:
 	bool isValidIndex(int row, int col) const;
 	bool isValidIndex(sf::Vector2i vect) const;
 	void receiveMsg(Message* msg);
+	
+	// для откладки
+	void printIsPlaced();
 
 	// геттеры, сеттеры
 	bool getIsPlaced(int row, int col) const;
@@ -41,4 +44,5 @@ public:
 	void setRectMap(sf::IntRect rect_map);
 	void setTexture(sf::Texture* texture_);
 	void setIsPlaced(int row, int col, bool isPlaced_);
+	void setIsPlaced(sf::Vector2i vect, bool isPlaced_);
 };

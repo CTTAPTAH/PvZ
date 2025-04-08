@@ -41,4 +41,7 @@ public:
     void FindVictimN(); // почему-то без ошибок
     void EatingPlantsN(double dt); // почему-то без ошибок
     void FindVictimN2(double dt); // менее производительно, но без потенциальных ошибок
+
+    // геттеры, сеттеры
+    int getSpeed() const;
 };

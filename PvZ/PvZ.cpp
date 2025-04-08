@@ -156,11 +156,11 @@ int main()
 
 	// создание интерфейса
 	vector<PlantInfo> plant_slots;
-	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeObject::PEASHOOTER);
-	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeObject::SUNFLOWER);
-	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeObject::WALLNUT);
-	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeObject::UNDEFINED);
-	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeObject::UNDEFINED);
+	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeEntity::PEASHOOTER);
+	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER);
+	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT);
+	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::UNDEFINED);
+	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::MELLONPULT);
 	plant_slots.push_back(pea_info);
 	plant_slots.push_back(sunflower_info);
 	plant_slots.push_back(wallnut_info);

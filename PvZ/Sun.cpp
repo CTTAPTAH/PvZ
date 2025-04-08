@@ -32,7 +32,8 @@ Sun::Sun(int pos_x, int pos_y, int index_line_) :
 		{ pos_x,pos_y,Config::SUN_FRAME_WIDTH, Config::SUN_FRAME_HEIGHT },
 		hp = 0,
 		idx_line = index_line_,
-		TypeObject::SUN
+		TypeObject::UNDEFINED,
+		TypeEntity::SUN
 	)
 {
 	start_pos_y = pos_y;
@@ -119,7 +120,7 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 	if (rect.left >= MGR->getWinWidth() || rect.top <= 4) {
 
 		collected_sun += 1;
-		std::cout << collected_sun << std::endl;
+		//std::cout << collected_sun << std::endl;
 
 		Message msg;
 		msg.type = TypeMsg::DEATH;

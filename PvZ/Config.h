@@ -46,13 +46,34 @@ public:
 	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_X = 72;
 	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_Y = 13;
 
-	// Горошина
+	// Горошина снаряд
 	static constexpr double PEA_PROJECTILE_SPEED = 300.0;
 	static constexpr int PEA_PROJECTILE_HP = 1;
 	static constexpr int PEA_PROJECTILE_FRAME_WIDTH = 20;
 	static constexpr int PEA_PROJECTILE_FRAME_HEIGHT = 20;
 	static constexpr int PEA_PROJECTILE_COUNT_FRAME = 1;
 	static constexpr double PEA_PROJECTILE_FRAMETIME = 0;
+
+	// Арбуз
+	static constexpr double MELONPULT_DAMAGE = 1.0;
+	static constexpr double MELONPULT_TIME_RELOAD = 1.0;
+	static constexpr int MELONPULT_HP = 4;
+	static constexpr int MELONPULT_FRAME_WIDTH = 100;
+	static constexpr int MELONPULT_FRAME_HEIGHT = 84;
+	static constexpr int MELONPULT_COUNT_FRAME = 1;
+	static constexpr double MELONPULT_FRAMETIME = 0;
+	static constexpr int MELONPULT_PROJECTILE_OFFSET_X = 72;
+	static constexpr int MELONPULT_PROJECTILE_OFFSET_Y = 13;
+
+	// Снаряд арбуза
+	static constexpr double MELON_VY = -300.0;
+	static constexpr int MELON_HP = 1;
+	static constexpr int MELON_FRAME_WIDTH = 52;
+	static constexpr int MELON_FRAME_HEIGHT = 44;
+	static constexpr int MELON_COUNT_FRAME = 1;
+	static constexpr double MELON_FRAMETIME = 0;
+	static constexpr double MELON_GRAVITY = 300;
+
 	//Зомби
 	static constexpr int ZOMBIE_FRAME_WIDTH = 100;
 	static constexpr int ZOMBIE_FRAME_HEIGHT = 100;

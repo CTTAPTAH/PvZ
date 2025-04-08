@@ -24,7 +24,7 @@ public:
 		} move;
 		struct {
 			sf::Vector2f mousePos;
-			TypeObject type;
+			TypeEntity type;
 			int cost;
 		} add_plant;
 
