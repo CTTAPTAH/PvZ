@@ -113,7 +113,7 @@ int main()
 	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER);
 	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT);
 	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::UNDEFINED);
-	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::UNDEFINED);
+	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::MELLONPULT);
 	plant_slots.push_back(pea_info);
 	plant_slots.push_back(sunflower_info);
 	plant_slots.push_back(wallnut_info);
@@ -161,7 +161,7 @@ int main()
 		timer -= fps.dt;
 		if (timer <= 0) {
 			timer = Random(0, (int)set_time);
-			Zombie* zombie = new Zombie(3);
+			Zombie* zombie = new Zombie(Random(0, 4));
 			Message zombie_msg;
 			zombie_msg.type = TypeMsg::CREATE;
 			zombie_msg.create.new_object = zombie;

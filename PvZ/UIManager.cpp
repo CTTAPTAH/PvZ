@@ -76,7 +76,6 @@ void UIManager::draw(sf::RenderWindow& win)
 }
 void UIManager::handleMousePress(sf::Vector2f mousePos)
 {
-	isPreviewing = true;
 	// иконка растений
 	for (int i = 0; i < plant_icons.size(); i++) {
 		if (plant_icons[i].getGlobalBounds().contains(mousePos)) {
@@ -87,6 +86,7 @@ void UIManager::handleMousePress(sf::Vector2f mousePos)
 			frame_icon.setPosition(pos);
 
 			if (chosen_shovel) chosen_shovel = false;
+			isPreviewing = true;
 			
 			return;
 		}
@@ -101,6 +101,8 @@ void UIManager::handleMousePress(sf::Vector2f mousePos)
 		frame_icon.setPosition(pos);
 
 		if (chosenPlantIdx != -1) chosenPlantIdx = -1;
+		isPreviewing = true;
+
 		return;
 	}
 }

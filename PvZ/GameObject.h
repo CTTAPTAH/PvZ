@@ -13,12 +13,14 @@ enum class TypeEntity {
 	PEASHOOTER,
 	SUNFLOWER,
 	WALLNUT,
+	MELLONPULT,
 
 	// зомби
 	ZOMBIE,
 
 	// пульки
 	PEA_PROJECTILE,
+	MELON_PROJECTILE,
 
 	// другое
 	CAR,
@@ -48,6 +50,7 @@ public:
 	// чисто виртуальные методы
 	virtual void receiveMsg(Message* msg) = 0;
 	virtual void update(double dt, sf::RenderWindow& win) = 0;
+	virtual void draw(sf::RenderWindow& win) = 0;
 
 	// геттеры, сеттеры
 	Animation getAnimetion() const;
@@ -57,4 +60,5 @@ public:
 	bool getIsDead() const;
 	TypeObject getTypeObj() const;
 	TypeEntity getTypeEnt() const;
+	void setRect(sf::IntRect rect_);
 };

@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Message.h"
 #include "Peashooter.h"
+#include "Melonpult.h"
 #include "Nut.h"
 
 // конструкторы, деструктор
@@ -97,8 +98,9 @@ void Map::receiveMsg(Message* msg)
 		else if (msg->add_plant.type == TypeEntity::UNDEFINED) {
 
 		}
-		else if (msg->add_plant.type == TypeEntity::UNDEFINED) {
-
+		else if (msg->add_plant.type == TypeEntity::MELLONPULT) {
+			Melonpult* melon = new Melonpult(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
+			new_msg.create.new_object = melon;
 		}
 		mng->addMessage(new_msg);
 		setIsPlaced(idxPlant.x, idxPlant.y, true);

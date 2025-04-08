@@ -24,7 +24,7 @@ void LoadTexture::loadAllTexture()
 	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
 	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
 	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
-
+	addTexture("melonpult", "textures\\melonpult.png");
 
 	// иконки
 	addTexture("peashooter_icon", "textures\\peasooter_icon.png");
@@ -35,6 +35,7 @@ void LoadTexture::loadAllTexture()
 
 	// другое
 	addTexture("pea_projectile", "textures\\pea_projectile.png");
+	addTexture("melon_projectile", "textures\\melon.png");
 	addTexture("map", "textures\\map.png");
 	addTexture("car", "textures\\Machine.png");
 	addTexture("sun", "textures\\sun.png");

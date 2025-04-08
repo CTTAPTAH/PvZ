@@ -20,10 +20,9 @@ public:
 
 	// методы
 	void update(double dt, sf::RenderWindow& win) override;
-	void isShooting(double dt);
-	void draw(sf::RenderWindow& win);
+	void draw(sf::RenderWindow& win) override;
 	void receiveMsg(Message* msg) override;
+	virtual void isShooting(double dt);
 
 	// геттеры, сеттеры
-	void setRect(sf::IntRect rect_);
 };

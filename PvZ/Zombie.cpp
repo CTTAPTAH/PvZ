@@ -30,6 +30,9 @@ Zombie::Zombie(int _index_line) :
 	current_index(count + 1)
 {
 	//std::cout << "Zombie number " << current_index << " cr" << std::endl;
+	//velocity_x = 0; //проверял точность арбуза Н.
+	//rect.left -= rand() % (1000 - 300 + 1) + 300; //проверял точность арбуза Н.
+	setRect(rect);
 
 	Manager::getBorn()->addZombieOnLine(_index_line);
 	count++;
@@ -225,5 +228,16 @@ void Zombie::FindVictimN2(double dt)
 			isEating = false;
 			reload = time_reload;
 		}
+	}
+}
+
+// геттеры, сеттеры
+int Zombie::getSpeed() const
+{
+	if (victim) {
+		return 0;
+	}
+	else {
+		return velocity_x;
 	}
 }

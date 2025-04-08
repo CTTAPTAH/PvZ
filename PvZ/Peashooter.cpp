@@ -18,7 +18,7 @@ Peashooter::Peashooter(sf::Vector2i pos, int idx_line_)
         Config::PEASHOOTER_HP,
         idx_line_,
         TypeObject::PLANT,
-        TypeEntity::PEASHOOTER
+        TypeEntity::PEASHOOTER  
     ),
     is_shooting(false),
     damage(Config::PEASHOOTER_DAMAGE),
@@ -33,6 +33,24 @@ void Peashooter::update(double dt, sf::RenderWindow& win)
     isShooting(dt);
     animation.update(dt);
     draw(win);
+}
+void Peashooter::draw(sf::RenderWindow& win) {
+    animation.draw(win);
+}
+void Peashooter::receiveMsg(Message* msg)
+{
+    Manager* mng = Manager::getBorn();
+    if (msg->type == TypeMsg::DAMAGE and this == msg->damage.who_receive) {
+        hp -= msg->damage.damage;
+        if (hp <= 0) {
+            Message msg;
+            msg.type = TypeMsg::DEATH;
+            msg.death.creature = this;
+            mng->addMessage(msg);
+            sf::Vector2i vect = mng->getMap().getFieldIdx({ rect.left, rect.top });
+            mng->getMap().setIsPlaced(vect.x, vect.y, false);
+        }
+    }
 }
 void Peashooter::isShooting(double dt)
 {
@@ -73,28 +91,5 @@ void Peashooter::isShooting(double dt)
         }
     }
 }
-void Peashooter::draw(sf::RenderWindow& win) {
-    animation.draw(win);
-}
-void Peashooter::receiveMsg(Message* msg)
-{
-    Manager* mng = Manager::getBorn();
-    if (msg->type == TypeMsg::DAMAGE and this == msg->damage.who_receive) {
-        hp -= msg->damage.damage;
-        if (hp <= 0) {
-            Message msg;
-            msg.type = TypeMsg::DEATH;
-            msg.death.creature = this;
-            mng->addMessage(msg);
-            sf::Vector2i vect = mng->getMap().getFieldIdx( {rect.left, rect.top});
-            mng->getMap().setIsPlaced(vect.x, vect.y, false);
-        }
-    }
-}
 
 // геттеры, сеттеры
-void Peashooter::setRect(sf::IntRect rect_)
-{
-    rect = rect_;
-    animation.setPosition(rect.left, rect.top);
-}

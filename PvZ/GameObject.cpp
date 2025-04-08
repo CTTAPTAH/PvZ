@@ -51,3 +51,8 @@ TypeEntity GameObject::getTypeEnt() const
 {
 	return type_ent;
 }
+void GameObject::setRect(sf::IntRect rect_)
+{
+	rect = rect_;
+	animation.setPosition(rect.left, rect.top);
+}

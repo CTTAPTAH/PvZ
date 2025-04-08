@@ -144,6 +144,8 @@
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MelonProjectile.cpp" />
+    <ClCompile Include="Melonpult.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Nut.cpp" />
     <ClCompile Include="Peashooter.cpp" />
@@ -163,6 +165,8 @@
     <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MelonProjectile.h" />
+    <ClInclude Include="Melonpult.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Nut.h" />
     <ClInclude Include="Peashooter.h" />
