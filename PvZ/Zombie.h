@@ -11,10 +11,16 @@ class Zombie : public GameObject
 protected:
 
     double velocity_x;
+    double original_velocity_x;
+
     static int count;
     int current_index;
     int damage;
     bool isEating = false;
+
+    bool haveFrozenEffect = false;
+    double frozen_timer = 0;
+    bool wasFrozenSpeedSet = false;
 
     const double time_reload = 1;
     double reload = 0;
@@ -41,6 +47,10 @@ public:
     void FindVictimN(); // почему-то без ошибок
     void EatingPlantsN(double dt); // почему-то без ошибок
     void FindVictimN2(double dt); // менее производительно, но без потенциальных ошибок
+
+    void ZombieIsFrosen(double dt);
+
+    void setHaveFrozenEffect(bool isHappend);
 
     // геттеры, сеттеры
     int getSpeed() const;

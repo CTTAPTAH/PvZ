@@ -8,7 +8,7 @@ RaZombie::RaZombie(int idx_line, int frame_w, int frame_h):
 {
 	animation.setTexture(LoadTexture::getBorn().getTexture("razombie"));
 	hp = 5;
-	velocity_x = 10;
+	velocity_x = 80;
 	type_obj = TypeObject::ZOMBIE;
 	type_ent = TypeEntity::RAZOMBIE;
 }
@@ -22,12 +22,17 @@ void RaZombie::move(double dt)
 {
 	if (!victim) {
 
-		if (!isTakeSuns) {
-			velocity_x = 30;
+		if (!isTakeSuns ) {
+
+			if (WasTaken) {
+				velocity_x = 80;
+				WasTaken = false;
+			}
 			rect.left -= velocity_x * dt;
 		}
 		else {
 			velocity_x = 0;
+			WasTaken = true;
 		}
 		animation.setPosition(rect.left, rect.top);
 	}
@@ -35,14 +40,22 @@ void RaZombie::move(double dt)
 
 void RaZombie::update(double dt, sf::RenderWindow& win)
 {
+	
 	if (getOnMap() and !onMap) {
 		waiting_list.push_back(this);
 		onMap = true;
 	}
-	FindVictimN2(dt);
-    MagnetSun(dt);
-	move(dt);
-	draw(win);
+	if (!getIsDead() and getOnMap()) {
+		MagnetSun(dt);
+	}
+	if(!getIsDead()){
+
+		FindVictimN2(dt);
+		move(dt);
+		draw(win);
+		ZombieIsFrosen(dt);
+	}
+
 }
 
 void RaZombie::setIsTakeSuns(bool isHappend)
@@ -72,8 +85,6 @@ void RaZombie::MagnetSun(double dt)
 	Manager* MGR = Manager::getBorn();
 
 	auto objlist = MGR->getListObject();
-
-	std::cout << waiting_list.size() << std::endl;
 
 	RaZombie* owner = nullptr;
 

@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Chomper.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -153,6 +154,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PvZ.cpp" />
     <ClCompile Include="RaZombie.cpp" />
+    <ClCompile Include="SnowPeaProjectile.cpp" />
+    <ClCompile Include="SnowPeashooter.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Sunflower.cpp" />
     <ClCompile Include="UIManager.cpp" />
@@ -161,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Chomper.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LoadTexture.h" />
@@ -174,6 +178,8 @@
     <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RaZombie.h" />
+    <ClInclude Include="SnowPeaProjectile.h" />
+    <ClInclude Include="SnowPeashooter.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Sunflower.h" />
     <ClInclude Include="PeaProjectile.h" />

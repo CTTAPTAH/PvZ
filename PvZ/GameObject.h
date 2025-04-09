@@ -11,15 +11,19 @@ enum class TypeEntity {
 
 	// растения
 	PEASHOOTER,
+	SNOWPEASHOOTER,
 	SUNFLOWER,
 	WALLNUT,
 	MELLONPULT,
+	CHOMPER,
 
 	// зомби
 	ZOMBIE,
 	RAZOMBIE,
 	// пульки
 	PEA_PROJECTILE,
+	SNOW_PEA_PROJECTILE,
+
 	MELON_PROJECTILE,
 
 	// другое
@@ -61,4 +65,5 @@ public:
 	TypeObject getTypeObj() const;
 	TypeEntity getTypeEnt() const;
 	void setRect(sf::IntRect rect_);
+	void setDead(bool isHappend);
 };

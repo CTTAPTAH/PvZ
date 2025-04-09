@@ -24,6 +24,11 @@ void LoadTexture::loadAllTexture()
 	addTexture("wnewszombie", "textures\\Zombies\\WithoutNewspaper.png");
 	addTexture("razombie", "textures\\Zombies\\Ra_zombie.png");
 	addTexture("razombie_tr", "textures\\Zombies\\RaZombieCAP.png");
+	addTexture("snowpea", "textures\\snowpea.png");
+	addTexture("chomper", "textures\\chomper.png");
+	addTexture("chew", "textures\\chew.png");
+	addTexture("snowpeaPr", "textures\\snowpeaPr.png");
+
 
 
 
@@ -39,6 +44,7 @@ void LoadTexture::loadAllTexture()
 	addTexture("wallnut_icon", "textures\\wallnut_icon.png");
 	addTexture("snow_pea_icon", "textures\\snow_pea_icon.png");
 	addTexture("cabbage_icon", "textures\\cabbage_icon.png");
+	addTexture("chomper_icon", "textures\\chomper_icon.png");
 
 	// другое
 	addTexture("pea_projectile", "textures\\pea_projectile.png");

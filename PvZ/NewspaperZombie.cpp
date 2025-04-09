@@ -1,7 +1,7 @@
 #include "NewspaperZombie.h"
 
 NewspaperZombie::NewspaperZombie(int idx_line, int frame_w, int frame_h) :
-	Zombie(idx_line,frame_w, frame_h)
+	Zombie(idx_line, frame_w, frame_h)
 {
 	animation.setTexture(LoadTexture::getBorn().getTexture("newszombie"));
 	hp = 6;

@@ -56,3 +56,8 @@ void GameObject::setRect(sf::IntRect rect_)
 	rect = rect_;
 	animation.setPosition(rect.left, rect.top);
 }
+
+void GameObject::setDead(bool isHappend)
+{
+	isdead = isHappend;
+}

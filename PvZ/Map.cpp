@@ -2,7 +2,9 @@
 #include "Message.h"
 #include "Peashooter.h"
 #include "Melonpult.h"
+#include "Chomper.h"
 #include "Nut.h"
+#include "SnowPeashooter.h"
 
 // конструкторы, деструктор
 Map::Map()
@@ -95,8 +97,13 @@ void Map::receiveMsg(Message* msg)
 			Nut* nut = new Nut(idxPlant.x, getFieldPosition(idxPlant.x, idxPlant.y));
 			new_msg.create.new_object = nut;
 		}
-		else if (msg->add_plant.type == TypeEntity::UNDEFINED) {
-
+		else if (msg->add_plant.type == TypeEntity::CHOMPER) {
+			Chomper* chomper = new Chomper(idxPlant.x, getFieldPosition(idxPlant.x, idxPlant.y));
+			new_msg.create.new_object = chomper;
+		}
+		else if (msg->add_plant.type == TypeEntity::SNOWPEASHOOTER) {
+			SnowPeashooter* snowpea = new SnowPeashooter(idxPlant.x, getFieldPosition(idxPlant.x, idxPlant.y));
+			new_msg.create.new_object = snowpea;
 		}
 		else if (msg->add_plant.type == TypeEntity::MELLONPULT) {
 			Melonpult* melon = new Melonpult(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);

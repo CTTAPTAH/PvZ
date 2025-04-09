@@ -6,6 +6,7 @@
 #include "Sunflower.h"
 #include"Car.h"
 #include "Nut.h"
+#include "Chomper.h"
 #include "NewspaperZombie.h"
 #include "RaZombie.h"
 #include <SFML/System.hpp>
@@ -47,8 +48,6 @@ void RandomSpawn(int random) {
 
 	GameObject* object = nullptr;
 
-	cout << random;
-
 	if (random == 1) {
 		Zombie* zombie = static_cast<Zombie*>(object);
 		zombie = new Zombie(Random(0, 4), 60, 100);
@@ -64,12 +63,18 @@ void RandomSpawn(int random) {
         zombie = new NewspaperZombie(Random(0, 4), 100, 100);
 		object = zombie;
 	}
-	Message msg;
-	msg.type = TypeMsg::CREATE;
-	msg.create.new_object = object;
-	Manager::getBorn()->addMessage(msg);
 
-	object = nullptr;
+	if (object) {
+		Message msg;
+		msg.type = TypeMsg::CREATE;
+		msg.create.new_object = object;
+		Manager::getBorn()->addMessage(msg);
+		object = nullptr;
+
+	}
+	else {
+		return;
+	}
 }
 
 int main()
@@ -159,13 +164,17 @@ int main()
 	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeEntity::PEASHOOTER);
 	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER);
 	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT);
-	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::UNDEFINED);
+	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::SNOWPEASHOOTER);
 	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::MELLONPULT);
+	PlantInfo chomper_info(LoadTexture::getBorn().getTexture("chomper_icon"), 200, TypeEntity::CHOMPER);
+
 	plant_slots.push_back(pea_info);
 	plant_slots.push_back(sunflower_info);
 	plant_slots.push_back(wallnut_info);
 	plant_slots.push_back(snow_pea_info);
 	plant_slots.push_back(cabbage_info);
+	plant_slots.push_back(chomper_info);
+
 
 
 	Player player(plant_slots);
@@ -220,7 +229,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(2);
+			RandomSpawn(Random(1,3));
 		}
 	
 		win.clear();

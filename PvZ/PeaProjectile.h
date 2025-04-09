@@ -6,7 +6,7 @@
 
 class PeaProjectile : public GameObject
 {
-private:
+protected:
 	double speed;
 	double damage;
 	bool is_dead;
@@ -21,7 +21,7 @@ public:
 	void move(double dt);
 	void draw(sf::RenderWindow& win);
 	void checkOutOfBounds();
-	void collisionWithZombies();
+	virtual void collisionWithZombies();
 	void receiveMsg(Message* msg) override;
 
 	//геттеры, сеттеры

@@ -8,6 +8,8 @@ private:
 	Sun* currentSun = nullptr;
 	bool onMap = false;
 
+	bool WasTaken=false;
+
 	static std::list<RaZombie*> waiting_list;
 
 public:

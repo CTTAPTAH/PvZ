@@ -28,7 +28,8 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 	reload(Config::DEFAULT_ZOMBIE_RELOAD),
 	time_reload(Config::DEFAULT_ZOMBIE_TIME_RELOAD),
 	victim(nullptr),
-	current_index(count + 1)
+	current_index(count + 1),
+	original_velocity_x(velocity_x)
 {
 	//std::cout << "Zombie number " << current_index << " cr" << std::endl;
 	//velocity_x = 0; //проверял точность арбуза Н.
@@ -61,30 +62,17 @@ void Zombie::move(double dt)
 
 void Zombie::draw(sf::RenderWindow& win)
 {
-	//if (texture) {
-	//	sprite.setPosition(rect.left, rect.top);
-	//	win.draw(sprite);
-	//}
-	//sf::RectangleShape rectangle;
-	//rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-	//rectangle.setPosition(rect.left, rect.top);
-	////rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-	//win.draw(rectangle);
 
 	animation.draw(win);
 }
 void Zombie::update(double dt, sf::RenderWindow& win) {
-	//Добавил update
-	FindVictimN2(dt);
-	// либо то, что ниже, либо выше
-	//if (!victim)
-	//	FindVictimN();
-	//if (victim)
-	//EatingPlantsN(dt);
-	move(dt);
-	draw(win);
-	//CollisionWithPlants(dt);
-	//std::cout << hp << std::endl;
+    
+	if (!getIsDead()) {
+		FindVictimN2(dt);
+		move(dt);
+		draw(win);
+		ZombieIsFrosen(dt);
+	}
 }
 void Zombie::receiveMsg(Message* msg)
 {
@@ -240,5 +228,31 @@ int Zombie::getSpeed() const
 	}
 	else {
 		return velocity_x;
+	}
+}
+
+void Zombie::setHaveFrozenEffect(bool isHappend)
+{
+	haveFrozenEffect = isHappend;
+}
+
+void Zombie::ZombieIsFrosen(double dt)
+{
+
+	if (haveFrozenEffect) {
+		if (!wasFrozenSpeedSet) {
+			velocity_x = original_velocity_x / 5.0f;
+			wasFrozenSpeedSet = true;
+		}
+		if (frozen_timer != 0) {
+			frozen_timer = 0;
+		}
+		frozen_timer += dt;
+	}
+	if (frozen_timer >= 2) {
+		haveFrozenEffect = false;
+		velocity_x = original_velocity_x;
+		frozen_timer = 0;
+		wasFrozenSpeedSet = false;
 	}
 }
