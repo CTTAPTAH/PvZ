@@ -84,7 +84,7 @@ void Animation::setTexture(sf::Texture* texture_)
 {
 	texture = texture_;
 	if (texture) { // Проверяем, загружена ли текстура
-		sprite.setTexture(*texture);
+		sprite.setTexture(*texture, true);
 		cur_frame = 0;
 		sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y); // Устанавливаем позицию спрайта
 	}
@@ -107,3 +107,7 @@ sf::Vector2i Animation::getRectPos() {
 	return { (int)sprite.getPosition().x, (int)sprite.getPosition().y };
 }
 
+void Animation::setRect(sf::IntRect rect)
+{
+	sprite.setTextureRect(rect);
+}

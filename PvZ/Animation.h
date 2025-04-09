@@ -27,6 +27,4 @@ public:
 	void setPosition(float x, float y);
 	void setScale(float x, float y);
 	void setFrameSize(int frame_w, int frame_h);
-
-	sf::Vector2i getRectPos();
 };

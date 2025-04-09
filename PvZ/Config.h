@@ -80,7 +80,23 @@ public:
 	static constexpr int ZOMBIE_FRAME_COUNT = 1;
 	static constexpr int ZOMBIE_FRAME_TIME = 0;
 
-	static constexpr int DEFAULT_ZOMBIE_HP = 4;
+	//Зомби с конусом
+	static constexpr int CONUS_ZOMBIE_FRAME_WIDTH = 51;
+	static constexpr int CONUS_ZOMBIE_FRAME_HEIGHT = 100;
+	static constexpr int CONUS_ZOMBIE_FRAME_COUNT = 1;
+	static constexpr int CONUS_ZOMBIE_FRAME_TIME = 0;
+	static constexpr int CONUS_ZOMBIE_HP = 8;
+
+	// Диско Зомби
+	static constexpr int DISCO_ZOMBIE_FRAME_WIDTH = 46;
+	static constexpr int DISCO_ZOMBIE_FRAME_HEIGHT = 100;
+	static constexpr int DISCO_ZOMBIE_FRAME_COUNT = 1;
+	static constexpr int DISCO_ZOMBIE_FRAME_TIME = 0;
+	static constexpr int DISCO_ZOMBIE_SPAWN_LEFT_OFFSET = 100;
+	static constexpr int DISCO_ZOMBIE_SPAWN_RIGHT_OFFSET = 100;
+
+	// дефолтные значения зомби
+	static constexpr int DEFAULT_ZOMBIE_HP = 3;
 	static constexpr double DEFAULT_ZOMBIE_SPEED = 100;
 	static constexpr double FROZEN_DEFAULT_ZOMBIE_SPEED = 20;
 

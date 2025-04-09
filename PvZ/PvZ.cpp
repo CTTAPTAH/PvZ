@@ -9,12 +9,13 @@
 #include "Chomper.h"
 #include "NewspaperZombie.h"
 #include "RaZombie.h"
+#include "ConusZombie.h"
+#include "DiscoZombie.h"
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
 using namespace std;
 using namespace sf;
-
 
 struct Dt
 {
@@ -63,13 +64,20 @@ void RandomSpawn(int random) {
         zombie = new NewspaperZombie(Random(0, 4), 100, 100);
 		object = zombie;
 	}
-
-	if (object) {
-		Message msg;
-		msg.type = TypeMsg::CREATE;
-		msg.create.new_object = object;
-		Manager::getBorn()->addMessage(msg);
-		object = nullptr;
+	else if (random == 4) {
+		ConusZombie* zombie = static_cast<ConusZombie*>(object);
+		zombie = new ConusZombie(Random(0, 4));
+		object = zombie;
+	}
+	else if (random == 5) {
+		DiscoZombie* zombie = static_cast<DiscoZombie*>(object);
+		zombie = new DiscoZombie(Random(0, 4));
+		object = zombie;
+	}
+	Message msg;
+	msg.type = TypeMsg::CREATE;
+	msg.create.new_object = object;
+	Manager::getBorn()->addMessage(msg);
 
 	}
 	else {
@@ -229,7 +237,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(Random(1,3));
+			RandomSpawn(Random(1,5));
 		}
 	
 		win.clear();
