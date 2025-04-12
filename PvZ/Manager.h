@@ -17,6 +17,8 @@ private:
 	int win_hei;
 	static Manager* born;
 	Map map;
+	Player player;
+	UIManager ui;
 	std::list<GameObject*> game_objects;
 	std::list<Message*> messages;
 	int zombie_on_line[Config::AMOUNT_LINES_MAP];
@@ -47,4 +49,6 @@ public:
 	std::list<GameObject*> getListObject() const;
 	std::vector<sf::IntRect> getZombieRects() const;
 	int getZombieOnLine(int idx_line) const;
+	UIManager& getUI();
+	Player& getPlayer();
 };

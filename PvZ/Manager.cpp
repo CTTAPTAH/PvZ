@@ -6,13 +6,16 @@ Manager* Manager::born = nullptr;
 Manager::Manager()
 	: game_objects(),
 	messages(),
-	map({ 258, 81, 732, 493 })
+	map({ 258, 81, 732, 493 }),
+	ui(),
+	player()
 {
 	win_wid = Config::WIN_WIDTH; win_hei = Config::WIN_HEIGHT;
 	born = nullptr;
 	for (int i = 0; i < Config::AMOUNT_LINES_MAP; i++) {
 		zombie_on_line[i] = 0;
 	}
+
 }
 Manager::~Manager() {
 	for (auto& obj : game_objects) {
@@ -59,6 +62,11 @@ void Manager::updateMessage(double dt) {
 		// сообщение для map
 		if (msg->type == TypeMsg::ADD_PLANT) {
 			map.receiveMsg(msg);
+		}
+
+		// сообщение для UIManager
+		if (msg->type == TypeMsg::SET_MONEY) {
+			ui.receiveMsg(msg);
 		}
 	}
 	messages.clear();
@@ -161,4 +169,13 @@ std::vector<sf::IntRect> Manager::getZombieRects() const {
 int Manager::getZombieOnLine(int idx_line) const
 {
 	return zombie_on_line[idx_line];
+}
+UIManager& Manager::getUI()
+{
+	return ui;
+}
+
+Player& Manager::getPlayer()
+{
+	return player;
 }

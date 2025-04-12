@@ -113,6 +113,10 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 	}
 
 	if (rect.intersects(cursor_rect)) {
+		if (!touch) { // добавил Н
+			Player& player = Manager::getBorn()->getPlayer(); // добавил Н
+			player.setMoney(player.getMoney() + Config::SUN_PRICE); // добавил Н
+		}
 		touch = true;
 		current_motion = MOVE_SUN;
 	}

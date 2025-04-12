@@ -74,15 +74,13 @@ void RandomSpawn(int random) {
 		zombie = new DiscoZombie(Random(0, 4));
 		object = zombie;
 	}
+	else {
+		return;
+	}
 	Message msg;
 	msg.type = TypeMsg::CREATE;
 	msg.create.new_object = object;
 	Manager::getBorn()->addMessage(msg);
-
-	}
-	else {
-		return;
-	}
 }
 
 int main()
@@ -112,6 +110,7 @@ int main()
 	LoadTexture& loader = LoadTexture::getBorn();
 	loader.loadAllTexture();
 	Manager* mng = Manager::getBorn();
+	mng->getPlayer().setMoney(Config::MONEY); // лучше на всякий случай писать
 
 	//Map map({ 258, 81, 732, 493 });
 
@@ -169,12 +168,12 @@ int main()
 
 	// создание интерфейса
 	vector<PlantInfo> plant_slots;
-	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeEntity::PEASHOOTER);
-	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER);
-	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT);
-	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::SNOWPEASHOOTER);
-	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::MELLONPULT);
-	PlantInfo chomper_info(LoadTexture::getBorn().getTexture("chomper_icon"), 200, TypeEntity::CHOMPER);
+	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeEntity::PEASHOOTER, Config::COOLDOWN_PEA);
+	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER, Config::COOLDOWN_SUNFLOWER);
+	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT, Config::COOLDOWN_NUT);
+	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::SNOWPEASHOOTER, Config::COOLDOWN_SNOW_PEA);
+	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::MELLONPULT, Config::COOLDOWN_MELON);
+	PlantInfo chomper_info(LoadTexture::getBorn().getTexture("chomper_icon"), 200, TypeEntity::CHOMPER, Config::COOLDOWN_CHOMPER);
 
 	plant_slots.push_back(pea_info);
 	plant_slots.push_back(sunflower_info);
@@ -183,10 +182,10 @@ int main()
 	plant_slots.push_back(cabbage_info);
 	plant_slots.push_back(chomper_info);
 
-
-
-	Player player(plant_slots);
-	UIManager ui;
+	//Player player(plant_slots);
+	Player& player = mng->getPlayer();
+	player.setPlantSlots(plant_slots);
+	UIManager& ui = mng->getUI();
 	ui.createPlantSelection(plant_slots);
 
 	const double set_time = 4;
@@ -200,6 +199,8 @@ int main()
 	Event ev;
 	while (win.isOpen()) {
 		FPS();
+		player.updateInfo(fps.dt);
+		ui.updateInfo();
 		while (win.pollEvent(ev)) {
 			if (ev.type == Event::Closed)
 				win.close();

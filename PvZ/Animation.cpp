@@ -103,7 +103,7 @@ void Animation::setFrameSize(int frame_w, int frame_h)
 	frame_width = frame_w;
 	frame_height = frame_h;
 }
-sf::Vector2i Animation::getRectPos() {
+sf::Vector2i Animation::getRectPos() const {
 	return { (int)sprite.getPosition().x, (int)sprite.getPosition().y };
 }
 

@@ -111,6 +111,10 @@ void Map::receiveMsg(Message* msg)
 		}
 		mng->addMessage(new_msg);
 		setIsPlaced(idxPlant.x, idxPlant.y, true);
+
+		Player& player = mng->getBorn()->getPlayer();
+		player.setMoney(player.getMoney() - msg->add_plant.cost);
+		player.resetCooldown(msg->add_plant.idx);
 	}
 }
 
