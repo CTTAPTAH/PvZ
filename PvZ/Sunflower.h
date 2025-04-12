@@ -12,12 +12,12 @@ private:
 	double current_time = 0;
 public:
 	Sunflower();
-	Sunflower(sf::Vector2i pos, int index_line_);
+	Sunflower(sf::Vector2f pos, int index_line_);
 	~Sunflower();
 	void dropsun(double dt);
 	void draw(sf::RenderWindow& win);
 	void receiveMsg(Message* msg) override;
 	void update(double dt, sf::RenderWindow& win) override;
-	void setRect(sf::IntRect rect_);
+	void setRect(sf::FloatRect rect_);
 };
 

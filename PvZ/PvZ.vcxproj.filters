@@ -57,6 +57,12 @@
     </ClCompile>
     <ClCompile Include="NewspaperZombie.cpp" />
     <ClCompile Include="RaZombie.cpp" />
+    <ClCompile Include="ConusZombie.cpp" />
+    <ClCompile Include="DiscoZombie.cpp" />
+    <ClCompile Include="Chomper.cpp" />
+    <ClCompile Include="SnowPeaProjectile.cpp" />
+    <ClCompile Include="SnowPeashooter.cpp" />
+    <ClCompile Include="SoundEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Car.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="NewspaperZombie.h" />
     <ClInclude Include="RaZombie.h" />
+    <ClInclude Include="Chomper.h" />
+    <ClInclude Include="ConusZombie.h" />
+    <ClInclude Include="DiscoZombie.h" />
+    <ClInclude Include="SnowPeaProjectile.h" />
+    <ClInclude Include="SnowPeashooter.h" />
+    <ClInclude Include="SoundEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Исходные файлы">

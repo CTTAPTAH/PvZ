@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include "SoundEditor.h"
+
 class Message;
 
 enum class TypeObject {
@@ -38,7 +40,8 @@ class GameObject
 {
 protected:
 	Animation animation;
-	sf::IntRect rect;
+	bool sound_played;
+	sf::FloatRect rect;
 	int hp;
 	bool isdead = false;
 	int idx_line;
@@ -47,7 +50,7 @@ protected:
 public:
 	// конструкторы, деструкторы
 	GameObject();
-	GameObject(Animation animation_, sf::IntRect rect_,
+	GameObject(Animation animation_, sf::FloatRect rect_,
 		int hp_, int idx_line_,
 		TypeObject type_obj_, TypeEntity type_ent_);
 	GameObject(const GameObject&) = default;
@@ -61,12 +64,12 @@ public:
 
 	// геттеры, сеттеры
 	Animation getAnimetion() const;
-	sf::IntRect getRect() const;
+	sf::FloatRect getRect() const;
 	int getHp() const;
 	int getIdxLine() const;
 	bool getIsDead() const;
 	TypeObject getTypeObj() const;
 	TypeEntity getTypeEnt() const;
-	void setRect(sf::IntRect rect_);
+	void setRect(sf::FloatRect rect_);
 	void setDead(bool isHappend);
 };

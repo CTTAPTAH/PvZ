@@ -9,7 +9,7 @@ private:
 
 
 public:
-	Nut(int idx_line, sf::Vector2i pos);
+	Nut(int idx_line, sf::Vector2f pos);
 	Nut();
 	~Nut();
 	void draw(sf::RenderWindow& win);

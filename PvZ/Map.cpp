@@ -15,10 +15,10 @@ Map::Map()
 	setTexture(LoadTexture::getBorn().getTexture("map"));
 
 	Manager* mng = Manager::getBorn();
-	resizeGrid({ 0, 0, mng->getWinWidth(), mng->getWinHeight() });
+	resizeGrid({ 0, 0, (float)mng->getWinWidth(),(float) mng->getWinHeight() });
 }
-Map::Map(sf::IntRect rect_map)
-	: sprite(),
+Map::Map(sf::FloatRect rect_map)
+	:sprite(),
 	amount_field_w(Config::AMOUNT_FIELD_W),
 	amount_field_h(Config::AMOUNT_FIELD_H)
 {
@@ -27,7 +27,7 @@ Map::Map(sf::IntRect rect_map)
 }
 
 // методы 
-void Map::resizeGrid(sf::IntRect rect_map)
+void Map::resizeGrid(sf::FloatRect rect_map)
 {
 	rect = rect_map;
 	field_width = rect.width / amount_field_w;
@@ -61,15 +61,15 @@ bool Map::isValidIndex(int row, int col) const
 	}
 	return true;
 }
-bool Map::isValidIndex(sf::Vector2i vect) const
+bool Map::isValidIndex(sf::Vector2f vect) const
 {
 	return isValidIndex(vect.x, vect.y);
 }
 void Map::receiveMsg(Message* msg)
 {
 	if (msg->type == TypeMsg::ADD_PLANT) {
-		sf::Vector2i mousePos(int(msg->add_plant.mousePos.x), int(msg->add_plant.mousePos.y));
-		sf::Vector2i idxPlant = getFieldIdx(mousePos);
+		sf::Vector2f mousePos(int(msg->add_plant.mousePos.x), int(msg->add_plant.mousePos.y));
+		sf::Vector2f idxPlant = getFieldIdx(mousePos);
 
 		// Мышку тыкнули на карту или нет. Занята ли ячейка
 		if ((idxPlant.y < 0 or idxPlant.y >= amount_field_w) or
@@ -109,6 +109,7 @@ void Map::receiveMsg(Message* msg)
 			Melonpult* melon = new Melonpult(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
 			new_msg.create.new_object = melon;
 		}
+		SoundEditor::getBorn()->playSound("plant", 30);
 		mng->addMessage(new_msg);
 		setIsPlaced(idxPlant.x, idxPlant.y, true);
 	}
@@ -146,7 +147,7 @@ int Map::getFieldHeight() const
 {
 	return field_height;
 }
-sf::Vector2i Map::getFieldPosition(int i, int j) const
+sf::Vector2f Map::getFieldPosition(int i, int j) const
 {
 	if (!isValidIndex(i, j)) {
 		std::cout << "Ошибка класса map, метода getFieldPosition: указан неверный индекс" << std::endl;
@@ -154,27 +155,27 @@ sf::Vector2i Map::getFieldPosition(int i, int j) const
 	}
 	return { rect.left + j * field_width, rect.top + i * field_height };
 }
-sf::Vector2i Map::getFieldPosition(sf::Vector2i vect) const
+sf::Vector2f Map::getFieldPosition(sf::Vector2f vect) const
 {
 	return getFieldPosition(vect.x, vect.y);
 }
-sf::Vector2i Map::getFieldIdx(sf::Vector2i point) const {
+sf::Vector2f Map::getFieldIdx(sf::Vector2f point) const {
 	// Проверяем, находится ли точка внутри границ карты
 	if (!rect.contains(point)) {
-		return sf::Vector2i(-1, -1); // Точка вне карты
+		return sf::Vector2f(-1, -1); // Точка вне карты
 	}
 
 	// Вычисляем индексы ячейки
 	int col = (point.x - rect.left) / field_width;
 	int row = (point.y - rect.top) / field_height;
 
-	return sf::Vector2i(row, col);
+	return sf::Vector2f(row, col);
 }
-sf::IntRect Map::getRect() const
+sf::FloatRect Map::getRect() const
 {
 	return rect;
 }
-void Map::setRectMap(sf::IntRect rect_map)
+void Map::setRectMap(sf::FloatRect rect_map)
 {
 	resizeGrid(rect_map);
 }
@@ -192,7 +193,7 @@ void Map::setIsPlaced(int row, int col, bool isPlaced_)
 
 	isPlaced[row][col] = isPlaced_;
 }
-void Map::setIsPlaced(sf::Vector2i vect, bool isPlaced_)
+void Map::setIsPlaced(sf::Vector2f vect, bool isPlaced_)
 {
 	setIsPlaced(vect.x, vect.y, isPlaced_);
 }

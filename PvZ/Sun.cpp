@@ -19,7 +19,7 @@ void normolize(sf::Vector2f& vector) {
 		vector = {0.f, 0.f};
 	}
 }
-Sun::Sun(int pos_x, int pos_y, int index_line_) :
+Sun::Sun(float pos_x, float pos_y, int index_line_) :
 	GameObject(
 		Animation(
 			LoadTexture::getBorn().getTexture("sun"),
@@ -96,11 +96,16 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 
 	Manager* MGR = Manager::getBorn();
 
-	sf::Vector2i cursor_position = sf::Mouse::getPosition(win);
+	sf::Vector2f cursor_position = (sf::Vector2f)sf::Mouse::getPosition(win);
 
-	sf::IntRect cursor_rect{ cursor_position.x, cursor_position.y, 1, 1 };
+	sf::FloatRect cursor_rect{ cursor_position.x, cursor_position.y, 1, 1 };
 
 	if (touch) {
+
+		if (!sound_played) {
+			SoundEditor::getBorn()->playSound("sun_pull_up", 15);
+			sound_played = true;
+		}
 
 		sf::Vector2f direction = { right_up_angle.x - rect.left, right_up_angle.y - rect.top };
 
@@ -113,6 +118,7 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 	}
 
 	if (rect.intersects(cursor_rect)) {
+
 		touch = true;
 		current_motion = MOVE_SUN;
 	}

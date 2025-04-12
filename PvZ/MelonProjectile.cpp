@@ -5,7 +5,7 @@ MelonProjectile::MelonProjectile()
 	: MelonProjectile( {0, 0}, 0, 0.0)
 {
 }
-MelonProjectile::MelonProjectile(sf::Vector2i pos_, int idx_line_, double vx_)
+MelonProjectile::MelonProjectile(sf::Vector2f pos_, int idx_line_, double vx_)
 	: GameObject(
 		Animation(
 			LoadTexture::getBorn().getTexture("melon_projectile"),
@@ -41,21 +41,21 @@ void MelonProjectile::move(double dt)
 	pos.x += vx * dt;
 	pos.y += vy * dt;
 	vy += Config::MELON_GRAVITY * dt;
-	setRect({ int(pos.x), int(pos.y), rect.width, rect.height });
+	setRect({ pos.x, pos.y, rect.width, rect.height });
 }
 void MelonProjectile::draw(sf::RenderWindow& win)
 {
 	animation.draw(win);
-	//// Создаем квадрат
-	//sf::RectangleShape square(sf::Vector2f(5.f, 5.f));
+	// Создаем квадрат
+	sf::RectangleShape square(sf::Vector2f(5.f, 5.f));
 
-	//// Устанавливаем позицию квадрата (необязательно)
-	//square.setPosition(float(rect.left), float(rect.top));
+	// Устанавливаем позицию квадрата (необязательно)
+	square.setPosition(float(rect.left), float(rect.top));
 
-	//// Устанавливаем цвет заливки (необязательно)
-	//square.setFillColor(sf::Color::Red);
+	// Устанавливаем цвет заливки (необязательно)
+	square.setFillColor(sf::Color::Red);
 
-	//win.draw(square);
+	win.draw(square);
 }
 void MelonProjectile::checkOutOfBounds()
 {

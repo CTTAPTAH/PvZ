@@ -31,8 +31,9 @@ private:
 
 	RaZombie* owner_zombie = nullptr;
 
+	
 public:
-	Sun(int pos_x, int pos_y, int index_line_);
+	Sun(float pos_x, float pos_y, int index_line_);
 	Sun();
 	~Sun();
 	void move_from_sunflower(double dt);

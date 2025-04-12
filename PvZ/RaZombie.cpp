@@ -8,7 +8,8 @@ RaZombie::RaZombie(int idx_line, int frame_w, int frame_h):
 {
 	animation.setTexture(LoadTexture::getBorn().getTexture("razombie"));
 	hp = 5;
-	velocity_x = 80;
+	velocity_x = Config::DEFAULT_ZOMBIE_SPEED;
+
 	type_obj = TypeObject::ZOMBIE;
 	type_ent = TypeEntity::RAZOMBIE;
 }

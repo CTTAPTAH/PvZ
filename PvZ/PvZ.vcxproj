@@ -158,6 +158,7 @@
     <ClCompile Include="RaZombie.cpp" />
     <ClCompile Include="SnowPeaProjectile.cpp" />
     <ClCompile Include="SnowPeashooter.cpp" />
+    <ClCompile Include="SoundEditor.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Sunflower.cpp" />
     <ClCompile Include="UIManager.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="RaZombie.h" />
     <ClInclude Include="SnowPeaProjectile.h" />
     <ClInclude Include="SnowPeashooter.h" />
+    <ClInclude Include="SoundEditor.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Sunflower.h" />
     <ClInclude Include="PeaProjectile.h" />

@@ -11,6 +11,7 @@
 #include "RaZombie.h"
 #include "ConusZombie.h"
 #include "DiscoZombie.h"
+#include "SoundEditor.h"
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
@@ -61,7 +62,7 @@ void RandomSpawn(int random) {
 	}
 	else if (random == 3) {
 		NewspaperZombie* zombie = static_cast<NewspaperZombie*>(object);
-        zombie = new NewspaperZombie(Random(0, 4), 100, 100);
+		zombie = new NewspaperZombie(Random(0, 4), 100, 100);
 		object = zombie;
 	}
 	else if (random == 4) {
@@ -74,15 +75,13 @@ void RandomSpawn(int random) {
 		zombie = new DiscoZombie(Random(0, 4));
 		object = zombie;
 	}
+	else {
+		return;
+	}
 	Message msg;
 	msg.type = TypeMsg::CREATE;
 	msg.create.new_object = object;
 	Manager::getBorn()->addMessage(msg);
-
-	}
-	else {
-		return;
-	}
 }
 
 int main()
@@ -96,18 +95,17 @@ int main()
 	}
 	else {
 		music.setLoop(true);
-		music.setVolume(100);
+		music.setVolume(30);
 		music.play();
 	}
-	SoundBuffer bufer;
-	Sound zombies_are_comming;
-	if (!bufer.loadFromFile("sounds\\zombies.ogg")) {
-		cerr << "Ошибка воспроизведения звука" << endl;
-		return 0;
-	}
-	zombies_are_comming.setBuffer(bufer);
-	zombies_are_comming.setVolume(100);
-	bool sound_played = false;
+
+
+	SoundEditor* sound_editor = SoundEditor::getBorn();
+	sound_editor->loadAllSounds();
+
+	//Sound* zombies_are_comming = SoundEditor::getBorn()->getSound("zombies_are_coming");
+
+	bool played = false;
 
 	LoadTexture& loader = LoadTexture::getBorn();
 	loader.loadAllTexture();
@@ -161,11 +159,11 @@ int main()
 
 
 
-	//Zombie* zombies = new Zombie(2, 60, 100);
-	//Message zombe_msg;
-	//zombe_msg.type = TypeMsg::CREATE;
-	//zombe_msg.create.new_object = zombies;
-	//mng->addMessage(zombe_msg);
+	Zombie* zombies = new Zombie(2, 60, 100);
+	Message zombe_msg;
+	zombe_msg.type = TypeMsg::CREATE;
+	zombe_msg.create.new_object = zombies;
+	mng->addMessage(zombe_msg);
 
 	// создание интерфейса
 	vector<PlantInfo> plant_slots;
@@ -195,8 +193,6 @@ int main()
 	const double music_set_time = 5;
 	double music_timer = music_set_time;
 
-	int counter_z = 0;
-
 	Event ev;
 	while (win.isOpen()) {
 		FPS();
@@ -219,16 +215,18 @@ int main()
 
 
 		music_timer -= fps.dt;
-		if (!sound_played && music_timer <= music_set_time-3.5) {
-			zombies_are_comming.play();
-			sound_played = true;
+		if (!played) {
+			if (music_timer <= music_set_time - 3.5) {
+				played = true;
+			}
+			
 		}
 
 		// Спавнер зомби
 		timer -= fps.dt;
 		if (timer <= 0) {
 			timer = Random(2, (int)set_time+2);
-
+			RandomSpawn(Random(1,5));
 			/*if (counter_z < 6) {
 				RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
 				Message zombie_msg;
@@ -237,7 +235,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(Random(1,5));
+		/*	RandomSpawn(Random(1,5));*/
 		}
 	
 		win.clear();

@@ -11,28 +11,15 @@ Car::Car(int index_line_, TypeObject type, int w_cell, int h_cell)
 			Config::CAR_FRAME_HEIGHT,
 			Config::CAR_FRAME_COUNT,
 			Config::CAR_FRAME_TIME,
-			{200, int((index_line_ * h_cell) + rect.height / 2.0f)+90 }
+			{200,(index_line_ * h_cell + rect.height / 2.0f)+90 }
 	    ),
-		{ 200, int((index_line_ * h_cell) + rect.height / 2.0f)+90, Config::CAR_FRAME_WIDTH, Config::CAR_FRAME_HEIGHT},
+		{ 200, (index_line_ * h_cell + rect.height / 2.0f)+90, Config::CAR_FRAME_WIDTH, Config::CAR_FRAME_HEIGHT},
 		INFINITY,
 		index_line_,
 		type,
 		TypeEntity::CAR
 		)
 {
-	//animation.setTexture(LoadTexture::getBorn().getTexture("car"));
-	//idx_line = index_line_; // Добавил Н
-	////sprite.setTexture(*texture);
-	//rect.width = 50;
-	//rect.height = 50;
-	////rect.left = 0 - rect.width;
-	//rect.left = 200;
-	////rect.top = (index_line_ * h_cell) + rect.height/2.0f;
-	//rect.top = (index_line_ * h_cell) + rect.height / 2.0f + 60;
-	//animation.setPosition(rect.left, rect.top); // Н добавил
-
-	//color = sf::Color::Black;
-	//hp = INFINITY;
 }
 Car::Car(){}
 Car::~Car() { /*std::cout << "Car was deleted" << std::endl;*/ }
@@ -54,15 +41,6 @@ void Car::receiveMsg(Message* msg)
 void Car::draw(sf::RenderWindow& win)
 {
 	animation.draw(win);
-	/*if (texture) {
-		sprite.setPosition(rect.left, rect.top);
-		win.draw(sprite);
-	}*/
-	/*sf::RectangleShape rectangle;
-	rectangle.setSize(sf::Vector2f(rect.width, rect.height));
-	rectangle.setPosition(rect.left, rect.top);
-	rectangle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-	win.draw(rectangle);*/
 }
 
 void Car::move(double dt)
@@ -79,6 +57,7 @@ void Car::CollisionWithZombie(double dt)
 	for (auto elem : object_list) {
 		if (elem->getTypeObj() == TypeObject::ZOMBIE and rect.intersects(elem->getRect())) {
 			if (this->idx_line == elem->getIdxLine()) {
+				SoundEditor::getBorn()->playSound("cars_start", 20);
 				touch = true;
 				Message msg;
 				msg.type = TypeMsg::DEATH;

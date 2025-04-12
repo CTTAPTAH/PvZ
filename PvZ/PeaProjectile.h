@@ -13,7 +13,7 @@ protected:
 public:
 	// конструкторы, деструкторы
 	PeaProjectile();
-	PeaProjectile(sf::Vector2i vect, int idx_line_, double damage);
+	PeaProjectile(sf::Vector2f vect, int idx_line_, double damage);
 	~PeaProjectile() = default;
 
 	// методы
@@ -25,5 +25,5 @@ public:
 	void receiveMsg(Message* msg) override;
 
 	//геттеры, сеттеры
-	void setRect(sf::IntRect rect_);
+	void setRect(sf::FloatRect rect_);
 };

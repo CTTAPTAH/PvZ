@@ -45,6 +45,6 @@ public:
 	int getWinWidth() const;
 	int getWinHeight() const;
 	std::list<GameObject*> getListObject() const;
-	std::vector<sf::IntRect> getZombieRects() const;
+	std::vector<sf::FloatRect> getZombieRects() const;
 	int getZombieOnLine(int idx_line) const;
 };

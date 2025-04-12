@@ -6,7 +6,7 @@ Melonpult::Melonpult()
     : Melonpult({ 0, 0 }, 0)
 {
 }
-Melonpult::Melonpult(sf::Vector2i pos, int idx_line_)
+Melonpult::Melonpult(sf::Vector2f pos, int idx_line_)
 	: Peashooter(
         pos, idx_line_
     ),
@@ -58,7 +58,7 @@ void Melonpult::isShooting(double dt)
 
             // Создаём снаряд. Для это находим vx
             // Позиции
-            sf::Vector2i pos_projectile = {
+            sf::Vector2f pos_projectile = {
                 rect.left + Config::PEASHOOTER_PROJECTILE_OFFSET_X,
                 rect.top + Config::PEASHOOTER_PROJECTILE_OFFSET_Y
             };

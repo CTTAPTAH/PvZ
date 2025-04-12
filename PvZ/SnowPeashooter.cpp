@@ -1,10 +1,23 @@
 #include "SnowPeashooter.h"
 
-SnowPeashooter::SnowPeashooter(int idx_line_, sf::Vector2i pos):
+SnowPeashooter::SnowPeashooter(int idx_line_, sf::Vector2f pos):
 	Peashooter(pos, idx_line_)
 {
-	animation.setTexture(LoadTexture::getBorn().getTexture("snowpea"));
-	TypeEntity::SNOWPEASHOOTER;
+	/*animation.setTexture(LoadTexture::getBorn().getTexture("snowpea"));
+	TypeEntity::SNOWPEASHOOTER;*/
+
+    animation = Animation(LoadTexture::getBorn().getTexture("snowpea"),
+        Config::PEASHOOTER_FRAME_WIDTH,
+        80,
+        1,
+        0,
+        pos
+    );
+    rect.width = Config::PEASHOOTER_FRAME_WIDTH;
+    rect.height = Config::PEASHOOTER_FRAME_HEIGHT;
+    hp = Config::PEASHOOTER_HP;
+    type_obj = TypeObject::PLANT;
+    type_ent = TypeEntity::SNOWPEASHOOTER;
 }
 
 SnowPeashooter::~SnowPeashooter()

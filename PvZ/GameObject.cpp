@@ -8,9 +8,10 @@ GameObject::GameObject()
 	idx_line(0),
 	type_obj(TypeObject::UNDEFINED),
 	type_ent(TypeEntity::UNDEFINED)
+
 {
 }
-GameObject::GameObject(Animation animation_, sf::IntRect rect_, int hp_, int idx_line_, TypeObject type_obj_, TypeEntity type_ent_)
+GameObject::GameObject(Animation animation_, sf::FloatRect rect_, int hp_, int idx_line_, TypeObject type_obj_, TypeEntity type_ent_)
 	: animation(animation_),
 	rect(rect_),
 	hp(hp_),
@@ -27,7 +28,7 @@ Animation GameObject::getAnimetion() const
 {
 	return animation;
 }
-sf::IntRect GameObject::getRect() const
+sf::FloatRect GameObject::getRect() const
 {
 	return rect;
 }
@@ -51,7 +52,7 @@ TypeEntity GameObject::getTypeEnt() const
 {
 	return type_ent;
 }
-void GameObject::setRect(sf::IntRect rect_)
+void GameObject::setRect(sf::FloatRect rect_)
 {
 	rect = rect_;
 	animation.setPosition(rect.left, rect.top);

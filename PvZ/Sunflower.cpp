@@ -1,6 +1,6 @@
 #include "Sunflower.h"
 
-Sunflower::Sunflower(sf::Vector2i pos, int index_line_)
+Sunflower::Sunflower(sf::Vector2f pos, int index_line_)
 	:GameObject(
 		Animation(
 			LoadTexture::getBorn().getTexture("sunflower"),
@@ -77,7 +77,7 @@ void Sunflower::receiveMsg(Message* msg)
 			MSG.type = TypeMsg::DEATH;
 			MSG.death.creature = this;
 			MGR->addMessage(MSG);
-			sf::Vector2i vect = MGR->getMap().getFieldIdx({ rect.left, rect.top });
+			sf::Vector2f vect = MGR->getMap().getFieldIdx({ rect.left, rect.top });
 			MGR->getMap().setIsPlaced(vect.x, vect.y, false);
 		}
 	}
@@ -92,7 +92,7 @@ void Sunflower::update(double dt, sf::RenderWindow& win)
 	}
 }
 
-void Sunflower::setRect(sf::IntRect rect_)
+void Sunflower::setRect(sf::FloatRect rect_)
 {
 	rect = rect_;
 	animation.setPosition(rect.left, rect.top);

@@ -11,7 +11,6 @@ class Zombie : public GameObject
 protected:
 
     double velocity_x;
-    double original_velocity_x;
 
     static int count;
     int current_index;
@@ -26,6 +25,7 @@ protected:
     double reload = 0;
 
     GameObject* victim;
+    sf::Sound chewingSound;
 
 public:
     Zombie();
@@ -49,6 +49,8 @@ public:
     void FindVictimN2(double dt); // менее производительно, но без потенциальных ошибок
 
     void ZombieIsFrosen(double dt);
+
+    void setZombieFrozenNull();
 
     void setHaveFrozenEffect(bool isHappend);
 

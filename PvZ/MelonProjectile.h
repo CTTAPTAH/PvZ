@@ -12,7 +12,7 @@ private:
 public:
 	// конструкторы, деструкторы
 	MelonProjectile();
-	MelonProjectile(sf::Vector2i pos_, int idx_line_, double vx_);
+	MelonProjectile(sf::Vector2f pos_, int idx_line_, double vx_);
 	~MelonProjectile() = default;
 
 	// методы

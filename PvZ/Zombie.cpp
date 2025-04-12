@@ -28,14 +28,16 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 	reload(Config::DEFAULT_ZOMBIE_RELOAD),
 	time_reload(Config::DEFAULT_ZOMBIE_TIME_RELOAD),
 	victim(nullptr),
-	current_index(count + 1),
-	original_velocity_x(velocity_x)
+	current_index(count + 1)
 {
 	//std::cout << "Zombie number " << current_index << " cr" << std::endl;
 	//velocity_x = 0; //проверял точность арбуза Н.
 	//rect.left -= rand() % (1000 - 300 + 1) + 300; //проверял точность арбуза Н.
-	setRect(rect);
 
+	//setRect(rect);
+	chewingSound.setBuffer(SoundEditor::getBorn()->getBuffer("zombie_chewing"));
+	chewingSound.setLoop(true);
+	chewingSound.setVolume(20);
 	Manager::getBorn()->addZombieOnLine(_index_line);
 	count++;
 }
@@ -55,6 +57,7 @@ void Zombie::move(double dt)
 		rect.left -= velocity_x * dt;
 		animation.setPosition(rect.left, rect.top);
 	}
+	//std::cout << velocity_x << std::endl;
 
 	//std::cout << "Zombie moving, position x: " <<dt << "\n";
 	//std::cout << dt << " " << velocity_x << " " << velocity_x * dt << std::endl;
@@ -62,7 +65,6 @@ void Zombie::move(double dt)
 
 void Zombie::draw(sf::RenderWindow& win)
 {
-
 	animation.draw(win);
 }
 void Zombie::update(double dt, sf::RenderWindow& win) {
@@ -85,13 +87,14 @@ void Zombie::receiveMsg(Message* msg)
 		this == msg->damage.who_receive) {
 		if (hp > 0) {
 			hp -= msg->damage.damage;
-		}
-		else {
-			Message msg;
-			msg.type = TypeMsg::DEATH;
-			msg.death.creature = this;
-			Manager* MGR = Manager::getBorn();
-			MGR->addMessage(msg);
+			if (hp <= 0) {
+				Message msg;
+				msg.type = TypeMsg::DEATH;
+				msg.death.creature = this;
+				Manager* MGR = Manager::getBorn();
+				MGR->addMessage(msg);
+				isdead = true; // <--- это важно!
+			}
 		}
 	}
 }
@@ -198,7 +201,12 @@ void Zombie::FindVictimN2(double dt)
 		}
 	}
 
+
 	if (victim) {
+
+		if (chewingSound.getStatus() != sf::Sound::Playing) {
+			chewingSound.play();
+		}
 		reload -= dt;
 		if (reload <= 0) {
 			reload = time_reload;
@@ -216,6 +224,9 @@ void Zombie::FindVictimN2(double dt)
 		if (isEating) {
 			isEating = false;
 			reload = time_reload;
+		}
+		if (chewingSound.getStatus() == sf::Sound::Playing) {
+			chewingSound.stop();
 		}
 	}
 }
@@ -238,21 +249,23 @@ void Zombie::setHaveFrozenEffect(bool isHappend)
 
 void Zombie::ZombieIsFrosen(double dt)
 {
-
 	if (haveFrozenEffect) {
+
 		if (!wasFrozenSpeedSet) {
-			velocity_x = original_velocity_x / 5.0f;
+			velocity_x = Config::DEFAULT_ZOMBIE_SPEED/ 2.0f;
 			wasFrozenSpeedSet = true;
-		}
-		if (frozen_timer != 0) {
-			frozen_timer = 0;
 		}
 		frozen_timer += dt;
 	}
 	if (frozen_timer >= 2) {
 		haveFrozenEffect = false;
-		velocity_x = original_velocity_x;
+		velocity_x = Config::DEFAULT_ZOMBIE_SPEED;
 		frozen_timer = 0;
 		wasFrozenSpeedSet = false;
 	}
+}
+
+void Zombie::setZombieFrozenNull()
+{
+	frozen_timer = 0;
 }

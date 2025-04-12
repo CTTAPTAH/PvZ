@@ -41,8 +41,8 @@ public:
 	static constexpr int PEASHOOTER_HP = 4;
 	static constexpr int PEASHOOTER_FRAME_WIDTH = 100;
 	static constexpr int PEASHOOTER_FRAME_HEIGHT = 100;
-	static constexpr int PEASHOOTER_COUNT_FRAME = 1;//23
-	static constexpr double PEASHOOTER_FRAMETIME = 0;//0.085
+	static constexpr int PEASHOOTER_COUNT_FRAME =23;//23
+	static constexpr double PEASHOOTER_FRAMETIME = 0.085;//0.085
 	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_X = 72;
 	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_Y = 13;
 
@@ -97,8 +97,8 @@ public:
 
 	// дефолтные значения зомби
 	static constexpr int DEFAULT_ZOMBIE_HP = 3;
-	static constexpr double DEFAULT_ZOMBIE_SPEED = 100;
-	static constexpr double FROZEN_DEFAULT_ZOMBIE_SPEED = 20;
+	static constexpr double DEFAULT_ZOMBIE_SPEED = 75;
+	static constexpr double FROZEN_DEFAULT_ZOMBIE_SPEED = 75;
 
 	static constexpr int DEFAULT_ZOMBIE_TIME_RELOAD = 1;
 	static constexpr int DEFAULT_ZOMBIE_RELOAD = 0;

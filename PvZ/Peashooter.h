@@ -12,10 +12,12 @@ protected:
 	double damage;
 	double time_reload;
 	double reload;
+
+
 public:
 	// конструкторы, деструкторы
 	Peashooter();
-	Peashooter(sf::Vector2i pos, int idx_line_);
+	Peashooter(sf::Vector2f pos, int idx_line_);
 	~Peashooter() = default;
 
 	// методы

@@ -14,7 +14,7 @@ private:
 	bool isEating = false;
 public:
 	Chomper();
-	Chomper(int idx_line, sf::Vector2i pos);
+	Chomper(int idx_line, sf::Vector2f pos);
 	~Chomper();
 
 	void draw(sf::RenderWindow& win);

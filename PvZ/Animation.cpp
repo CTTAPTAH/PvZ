@@ -2,7 +2,7 @@
 #include <iostream>
 
 // конструкторы, деструкторы
-Animation::Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime_, sf::Vector2i position)
+Animation::Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime_, sf::Vector2f position)
 	: sprite(),
 	texture(texture_),
 	frame_width(frame_width_),
@@ -84,7 +84,7 @@ void Animation::setTexture(sf::Texture* texture_)
 {
 	texture = texture_;
 	if (texture) { // ѕровер€ем, загружена ли текстура
-		sprite.setTexture(*texture, true);
+		sprite.setTexture(*texture);
 		cur_frame = 0;
 		sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y); // ”станавливаем позицию спрайта
 	}
@@ -102,12 +102,4 @@ void Animation::setFrameSize(int frame_w, int frame_h)
 {
 	frame_width = frame_w;
 	frame_height = frame_h;
-}
-sf::Vector2i Animation::getRectPos() {
-	return { (int)sprite.getPosition().x, (int)sprite.getPosition().y };
-}
-
-void Animation::setRect(sf::IntRect rect)
-{
-	sprite.setTextureRect(rect);
 }

@@ -35,7 +35,7 @@ void ConusZombie::receiveMsg(Message* msg)
 		}
 		else if (hp == 2 or hp == 1) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("zombie"));
-			rect.width = 63; // вручную плохо. Config лучше
+			rect.width = 68; // вручную плохо. Config лучше
 			rect.height = 100; // вручную плохо. Config лучше
 		}
 

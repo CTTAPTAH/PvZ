@@ -32,6 +32,7 @@ void NewspaperZombie::receiveMsg(Message* msg)
 	if (msg->type == TypeMsg::DAMAGE and
 		this == msg->damage.who_receive) {
 		hp -= msg->damage.damage;
+
 		if (hp <= 3) {
 			isHavePaper = false;
 			animation.setTexture(LoadTexture::getBorn().getTexture("wnewszombie"));

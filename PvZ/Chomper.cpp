@@ -2,14 +2,14 @@
 
 Chomper::Chomper(){}
 
-Chomper::Chomper(int idx_line, sf::Vector2i pos):
+Chomper::Chomper(int idx_line, sf::Vector2f pos):
 	GameObject(
 		Animation(
 			LoadTexture::getBorn().getTexture("chomper"),
 			Config::CHOMPER_FRAME_WIDTH,
 			Config::CHOMPER_FRAME_HEIGHT,
-			Config::CHOMPER_FRAME_COUNT,
-			Config::CHOMPER_FRAME_TIME,
+			1,
+			0,
 			pos
 	),
 	{pos.x, pos.y, Config::CHOMPER_FRAME_WIDTH, Config::CHOMPER_FRAME_HEIGHT },

@@ -13,7 +13,7 @@ private:
 	double timer; // сколько времени прошло
 public:
 	// конструкторы, деструкторы
-	Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime, sf::Vector2i position);
+	Animation(sf::Texture* texture_, int frame_width_, int frame_height_, int count_frame_, double frametime, sf::Vector2f position);
 	Animation(sf::Texture* texture_); // лучше не использовать. Можно только ради быстроты написания кода
 	Animation();
 	Animation(const Animation& other);

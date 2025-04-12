@@ -5,8 +5,8 @@ Peashooter::Peashooter()
     : Peashooter({ 0, 0 }, 0)
 {
 }
-Peashooter::Peashooter(sf::Vector2i pos, int idx_line_)
-    : GameObject(
+Peashooter::Peashooter(sf::Vector2f pos, int idx_line_)
+    :GameObject(
         Animation(LoadTexture::getBorn().getTexture("peashooter"),
             Config::PEASHOOTER_FRAME_WIDTH,
             Config::PEASHOOTER_FRAME_HEIGHT,
@@ -47,7 +47,7 @@ void Peashooter::receiveMsg(Message* msg)
             msg.type = TypeMsg::DEATH;
             msg.death.creature = this;
             mng->addMessage(msg);
-            sf::Vector2i vect = mng->getMap().getFieldIdx({ rect.left, rect.top });
+            sf::Vector2f vect = mng->getMap().getFieldIdx({ rect.left, rect.top });
             mng->getMap().setIsPlaced(vect.x, vect.y, false);
         }
     }

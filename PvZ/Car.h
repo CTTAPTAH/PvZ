@@ -11,6 +11,8 @@ private:
 
 	static sf::Texture* texture;
 	sf::Sprite sprite;
+
+
 public:
 	Car();
 	Car(int index_line_, TypeObject type, int w_cell, int h_cell);

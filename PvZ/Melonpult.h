@@ -12,7 +12,7 @@ protected:
 public:
 	// конструкторы, деструкторы
 	Melonpult();
-	Melonpult(sf::Vector2i pos, int idx_line_);
+	Melonpult(sf::Vector2f pos, int idx_line_);
 	~Melonpult() = default;
 
 	// методы

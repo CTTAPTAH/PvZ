@@ -149,8 +149,8 @@ std::list<GameObject*> Manager::getListObject() const {
 	return game_objects;
 }
 //Функция для создания списка ректов исключительно зомби
-std::vector<sf::IntRect> Manager::getZombieRects() const {
-	std::vector<sf::IntRect> zombieRects;
+std::vector<sf::FloatRect> Manager::getZombieRects() const {
+	std::vector<sf::FloatRect> zombieRects;
 	for (auto obj : game_objects) {
 		if (obj->getTypeObj() == TypeObject::ZOMBIE) {
 			zombieRects.push_back(obj->getRect());

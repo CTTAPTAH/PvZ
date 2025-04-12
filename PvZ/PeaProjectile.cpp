@@ -9,7 +9,7 @@ PeaProjectile::PeaProjectile()
 {
 	
 }
-PeaProjectile::PeaProjectile(sf::Vector2i vect, int idx_line_, double damage_)
+PeaProjectile::PeaProjectile(sf::Vector2f vect, int idx_line_, double damage_)
 	: GameObject(
 		Animation(LoadTexture::getBorn().getTexture("pea_projectile"),
 			Config::PEA_PROJECTILE_FRAME_WIDTH,
@@ -68,6 +68,8 @@ void PeaProjectile::collisionWithZombies()
 		if (zombie->getTypeObj() == TypeObject::ZOMBIE) {
 			if (rect.intersects(zombie->getRect())) {
 				// удаляем снаряд
+				SoundEditor::getBorn()->playSound("pea_hit", 10);
+
 				Message msg;
 				msg.type = TypeMsg::DEATH;
 				msg.death.creature = this;
@@ -90,7 +92,7 @@ void PeaProjectile::receiveMsg(Message* msg)
 }
 
 // геттеры, сеттеры
-void PeaProjectile::setRect(sf::IntRect rect_)
+void PeaProjectile::setRect(sf::FloatRect rect_)
 {
 	rect = rect_;
 	animation.setPosition(rect.left, rect.top);

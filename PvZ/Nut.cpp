@@ -1,6 +1,6 @@
 #include "Nut.h"
 
-Nut::Nut(int idx_line, sf::Vector2i pos) :
+Nut::Nut(int idx_line, sf::Vector2f pos) :
 	GameObject(
 		Animation(
 			LoadTexture::getBorn().getTexture("nut_full_hp"),
@@ -50,7 +50,7 @@ void Nut::receiveMsg(Message* msg)
 			msg.type = TypeMsg::DEATH;
 			msg.death.creature = this;
 			mng->addMessage(msg);
-			sf::Vector2i vect = mng->getMap().getFieldIdx({ rect.left, rect.top });
+			sf::Vector2f vect = mng->getMap().getFieldIdx({ rect.left, rect.top });
 			mng->getMap().setIsPlaced(vect.x, vect.y, false);
 		}
 	}

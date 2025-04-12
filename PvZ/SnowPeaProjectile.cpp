@@ -1,6 +1,6 @@
 #include "SnowPeaProjectile.h"
 
-SnowPeaProjectile::SnowPeaProjectile(sf::Vector2i vect, int idx_line_, double damage_):
+SnowPeaProjectile::SnowPeaProjectile(sf::Vector2f vect, int idx_line_, double damage_):
 	PeaProjectile(vect, idx_line_, damage_)
 {
 	animation.setTexture(LoadTexture::getBorn().getTexture("snowpeaPr"));
@@ -20,6 +20,7 @@ void SnowPeaProjectile::collisionWithZombies()
 
 				Zombie* current_zombie = static_cast<Zombie*>(zombie);
 				current_zombie->setHaveFrozenEffect(true);
+				current_zombie->setZombieFrozenNull();
 
 				Message msg;
 				msg.type = TypeMsg::DEATH;
