@@ -13,20 +13,46 @@ public:
 	static constexpr int H_CELL = 98;
 	// Игрок
 	static constexpr int PLANT_COUNT = 5;
+	static constexpr int MONEY = 50;
+	//---------------------------------------------
+
+	// Перезаряка перед следующей попыткой поставить растение
+	
+	// если хочется убрать кд, то COOLDOWN_DEFAULT.
+	// Изменять значение кд в классе player в конструкторе.
+	// Нужно переписать так: time_reload(Config::COOLDOWN_DEFAULT)
+	static constexpr double COOLDOWN_DEFAULT = 5.0;
+	static constexpr double COOLDOWN_PEA = 5.0;
+	static constexpr double COOLDOWN_SNOW_PEA = 5.0;
+	static constexpr double COOLDOWN_SUNFLOWER = 5.0;
+	static constexpr double COOLDOWN_MELON = 5.0;
+	static constexpr double COOLDOWN_CHOMPER = 5.0;
+	static constexpr double COOLDOWN_NUT = 5.0;
+	//---------------------------------------------
 
 	// Интерфейс
+	// деньги
+	static constexpr int SIZE_MONEY = 45;
+	static constexpr int MONEY_POS_X = 230;
+	static constexpr int MONEY_POS_Y = 0;
+
+	// иконка
 	static constexpr int FRAME_ICON_OFFSET_X = -4;
 	static constexpr int FRAME_ICON_OFFSET_Y = -1;
 	static constexpr int ICON_OFFSET_X = 15;
 	static constexpr int ICON_OFFSET_Y = 0;
 	static constexpr int ICON_SPACING = 5;
 
+	// таблица с количеством денег
 	static constexpr int BOARD_POS_X = 150;
 	static constexpr int BOARD_POS_Y = 0;
+	static constexpr int MONEY_DISPLAY_OFFSET_X = 214;
+	static constexpr int MONEY_DISPLAY_WIDTH = 133;
 
+	// лопата
 	static constexpr int SHOVEL_POS_X = 333;
 	static constexpr int SHOVEL_POS_Y = 0;
-
+	
 	// Карта
 	// Количество линий на карте
 	static constexpr int AMOUNT_LINES_MAP = 5;
@@ -105,11 +131,6 @@ public:
 	static constexpr int DEFAULT_ZOMBIE_DAMAGE = 1;
 	static constexpr int DEFAULT_ZOMBIE_IDLE_SPEED = 0;
 
-
-
-
-
-
 	//Подсолнух
 	static constexpr int SUNFLOWER_FRAME_WIDTH = 100;
 	static constexpr int SUNFLOWER_FRAME_HEIGHT = 100;
@@ -120,7 +141,7 @@ public:
 	static constexpr int TIME_TO_REAPEAR_SUN = 7;
 
 	//Солнца
-
+	static constexpr int SUN_PRICE = 50;
 	static constexpr int SUN_FRAME_WIDTH = 50;
 	static constexpr int SUN_FRAME_HEIGHT = 50;
 	static constexpr int SUN_FRAME_COUNT = 1;

@@ -1,12 +1,19 @@
 #pragma once
-#include "Manager.h"
-
+#include "config.h"
+#include <SFML/Graphics.hpp>
+#include "Player.h"
 
 struct PlantInfo;
+class Manager;
 
 class UIManager
 {
 private:
+	// Отображаем деньги
+	sf::Font font;
+	sf::Text money_text;
+	int money;
+
 	// Рисуем ли индиактор, помогающий поставить растение
 	bool isPreviewing;
 	sf::Color color_indicator;
@@ -28,10 +35,13 @@ public:
 	UIManager();
 
 	// методы
+	void updateInfo();
 	void createPlantSelection(const std::vector<PlantInfo>& plants);
 	void draw(sf::RenderWindow& win);
 	void handleMousePress(sf::Vector2f mousePos);
 	void handleMouseRelease(sf::Vector2f mousePos);
+	void receiveMsg(Message* msg);
+	void updateMoneyText(int money_);
 
 	// геттеры, сеттеры
 };
