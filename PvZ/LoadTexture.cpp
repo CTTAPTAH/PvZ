@@ -66,6 +66,7 @@ void LoadTexture::loadAllTexture()
 	addTexture("shovel", "textures\\shovel.png");
 	addTexture("shovel2", "textures\\shovel2.png");
 	addTexture("frame_icon", "textures\\frame_icon.png");
+	addTexture("end_screen", "textures\\EndScreen.png");
 }
 
 // геттеры, сеттеры

@@ -55,6 +55,7 @@ void RaZombie::update(double dt, sf::RenderWindow& win)
 		move(dt);
 		draw(win);
 		ZombieIsFrosen(dt);
+		isGameOver();
 	}
 
 }

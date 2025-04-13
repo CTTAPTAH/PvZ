@@ -5,6 +5,69 @@
 #include <iostream>
 #include "Map.h"
 
+//static int set_counter = 0;
+
+struct GameOverInfo {
+
+    int set_counter;
+    bool gameOver;
+    double alpha_channel;
+    sf::Color color;
+    sf::RectangleShape generalrect;
+
+    sf::Sprite sprite;
+    sf::Texture* texture;
+
+    static GameOverInfo& getBorn() {
+        static GameOverInfo instance;
+        return instance;
+    }
+
+private:
+    GameOverInfo() :gameOver(false), alpha_channel(0), color({ 0,0,0, sf::Uint8(alpha_channel)}), generalrect({Config::WIN_WIDTH, Config::WIN_HEIGHT}) {
+        generalrect.setPosition({ 0, 0 });    
+        texture = LoadTexture::getBorn().getTexture("end_screen");
+        sprite.setTexture(*texture);
+        sprite.setPosition({ Config::WIN_WIDTH / 2.0- Config::WIN_WIDTH/5.0, Config::WIN_HEIGHT/5.0 });
+    }
+public:
+    GameOverInfo(const GameOverInfo&) = delete;
+    GameOverInfo& operator=(const GameOverInfo&) = delete;
+    ~GameOverInfo() {}
+
+    void GameOver(double dt, sf::RenderWindow& win) {
+        if (gameOver) {
+            if (alpha_channel <= 255) {
+                alpha_channel += dt * 200;
+                if (alpha_channel > 255) alpha_channel = 255;
+                
+            }
+            color.a = static_cast<sf::Uint8>(alpha_channel); 
+            color = { 0, 0, 0, color.a };
+            generalrect.setFillColor(color);
+           
+            win.draw(generalrect);
+
+            if (color.a >= 255) {
+                win.draw(sprite);
+            }
+        }
+    }
+    void setGameOver(bool isHappend) {
+        if (set_counter < 1) {
+            gameOver = isHappend;
+            SoundEditor::getBorn()->playSound("Noo", 50);
+            set_counter++;
+        }
+        return;
+    }
+    bool getGameOver() {
+        return gameOver;
+    }
+    double getAlpha() {
+        return alpha_channel;
+    }
+};
 
 class Zombie : public GameObject
 {
@@ -53,7 +116,8 @@ public:
     void setZombieFrozenNull();
 
     void setHaveFrozenEffect(bool isHappend);
-
+    void isGameOver();
     // геттеры, сеттеры
     int getSpeed() const;
+
 };

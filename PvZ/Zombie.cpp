@@ -3,7 +3,12 @@
 #define IDLE_ZOMBIE_SPEED 0
 
 
+
 int Zombie::count = 0;
+
+//bool Zombie::gameOver = false;
+//
+//double Zombie::alpha_channel = 0;
 
 Zombie::Zombie() {}
 
@@ -37,7 +42,7 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 	//setRect(rect);
 	chewingSound.setBuffer(SoundEditor::getBorn()->getBuffer("zombie_chewing"));
 	chewingSound.setLoop(true);
-	chewingSound.setVolume(20);
+	chewingSound.setVolume(10);
 	Manager::getBorn()->addZombieOnLine(_index_line);
 	count++;
 }
@@ -74,6 +79,7 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 		move(dt);
 		draw(win);
 		ZombieIsFrosen(dt);
+		isGameOver();
 	}
 }
 void Zombie::receiveMsg(Message* msg)
@@ -268,4 +274,10 @@ void Zombie::ZombieIsFrosen(double dt)
 void Zombie::setZombieFrozenNull()
 {
 	frozen_timer = 0;
+}
+
+void Zombie::isGameOver() {
+	if (rect.left + rect.width <= 0) {
+		GameOverInfo::getBorn().setGameOver(true);
+	}
 }

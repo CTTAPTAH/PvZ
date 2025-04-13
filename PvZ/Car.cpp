@@ -57,12 +57,16 @@ void Car::CollisionWithZombie(double dt)
 	for (auto elem : object_list) {
 		if (elem->getTypeObj() == TypeObject::ZOMBIE and rect.intersects(elem->getRect())) {
 			if (this->idx_line == elem->getIdxLine()) {
-				SoundEditor::getBorn()->playSound("cars_start", 20);
+				if (!sound_played) {
+					SoundEditor::getBorn()->playSound("cars_start", 20);
+					sound_played = true;
+				}
 				touch = true;
 				Message msg;
 				msg.type = TypeMsg::DEATH;
 				msg.death.creature = elem;
 				MGR->addMessage(msg);
+				break;
 			}
 		}
 	}

@@ -4,6 +4,18 @@
 
 SoundEditor* SoundEditor::born = nullptr;
 
+SoundEditor::SoundEditor() {
+
+    if (!music.openFromFile("sounds\\MUSIC.ogg")) {
+        std::cerr << "Ошибка загрузки музыки!" << std::endl;
+    }
+    else {
+        music.setLoop(true);
+        music.setVolume(30);
+        music.play();
+    }
+}
+
 SoundEditor* SoundEditor::getBorn() {
     if (!born) {
         born = new SoundEditor();
@@ -31,6 +43,7 @@ void SoundEditor::loadAllSounds() {
     addSound("zombie_chewing", "sounds\\zombieChew.ogg");
     addSound("cars_start", "sounds\\carsStart.ogg");
     addSound("plant", "sounds\\plant.ogg");
+    addSound("Noo", "sounds\\Noo.ogg");
 }
 
 void SoundEditor::playSound(const std::string& soundName, int volume, bool loop) {
@@ -49,7 +62,6 @@ void SoundEditor::playSound(const std::string& soundName, int volume, bool loop)
 
     playingSounds.push_back(std::move(sound));
     cleanupSounds();
-    std::cout << playingSounds.size() << std::endl;
 }
 
 void SoundEditor::cleanupSounds() {
@@ -67,4 +79,9 @@ sf::SoundBuffer& SoundEditor::getBuffer(const std::string& name) {
     if (it != buffers.end()) {
         return it->second;
     }
+}
+
+void SoundEditor::setMusicStop()
+{
+    music.stop();
 }

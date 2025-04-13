@@ -18,6 +18,7 @@
 using namespace std;
 using namespace sf;
 
+
 struct Dt
 {
 	Clock clock;
@@ -72,7 +73,7 @@ void RandomSpawn(int random) {
 	}
 	else if (random == 5) {
 		DiscoZombie* zombie = static_cast<DiscoZombie*>(object);
-		zombie = new DiscoZombie(Random(0, 4));
+		zombie = new DiscoZombie(2);
 		object = zombie;
 	}
 	else {
@@ -89,18 +90,11 @@ int main()
 	srand(time(0));
 	system("chcp 1251>nul");
 
-	Music music;
-	if (!music.openFromFile("sounds\\MUSIC.ogg")) {
-		cerr << "Ошибка загрузки музыки!" << endl;
-	}
-	else {
-		music.setLoop(true);
-		music.setVolume(30);
-		music.play();
-	}
+
 
 
 	SoundEditor* sound_editor = SoundEditor::getBorn();
+
 	sound_editor->loadAllSounds();
 
 	//Sound* zombies_are_comming = SoundEditor::getBorn()->getSound("zombies_are_coming");
@@ -157,15 +151,6 @@ int main()
 	//	mng->addMessage(msg);
 	//}
 
-
-
-
-	Zombie* zombies = new Zombie(2, 60, 100);
-	Message zombe_msg;
-	zombe_msg.type = TypeMsg::CREATE;
-	zombe_msg.create.new_object = zombies;
-	mng->addMessage(zombe_msg);
-
 	// создание интерфейса
 	vector<PlantInfo> plant_slots;
 	PlantInfo pea_info(LoadTexture::getBorn().getTexture("peashooter_icon"), 100, TypeEntity::PEASHOOTER, Config::COOLDOWN_PEA);
@@ -194,6 +179,8 @@ int main()
 	const double music_set_time = 5;
 	double music_timer = music_set_time;
 
+	int counter_z = 0;
+
 	Event ev;
 	while (win.isOpen()) {
 		FPS();
@@ -220,6 +207,7 @@ int main()
 		music_timer -= fps.dt;
 		if (!played) {
 			if (music_timer <= music_set_time - 3.5) {
+				SoundEditor::getBorn()->playSound("zombies_are_coming");
 				played = true;
 			}
 			
@@ -229,7 +217,10 @@ int main()
 		timer -= fps.dt;
 		if (timer <= 0) {
 			timer = Random(2, (int)set_time+2);
-			RandomSpawn(Random(1,5));
+			/*if (counter_z < 1) {
+				RandomSpawn(5);
+				counter_z++;
+			}*/
 			/*if (counter_z < 6) {
 				RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
 				Message zombie_msg;
@@ -238,15 +229,21 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-		/*	RandomSpawn(Random(1,5));*/
+			RandomSpawn(Random(1,5));
 		}
-	
 		win.clear();
 		mng->getMap().drawMap(win); // сначала рисуем карту
 
-		mng->updateMessage(fps.dt); // обрабатываем сообщения
-		mng->updateObject(fps.dt, win); // объекты действуют и рисуются (можно разделить на действие и рисование)
+		if (GameOverInfo::getBorn().getGameOver()) {
+			SoundEditor::getBorn()->setMusicStop();
+		}
+		if (!GameOverInfo::getBorn().getGameOver() and GameOverInfo::getBorn().getAlpha()<255) {
+			mng->updateMessage(fps.dt);
+			mng->updateObject(fps.dt, win);
+		}
 		ui.draw(win);
+
+		GameOverInfo::getBorn().GameOver(fps.dt, win);
 
 		win.display();
 	}
