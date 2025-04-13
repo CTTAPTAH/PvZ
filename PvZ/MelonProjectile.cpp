@@ -46,16 +46,16 @@ void MelonProjectile::move(double dt)
 void MelonProjectile::draw(sf::RenderWindow& win)
 {
 	animation.draw(win);
-	// Создаем квадрат
-	sf::RectangleShape square(sf::Vector2f(5.f, 5.f));
+	//// Создаем квадрат
+	//sf::RectangleShape square(sf::Vector2f(5.f, 5.f));
 
-	// Устанавливаем позицию квадрата (необязательно)
-	square.setPosition(float(rect.left), float(rect.top));
+	//// Устанавливаем позицию квадрата (необязательно)
+	//square.setPosition(float(rect.left), float(rect.top));
 
-	// Устанавливаем цвет заливки (необязательно)
-	square.setFillColor(sf::Color::Red);
+	//// Устанавливаем цвет заливки (необязательно)
+	//square.setFillColor(sf::Color::Red);
 
-	win.draw(square);
+	//win.draw(square);
 }
 void MelonProjectile::checkOutOfBounds()
 {

@@ -30,6 +30,7 @@ void Nut::draw(sf::RenderWindow& win)
 
 void Nut::update(double dt, sf::RenderWindow& win)
 {
+	animation.update(dt);
 	draw(win);
 }
 

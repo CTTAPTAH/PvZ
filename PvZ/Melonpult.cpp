@@ -11,8 +11,8 @@ Melonpult::Melonpult(sf::Vector2f pos, int idx_line_)
         pos, idx_line_
     ),
     is_shooting(false),
-    damage(Config::PEASHOOTER_DAMAGE),
-    time_reload(Config::PEASHOOTER_TIME_RELOAD),
+    damage(Config::MELONPULT_DAMAGE),
+    time_reload(Config::MELONPULT_TIME_RELOAD),
     reload(Config::MELONPULT_TIME_RELOAD)
 {
     damage = Config::MELONPULT_DAMAGE;
@@ -26,7 +26,7 @@ Melonpult::Melonpult(sf::Vector2f pos, int idx_line_)
     );
     rect.width = Config::MELONPULT_FRAME_WIDTH;
     rect.height = Config::MELONPULT_FRAME_HEIGHT;
-    hp = Config::PEASHOOTER_HP;
+    hp = Config::MELONPULT_HP;
     type_obj = TypeObject::PLANT;
     type_ent = TypeEntity::MELLONPULT;
 }

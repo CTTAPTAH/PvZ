@@ -6,14 +6,14 @@ public:
 	// Размеры экрана получает manager, при дальнейшё работе программы
 	// лучше не пользоваться этими значениями, а получать их через manager,
 	// т.к. размеры окна могут меняться
-	static constexpr int WIN_WIDTH = 1399;
+	static constexpr int WIN_WIDTH = 1020; // 1399 или 1020
 	static constexpr int WIN_HEIGHT = 600;
 
 	static constexpr int W_CELL = 81;
 	static constexpr int H_CELL = 98;
 	// Игрок
 	static constexpr int PLANT_COUNT = 5;
-	static constexpr int MONEY = 50;
+	static constexpr int MONEY = 5000;
 	//---------------------------------------------
 
 	// Перезаряка перед следующей попыткой поставить растение
@@ -21,7 +21,7 @@ public:
 	// если хочется убрать кд, то COOLDOWN_DEFAULT.
 	// Изменять значение кд в классе player в конструкторе.
 	// Нужно переписать так: time_reload(Config::COOLDOWN_DEFAULT)
-	static constexpr double COOLDOWN_DEFAULT = 5.0;
+	static constexpr double COOLDOWN_DEFAULT = 0.0;
 	static constexpr double COOLDOWN_PEA = 5.0;
 	static constexpr double COOLDOWN_SNOW_PEA = 5.0;
 	static constexpr double COOLDOWN_SUNFLOWER = 5.0;
@@ -29,7 +29,7 @@ public:
 	static constexpr double COOLDOWN_CHOMPER = 5.0;
 	static constexpr double COOLDOWN_NUT = 5.0;
 	//---------------------------------------------
-
+	
 	// Интерфейс
 	// деньги
 	static constexpr int SIZE_MONEY = 45;
@@ -67,10 +67,10 @@ public:
 	static constexpr int PEASHOOTER_HP = 4;
 	static constexpr int PEASHOOTER_FRAME_WIDTH = 100;
 	static constexpr int PEASHOOTER_FRAME_HEIGHT = 100;
-	static constexpr int PEASHOOTER_COUNT_FRAME =23;//23
-	static constexpr double PEASHOOTER_FRAMETIME = 0.085;//0.085
-	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_X = 72;
-	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_Y = 13;
+	static constexpr int PEASHOOTER_COUNT_FRAME = 23; //23
+	static constexpr double PEASHOOTER_FRAMETIME = 0.085; //0.085
+	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_X = 0;
+	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_Y = 18;
 
 	// Горошина снаряд
 	static constexpr double PEA_PROJECTILE_SPEED = 300.0;
@@ -85,9 +85,9 @@ public:
 	static constexpr double MELONPULT_TIME_RELOAD = 1.0;
 	static constexpr int MELONPULT_HP = 4;
 	static constexpr int MELONPULT_FRAME_WIDTH = 100;
-	static constexpr int MELONPULT_FRAME_HEIGHT = 84;
-	static constexpr int MELONPULT_COUNT_FRAME = 1;
-	static constexpr double MELONPULT_FRAMETIME = 0;
+	static constexpr int MELONPULT_FRAME_HEIGHT = 100;
+	static constexpr int MELONPULT_COUNT_FRAME = 36;
+	static constexpr double MELONPULT_FRAMETIME = 0.085;
 	static constexpr int MELONPULT_PROJECTILE_OFFSET_X = 72;
 	static constexpr int MELONPULT_PROJECTILE_OFFSET_Y = 13;
 
@@ -150,12 +150,12 @@ public:
 	//Орех
 	static constexpr int NUT_FRAME_WIDTH = 100;
 	static constexpr int NUT_FRAME_HEIGHT = 100;
-	static constexpr int NUT_FRAME_COUNT = 1;
-	static constexpr int NUT_FRAME_TIME = 0;
+	static constexpr int NUT_FRAME_COUNT = 4;
+	static constexpr int NUT_FRAME_TIME = 1;
 
 	static constexpr int NUT_HP = 12;
 
-	//Машинки
+	//Машина
 	static constexpr int CAR_FRAME_WIDTH = 100;
 	static constexpr int CAR_FRAME_HEIGHT = 60;
 	static constexpr int CAR_FRAME_COUNT = 1;
@@ -164,8 +164,9 @@ public:
 	//Чомпер
 	static constexpr int CHOMPER_FRAME_WIDTH = 100;
 	static constexpr int CHOMPER_FRAME_HEIGHT = 100;
-	static constexpr int CHOMPER_FRAME_COUNT = 10;
-	static constexpr double CHOMPER_FRAME_TIME = 0.07;
+	static constexpr int CHOMPER_FRAME_COUNT = 30;
+	static constexpr int CHOMPER_EAT_FRAME_COUNT = 19;
+	static constexpr double CHOMPER_FRAME_TIME = 0.085; // 0.07 было
 	static constexpr int CHOMPER_HP = 4;
 
 };

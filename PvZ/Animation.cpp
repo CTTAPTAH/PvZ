@@ -111,3 +111,11 @@ void Animation::setRect(sf::IntRect rect)
 {
 	sprite.setTextureRect(rect);
 }
+void Animation::setCountFrame(int count)
+{
+	count_frame = count;
+}
+void Animation::setCurFrame(int num)
+{
+	cur_frame = num;
+}

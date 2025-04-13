@@ -8,8 +8,8 @@ Chomper::Chomper(int idx_line, sf::Vector2f pos):
 			LoadTexture::getBorn().getTexture("chomper"),
 			Config::CHOMPER_FRAME_WIDTH,
 			Config::CHOMPER_FRAME_HEIGHT,
-			1,
-			0,
+			Config::CHOMPER_FRAME_COUNT,
+			Config::CHOMPER_FRAME_TIME,
 			pos
 	),
 	{pos.x, pos.y, Config::CHOMPER_FRAME_WIDTH, Config::CHOMPER_FRAME_HEIGHT },
@@ -65,6 +65,9 @@ void Chomper::EatingZombie(double dt, GameObject* object)
 	if (isEating) {
 
 		animation.setTexture(LoadTexture::getBorn().getTexture("chew"));
+		animation.setCountFrame(Config::CHOMPER_EAT_FRAME_COUNT);
+		animation.setCurFrame(0);
+
 		chewing_zombie_timer -= dt;
 
 		if (chewing_zombie_timer <= 0) {
@@ -77,10 +80,11 @@ void Chomper::EatingZombie(double dt, GameObject* object)
 			chewing_zombie_timer = time_to_chew_zombie;
 			isEating = false;
 			animation.setTexture(LoadTexture::getBorn().getTexture("chomper"));
+			animation.setCountFrame(Config::CHOMPER_FRAME_COUNT);
+			animation.setCurFrame(0);
 		}
 	}
 }
-
 
 void Chomper::CollisionWithZombie(double dt)
 {

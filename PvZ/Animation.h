@@ -29,4 +29,6 @@ public:
 	void setFrameSize(int frame_w, int frame_h);
 	sf::Vector2i getRectPos() const;
 	void setRect(sf::IntRect rect);
+	void setCountFrame(int count);
+	void setCurFrame(int num);
 };
