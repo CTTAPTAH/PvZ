@@ -32,14 +32,14 @@ void WaveManager::initWaves()
 	});
 
 	// “реть€ через 40 секунд
-	waves.emplace_back(40, std::vector<TypeEntity>{
+	waves.emplace_back(5, std::vector<TypeEntity>{
 		TypeEntity::CONUS_ZOMBIE,
 			TypeEntity::ZOMBIE,
 			TypeEntity::ZOMBIE
 	});
 
 	// ‘инальна€ волна через 60 секунд Ч жестче, но сбалансировано
-	waves.emplace_back(60, std::vector<TypeEntity>{
+	waves.emplace_back(5, std::vector<TypeEntity>{
 		TypeEntity::DISCO_ZOMBIE,
 			TypeEntity::ZOMBIE,
 			TypeEntity::NEWSPAPER_ZOMBIE,
@@ -50,7 +50,7 @@ void WaveManager::initWaves()
 // конструкторы, деструкторы
 WaveManager::WaveManager()
 	: time_past(0),
-	cur_wave(-1)
+	cur_wave(0)
 {
 	initWaves();
 }
@@ -65,17 +65,18 @@ WaveManager::WaveManager(const WaveManager& other)
 void WaveManager::update(double dt)
 {
 	// вычитаем единицу, т.к. последн€€ волна уже была выпущена
-	if (cur_wave + 1 >= waves.size()) return;
+	if (cur_wave >= waves.size()) return;
 
 	time_past += dt;
 	// переходим к следующей волне, если нет зомби на карте или пришло врем€
 	// ”словие "нет зомби" провер€етс€, если это не перва€ волна)
-	if ((!hasZombies()) or
-		time_past >= waves[cur_wave + 1].start_time) {
+	if ((!hasZombies() and cur_wave != 0) or
+		time_past >= waves[cur_wave].start_time) {
+		spawn();
 		cur_wave++;
 		time_past = 0;
 
-		spawn(); // спавним зомби у следующей волны волны
+		// спавним зомби у следующей волны волны
 	}
 }
 
