@@ -8,6 +8,7 @@
 #include "Peashooter.h"
 //#include "Melonpult.h"
 #include "Sunflower.h"
+#include "WaveManager.h"
 #include <list>
 
 class Manager
@@ -19,6 +20,7 @@ private:
 	Map map;
 	Player player;
 	UIManager ui;
+	WaveManager wave_manager;
 	std::list<GameObject*> game_objects;
 	std::list<Message*> messages;
 	int zombie_on_line[Config::AMOUNT_LINES_MAP];
@@ -51,4 +53,5 @@ public:
 	int getZombieOnLine(int idx_line) const;
 	UIManager& getUI();
 	Player& getPlayer();
+	WaveManager& getWaveManager();
 };

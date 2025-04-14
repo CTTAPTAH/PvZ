@@ -8,7 +8,8 @@ Manager::Manager()
 	messages(),
 	map({ 258, 81, 732, 493 }),
 	ui(),
-	player()
+	player(),
+	wave_manager()
 {
 	win_wid = Config::WIN_WIDTH; win_hei = Config::WIN_HEIGHT;
 	born = nullptr;
@@ -178,4 +179,9 @@ UIManager& Manager::getUI()
 Player& Manager::getPlayer()
 {
 	return player;
+}
+
+WaveManager& Manager::getWaveManager()
+{
+	return wave_manager;
 }

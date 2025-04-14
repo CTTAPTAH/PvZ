@@ -21,6 +21,7 @@ enum class TypeEntity {
 
 	// зомби
 	ZOMBIE,
+	NEWSPAPER_ZOMBIE,
 	RAZOMBIE,
 	CONUS_ZOMBIE,
 	DISCO_ZOMBIE,

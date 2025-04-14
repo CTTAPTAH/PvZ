@@ -5,6 +5,7 @@ NewspaperZombie::NewspaperZombie(int idx_line, int frame_w, int frame_h) :
 {
 	animation.setTexture(LoadTexture::getBorn().getTexture("newszombie"));
 	hp = 6;
+	type_ent = TypeEntity::NEWSPAPER_ZOMBIE;
 }
 
 NewspaperZombie::~NewspaperZombie()
