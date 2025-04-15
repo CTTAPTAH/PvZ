@@ -23,6 +23,14 @@ void LoadTexture::loadAllTexture()
 	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
 	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
 	addTexture("melonpult", "textures\\melonpult.png");
+	addTexture("snowpea", "textures\\snowpea.png");
+	addTexture("chomper", "textures\\chomper.png");
+	addTexture("chew", "textures\\chew.png");
+	addTexture("snowpeaPr", "textures\\snowpeaPr.png");
+	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
+	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
+	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
+	addTexture("melonpult", "textures\\melonpult.png");
 
 	// зомби
 	addTexture("zombie", "textures\\zomsheet.png");
@@ -30,19 +38,6 @@ void LoadTexture::loadAllTexture()
 	addTexture("wnewszombie", "textures\\Zombies\\WithoutNewspaper.png");
 	addTexture("razombie", "textures\\Zombies\\Ra_zombie.png");
 	addTexture("razombie_tr", "textures\\Zombies\\RaZombieCAP.png");
-	addTexture("snowpea", "textures\\snowpea.png");
-	addTexture("chomper", "textures\\chomper.png");
-	addTexture("chew", "textures\\chew.png");
-	addTexture("snowpeaPr", "textures\\snowpeaPr.png");
-
-
-
-
-
-	addTexture("nut_full_hp", "textures\\Wallnut\\nut_full_hp.png");
-	addTexture("nut_50_hp", "textures\\Wallnut\\nut_50_hp.png");
-	addTexture("nut_low_hp", "textures\\Wallnut\\nut_low_hp.png");
-	addTexture("melonpult", "textures\\melonpult.png");
 	addTexture("conus_zombie1", "textures\\Zombies\\conus_zombie1.png");
 	addTexture("conus_zombie2", "textures\\Zombies\\conus_zombie2.png");
 	addTexture("conus_zombie3", "textures\\Zombies\\conus_zombie3.png");

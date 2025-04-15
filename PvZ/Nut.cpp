@@ -40,10 +40,14 @@ void Nut::receiveMsg(Message* msg)
 	if (msg->type == TypeMsg::DAMAGE and this == msg->damage.who_receive) {
 		hp -= msg->damage.damage;
 
-		if (hp <= 8 && hp > 4) {
+		// было hp <= 8 && hp > 4
+		// добавил Н в if
+		if (Config::NUT_HP * 1 / 3 < hp and hp <= Config::NUT_HP * 2 / 3) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("nut_50_hp"));
 		}
-		if (hp <= 4 && hp > 0) {
+		// было hp <= 4 && hp > 0
+		// добавил Н в if
+		if (0 < hp and hp <= Config::NUT_HP * 1 / 3) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("nut_low_hp"));
 		}
 		if (hp <= 0) {

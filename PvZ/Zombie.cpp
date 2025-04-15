@@ -33,7 +33,8 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 	reload(Config::DEFAULT_ZOMBIE_RELOAD),
 	time_reload(Config::DEFAULT_ZOMBIE_TIME_RELOAD),
 	victim(nullptr),
-	current_index(count + 1)
+	current_index(count + 1),
+	hasEnteredScreen(false)
 {
 	//std::cout << "Zombie number " << current_index << " cr" << std::endl;
 	//velocity_x = 0; //проверял точность арбуза Н.
@@ -43,7 +44,7 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 	chewingSound.setBuffer(SoundEditor::getBorn()->getBuffer("zombie_chewing"));
 	chewingSound.setLoop(true);
 	chewingSound.setVolume(10);
-	Manager::getBorn()->addZombieOnLine(_index_line);
+	//Manager::getBorn()->addZombieOnLine(_index_line);
 	count++;
 }
 
@@ -77,9 +78,18 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 	if (!getIsDead()) {
 		FindVictimN2(dt);
 		move(dt);
+		tryRegisterOnLine(); // Добавил Н
 		draw(win);
 		ZombieIsFrosen(dt);
 		isGameOver();
+	}
+}
+void Zombie::tryRegisterOnLine()
+{
+	Manager* mng = Manager::getBorn();
+	if (!hasEnteredScreen and rect.left < mng->getWinWidth()) {
+		mng->addZombieOnLine(idx_line);
+		hasEnteredScreen = true;
 	}
 }
 void Zombie::receiveMsg(Message* msg)

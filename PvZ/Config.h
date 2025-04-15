@@ -13,7 +13,7 @@ public:
 	static constexpr int H_CELL = 98;
 	// Игрок
 	static constexpr int PLANT_COUNT = 5;
-	static constexpr int MONEY = 5000;
+	static constexpr int MONEY = 50;
 	//---------------------------------------------
 
 	// Перезаряка перед следующей попыткой поставить растение
@@ -22,12 +22,12 @@ public:
 	// Изменять значение кд в классе player в конструкторе.
 	// Нужно переписать так: time_reload(Config::COOLDOWN_DEFAULT)
 	static constexpr double COOLDOWN_DEFAULT = 0.0;
-	static constexpr double COOLDOWN_PEA = 5.0;
-	static constexpr double COOLDOWN_SNOW_PEA = 5.0;
-	static constexpr double COOLDOWN_SUNFLOWER = 5.0;
-	static constexpr double COOLDOWN_MELON = 5.0;
-	static constexpr double COOLDOWN_CHOMPER = 5.0;
-	static constexpr double COOLDOWN_NUT = 5.0;
+	static constexpr double COOLDOWN_PEA = 8.0;
+	static constexpr double COOLDOWN_SNOW_PEA = 8.0;
+	static constexpr double COOLDOWN_SUNFLOWER = 8.0;
+	static constexpr double COOLDOWN_MELON = 8.0;
+	static constexpr double COOLDOWN_CHOMPER = 8.0;
+	static constexpr double COOLDOWN_NUT = 30.0;
 	//---------------------------------------------
 	
 	// Интерфейс
@@ -54,8 +54,8 @@ public:
 	static constexpr int SHOVEL_POS_Y = 0;
 	//------------------------------------
 	// спавнер
-	static constexpr int SPAWN_OFFSET_MAX = 90;
-	static constexpr int SPAWN_OFFSET_MIN = 60;
+	static constexpr int SPAWN_OFFSET_MAX = 15;
+	static constexpr int SPAWN_OFFSET_MIN = 0;
 
 	// Карта
 	// Количество линий на карте
@@ -64,6 +64,10 @@ public:
 	// Количество ячеек в длину и высоту
 	static constexpr int AMOUNT_FIELD_W = 9;
 	static constexpr int AMOUNT_FIELD_H = 5;
+	// Появление солнышек с неба
+	static constexpr double RELOAD_SPAWN_SUN = 5;
+
+	//------------------------------------
 
 	// Горох
 	static constexpr double PEASHOOTER_DAMAGE = 1.0;
@@ -109,7 +113,7 @@ public:
 	static constexpr double MELON_GRAVITY = 300;
 
 	//Зомби
-	static constexpr int ZOMBIE_FRAME_WIDTH = 60;
+	static constexpr int ZOMBIE_FRAME_WIDTH = 63;
 	static constexpr int ZOMBIE_FRAME_HEIGHT = 100;
 	static constexpr int ZOMBIE_FRAME_COUNT = 1;
 	static constexpr int ZOMBIE_FRAME_TIME = 0;
@@ -145,6 +149,7 @@ public:
 	static constexpr double SUNFLOWER_FRAME_TIME = 0.085;
 
 	static constexpr int SUNFLOWER_HP = 4;
+	// изначально 17. От 5 до 25. 
 	static constexpr int TIME_TO_REAPEAR_SUN = 17;
 
 	//Солнца
@@ -157,8 +162,8 @@ public:
 	//Орех
 	static constexpr int NUT_FRAME_WIDTH = 100;
 	static constexpr int NUT_FRAME_HEIGHT = 100;
-	static constexpr int NUT_FRAME_COUNT = 4;
-	static constexpr int NUT_FRAME_TIME = 1;
+	static constexpr int NUT_FRAME_COUNT = 1;
+	static constexpr int NUT_FRAME_TIME = 0;
 
 	static constexpr int NUT_HP = 40;
 

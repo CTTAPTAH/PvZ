@@ -91,6 +91,7 @@ protected:
     GameObject* victim;
     sf::Sound chewingSound;
 
+    bool hasEnteredScreen = false; // добавил Н
 public:
     Zombie();
     Zombie(int _index_line, int frame_w, int frame_h);
@@ -105,6 +106,7 @@ public:
     virtual void move(double dt);
     virtual void draw(sf::RenderWindow& win);
     void update(double dt, sf::RenderWindow& win) override;
+    virtual void tryRegisterOnLine();
     void receiveMsg(Message* msg) override;
 
     // добавил при создании анмации

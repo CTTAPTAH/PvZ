@@ -18,32 +18,165 @@ Wave::Wave(double start_time_, std::vector<TypeEntity> zombies_)
 
 void WaveManager::initWaves()
 {
-	// ѕерва€ волна Ч сразу
-	waves.emplace_back(0, std::vector<TypeEntity>{
-		TypeEntity::ZOMBIE,
+	// 1 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::ZOMBIE
+	});
+
+	// 2 волна
+	waves.emplace_back(30, std::vector<TypeEntity>{
+		TypeEntity::ZOMBIE
+	});
+
+	// 3 волна
+	waves.emplace_back(28, std::vector<TypeEntity>{
 			TypeEntity::ZOMBIE
 	});
 
-	// ¬тора€ волна через 20 секунд
-	waves.emplace_back(5, std::vector<TypeEntity>{
-		TypeEntity::ZOMBIE,
-			TypeEntity::ZOMBIE,
+	// 4 волна
+	waves.emplace_back(25, std::vector<TypeEntity>{
+		TypeEntity::CONUS_ZOMBIE
+	});
+
+	// 5 волна
+	waves.emplace_back(23, std::vector<TypeEntity>{
+		TypeEntity::RAZOMBIE,
 			TypeEntity::RAZOMBIE
 	});
 
-	// “реть€ через 40 секунд
-	waves.emplace_back(5, std::vector<TypeEntity>{
+	// 6 волна
+	waves.emplace_back(25, std::vector<TypeEntity>{
+			TypeEntity::ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE
+	});
+
+	// 7 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE
+	});
+
+	// 8 волна
+	waves.emplace_back(25, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE
+	});
+
+	// 9 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE
+	});
+
+	// 10 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::RAZOMBIE
+	});
+
+	// 11 волна
+	waves.emplace_back(25, std::vector<TypeEntity>{
 		TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE
+	});
+
+	// 12 волна
+	waves.emplace_back(27, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE
+	});
+
+	// 13 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::RAZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE
+	});
+
+	// 14 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
 			TypeEntity::ZOMBIE,
 			TypeEntity::ZOMBIE
 	});
 
-	// ‘инальна€ волна через 60 секунд Ч жестче, но сбалансировано
-	waves.emplace_back(5, std::vector<TypeEntity>{
+	// 15 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::RAZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::ZOMBIE
+	});
+
+	// 16 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::ZOMBIE
+	});
+
+	// 17 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
 		TypeEntity::DISCO_ZOMBIE,
 			TypeEntity::ZOMBIE,
 			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
 			TypeEntity::ZOMBIE
+	});
+
+	// 18 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE
+	});
+
+	// 19 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::ZOMBIE
+	});
+
+	// 20 волна
+	waves.emplace_back(20, std::vector<TypeEntity>{
+		TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::DISCO_ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::NEWSPAPER_ZOMBIE,
+			TypeEntity::RAZOMBIE,
+			TypeEntity::ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE,
+			TypeEntity::CONUS_ZOMBIE
 	});
 }
 
@@ -98,43 +231,65 @@ bool WaveManager::hasZombies()
 }
 void WaveManager::spawn()
 {
-	GameObject* object = nullptr;
+	// чтобы равномерно ставились зомби:
+	int size = 5;
+	int free_lines[5] = { 0, 1, 2, 3, 4 };
+	int idx;
 
-	int old_line = -1;
-	int cur_line = -1;
+	// если зомби больше, чем линий, то смещаем их относительно прощлых зомби
+	int offset_on_line[5] = { 0, 0, 0, 0, 0 };
+
+	GameObject* object = nullptr;
+	
+	int line;
 	for (const auto& zm : waves[cur_wave].zombies) {
+		// выбираем линию
+		if (size > 0) {
+			idx = Rand(0, size - 1);
+			line = free_lines[idx];
+			std::swap(free_lines[idx], free_lines[size - 1]);
+			--size;
+		}
+		else {
+			size = 5;
+		}
+
+		// создаЄм выбранного зомби
 		if (zm == TypeEntity::ZOMBIE) {
-			object = new Zombie(Rand(0, 4),
+			object = new Zombie(line,
 				Config::ZOMBIE_FRAME_WIDTH,
 				Config::ZOMBIE_FRAME_HEIGHT);
 		}
 		else if (zm == TypeEntity::RAZOMBIE) {
-			object = new RaZombie(Rand(0, 4),
+			object = new RaZombie(line,
 				100,
 				100);
 		}
 		else if (zm == TypeEntity::NEWSPAPER_ZOMBIE) {
-			object = new NewspaperZombie(Rand(0, 4),
+			object = new NewspaperZombie(line,
 				100,
 				100);
 		}
 		else if (zm == TypeEntity::CONUS_ZOMBIE) {
-			object = new ConusZombie(Rand(0, 4));
+			object = new ConusZombie(line);
 		}
 		else if (zm == TypeEntity::DISCO_ZOMBIE) {
-			object = new DiscoZombie(Rand(0, 4));
+			object = new DiscoZombie(line);
 		}
 		else {
 			return;
 		}
 
 		if (object) {
-			// смещение от начальной при спавне, чтобы по€вл€лись не в одну линию
+			// смещение от начальной позиции при спавне,
+			// чтобы по€вл€лись не в одну линию
 			sf::FloatRect rect_zm = object->getRect();
-			cur_line = object->getIdxLine();
-			if (cur_line == old_line) rect_zm.left += Rand(Config::SPAWN_OFFSET_MIN, Config::SPAWN_OFFSET_MAX);
-			rect_zm.left += Rand(0, 10);
+			rect_zm.left += Rand(Config::SPAWN_OFFSET_MIN,
+				Config::SPAWN_OFFSET_MAX) + offset_on_line[line];
 			object->setRect(rect_zm);
+
+			// запоминаем позицию спавна, чтобы не было "зомби в зомби"
+			offset_on_line[line] = (rect_zm.left + rect_zm.width) / 2; // с учЄтом ширины
 			
 			// отправка сообщени€
 			Message msg;
@@ -142,9 +297,9 @@ void WaveManager::spawn()
 			msg.create.new_object = object;
 			Manager::getBorn()->addMessage(msg);
 
-			old_line == object->getIdxLine();
 		}
 	}
+	std::cout << "«аспавнили волну: " << cur_wave + 1 << std::endl;
 }
 
 // геттеры, сеттеры
