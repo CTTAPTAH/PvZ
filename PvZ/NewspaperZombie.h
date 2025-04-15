@@ -7,7 +7,6 @@ private:
 public:
 	NewspaperZombie(int idx_line, int frame_w, int frame_h);
 	virtual ~NewspaperZombie();
-	void move(double dt) override;
 	void receiveMsg(Message* msg) override;
 };
 

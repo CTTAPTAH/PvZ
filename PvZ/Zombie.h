@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include"GameObject.h"
 #include "Manager.h"
+#include "Chomper.h"
 #include <iostream>
 #include "Map.h"
 
@@ -119,5 +120,6 @@ public:
     void isGameOver();
     // геттеры, сеттеры
     int getSpeed() const;
+    void setVictim();
 
 };

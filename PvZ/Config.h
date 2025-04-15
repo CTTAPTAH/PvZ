@@ -69,8 +69,12 @@ public:
 	static constexpr int PEASHOOTER_FRAME_HEIGHT = 100;
 	static constexpr int PEASHOOTER_COUNT_FRAME = 23; //23
 	static constexpr double PEASHOOTER_FRAMETIME = 0.085; //0.085
-	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_X = 0;
-	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_Y = 18;
+	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_X = 75;
+	static constexpr int PEASHOOTER_PROJECTILE_OFFSET_Y = 12;
+
+	static constexpr int MELON_PROJECTILE_OFFSET_X = 0;
+	static constexpr int MELON_PROJECTILE_OFFSET_Y = 18;
+
 
 	// Горошина снаряд
 	static constexpr double PEA_PROJECTILE_SPEED = 300.0;
@@ -168,5 +172,8 @@ public:
 	static constexpr int CHOMPER_EAT_FRAME_COUNT = 19;
 	static constexpr double CHOMPER_FRAME_TIME = 0.085; // 0.07 было
 	static constexpr int CHOMPER_HP = 4;
+
+	static constexpr int NEWSPAPER_ZOMBIE_DOUBLE_SPEED = 200;
+
 
 };

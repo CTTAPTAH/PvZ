@@ -104,10 +104,6 @@ void Zombie::receiveMsg(Message* msg)
 		}
 	}
 }
-bool Zombie::Collision1()
-{
-	return rect.left <= 800 / 9;
-}
 void Zombie::EatingPlants(double dt, GameObject* current_object)
 {
 	Manager* MGR = Manager::getBorn();
@@ -140,58 +136,6 @@ void Zombie::EatingPlants(double dt, GameObject* current_object)
 	}
 
 }
-void Zombie::CollisionWithPlants(double dt)
-{
-	Manager* MGR = Manager::getBorn();
-
-	std::list<GameObject*> objects = MGR->getListObject();
-
-	for (auto obj : objects) {
-		if (obj->getTypeObj() == TypeObject::PLANT) {
-			if (Collision1() && idx_line == obj->getIdxLine()) {
-				//std::cout << "Yes" << std::endl;
-				EatingPlants(dt, obj);
-				break;
-			}
-		}
-	}
-}
-
-// добавил Н
-void Zombie::FindVictimN()
-{
-	Manager* mng = Manager::getBorn();
-	std::list<GameObject*> objects = mng->getListObject();
-	for (auto obj : objects) {
-		if (obj->getTypeObj() == TypeObject::PLANT) {
-			if (Collision1() and idx_line == obj->getIdxLine()) {
-				victim = obj;
-			}
-		}
-	}
-}
-void Zombie::EatingPlantsN(double dt)
-{
-	if (victim) {
-		reload -= dt;
-		if (reload <= 0) {
-			reload = time_reload;
-
-			Message msg;
-			msg.type = TypeMsg::DAMAGE;
-			msg.damage.damage = damage;
-			msg.damage.who_receive = victim;
-
-			Manager* mng = Manager::getBorn();
-			mng->addMessage(msg);
-
-			if (victim->getHp() - damage <= 0) {
-				victim = nullptr;
-				reload = time_reload;
-			}
-		}
-	}
-}
 void Zombie::FindVictimN2(double dt)
 {
 	Manager* mng = Manager::getBorn();
@@ -199,6 +143,14 @@ void Zombie::FindVictimN2(double dt)
 	victim = nullptr;
 	for (auto obj : objects) {
 		if (obj->getTypeObj() == TypeObject::PLANT and !obj->getIsDead()) {
+
+			if (obj->getTypeEnt() == TypeEntity::CHOMPER) {
+				Chomper* chomp = dynamic_cast<Chomper*>(obj);
+				if (chomp and !chomp->getIsEating()) {
+					break;
+				}
+			}
+
 			if (rect.intersects(obj->getRect()) and idx_line == obj->getIdxLine()) {
 				victim = obj;
 				isEating = true;
@@ -269,6 +221,11 @@ void Zombie::ZombieIsFrosen(double dt)
 		frozen_timer = 0;
 		wasFrozenSpeedSet = false;
 	}
+}
+
+void Zombie::setVictim()
+{
+	victim = nullptr;
 }
 
 void Zombie::setZombieFrozenNull()

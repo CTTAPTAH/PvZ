@@ -22,6 +22,7 @@ public:
 	void update(double dt, sf::RenderWindow& win) override;
 	void EatingZombie(double dt, GameObject* object);
 	void CollisionWithZombie(double dt);
+	bool getIsEating();
 };
 
 

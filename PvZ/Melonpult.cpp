@@ -59,8 +59,8 @@ void Melonpult::isShooting(double dt)
             // Создаём снаряд. Для это находим vx
             // Позиции
             sf::Vector2f pos_projectile = {
-                rect.left + Config::PEASHOOTER_PROJECTILE_OFFSET_X,
-                rect.top + Config::PEASHOOTER_PROJECTILE_OFFSET_Y
+                rect.left + Config::MELON_PROJECTILE_OFFSET_Y,
+                rect.top + Config::MELON_PROJECTILE_OFFSET_Y
             };
 
             // Ищем координату цели

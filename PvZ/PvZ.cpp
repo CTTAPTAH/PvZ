@@ -111,14 +111,14 @@ int main()
 	RenderWindow win(VideoMode(mng->getWinWidth(), mng->getWinHeight()), "PVZ");
 
 	//// создание машин
-	for (int i = 0; i < 5; i++) {
-		Manager* mng = Manager::getBorn();
-		Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
-		Message msg;
-		msg.type = TypeMsg::CREATE;
-		msg.create.new_object = car;
-		mng->addMessage(msg);
-	}
+	//for (int i = 0; i < 5; i++) {
+	//	Manager* mng = Manager::getBorn();
+	//	Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
+	//	Message msg;
+	//	msg.type = TypeMsg::CREATE;
+	//	msg.create.new_object = car;
+	//	mng->addMessage(msg);
+	//}
 	//for (int i = 0; i < 2; i++) {
 	//	RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
 	//	Message zombie_msg;
@@ -229,7 +229,7 @@ int main()
 				mng->addMessage(zombie_msg);
 				counter_z++;
 			}*/
-			RandomSpawn(Random(1,5));
+			RandomSpawn(3);
 		}
 		win.clear();
 		mng->getMap().drawMap(win); // сначала рисуем карту

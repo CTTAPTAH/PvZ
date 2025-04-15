@@ -9,19 +9,6 @@ NewspaperZombie::NewspaperZombie(int idx_line, int frame_w, int frame_h) :
 
 NewspaperZombie::~NewspaperZombie()
 {}
-
-void NewspaperZombie::move(double dt)
-{
-	if (!victim) {
-		if (isHavePaper) {
-			rect.left -= velocity_x * dt;
-		}
-		else {
-			rect.left -= (velocity_x * 2.0f) * dt;
-		}
-		animation.setPosition(rect.left, rect.top);
-	}
-}
 void NewspaperZombie::receiveMsg(Message* msg)
 {
 	if (msg->type == TypeMsg::DEATH && msg->death.creature->getTypeObj() == TypeObject::PLANT) {
@@ -35,6 +22,7 @@ void NewspaperZombie::receiveMsg(Message* msg)
 
 		if (hp <= 3) {
 			isHavePaper = false;
+			velocity_x = Config::NEWSPAPER_ZOMBIE_DOUBLE_SPEED;
 			animation.setTexture(LoadTexture::getBorn().getTexture("wnewszombie"));
 			damage = 2;
 		}

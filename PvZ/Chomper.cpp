@@ -42,6 +42,8 @@ void Chomper::receiveMsg(Message* msg)
 			msg.type = TypeMsg::DEATH;
 			msg.death.creature = this;
 			MGR->addMessage(msg);
+			sf::Vector2f vect = MGR->getMap().getFieldIdx({ rect.left, rect.top });
+			MGR->getMap().setIsPlaced(vect.x, vect.y, false);
 		}
 	}
 }
@@ -61,12 +63,12 @@ void Chomper::EatingZombie(double dt, GameObject* object)
 	if (!isEating) {
 		isEating = true;
 		zombie->setDead(true);
-	}
-	if (isEating) {
-
-		animation.setTexture(LoadTexture::getBorn().getTexture("chew"));
+		zombie->setVictim();
 		animation.setCountFrame(Config::CHOMPER_EAT_FRAME_COUNT);
 		animation.setCurFrame(0);
+		animation.setTexture(LoadTexture::getBorn().getTexture("chew"));
+	}
+	if (isEating) {
 
 		chewing_zombie_timer -= dt;
 
@@ -101,4 +103,9 @@ void Chomper::CollisionWithZombie(double dt)
 			}
 		}
 	}
+}
+
+bool Chomper::getIsEating()
+{
+	return isEating;
 }
