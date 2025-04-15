@@ -4,7 +4,7 @@
 PlantInfo::PlantInfo(sf::Texture* icon_, int cost_, TypeEntity type_,
 	double time_reload_)
 	: icon(icon_), cost(cost_), type(type_),
-	reload(0), time_reload(Config::COOLDOWN_DEFAULT)
+	reload(0), time_reload(time_reload_)
 {
 }
 

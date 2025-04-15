@@ -24,7 +24,7 @@ Chomper::Chomper(int idx_line, sf::Vector2f pos):
 
 Chomper::~Chomper()
 {
-	std::cout << "Чомпер умер" << std::endl;
+	//std::cout << "Чомпер умер" << std::endl;
 }
 
 void Chomper::draw(sf::RenderWindow& win)

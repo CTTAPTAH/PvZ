@@ -52,6 +52,7 @@ void RaZombie::update(double dt, sf::RenderWindow& win)
 
 		FindVictimN2(dt);
 		move(dt);
+		tryRegisterOnLine(); // Добавил Н
 		draw(win);
 		ZombieIsFrosen(dt);
 		isGameOver();

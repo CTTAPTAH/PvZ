@@ -201,13 +201,19 @@ void UIManager::handleMouseRelease(sf::Vector2f mousePos)
 
 		for (const auto& obj : list_obj) {
 			if (obj->getTypeObj() == TypeObject::PLANT and obj->getRect().contains(mousePosI)) {
-				Message msg;
-				msg.type = TypeMsg::DEATH;
-				msg.death.creature = obj;
-				mng->addMessage(msg);
-				
-				sf::Vector2f vect = mng->getMap().getFieldIdx(mousePosI);
-				mng->getMap().setIsPlaced(vect, false);
+				sf::Vector2f idx_cursor = mng->getMap().getFieldIdx(mousePosI);
+				sf::Vector2f idx_plant = mng->getMap().getFieldIdx({ float(obj->getRect().left), float(obj->getRect().top) });
+
+				// если их позиции совпали
+				if (idx_cursor.x == idx_plant.x and
+					idx_cursor.y == idx_plant.y) {
+					Message msg;
+					msg.type = TypeMsg::DEATH;
+					msg.death.creature = obj;
+					mng->addMessage(msg);
+
+					mng->getMap().setIsPlaced(idx_cursor, false);
+				}
 			}
 		}
 	}

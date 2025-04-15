@@ -10,7 +10,8 @@
 Map::Map()
 	: sprite(),
 	amount_field_w(Config::AMOUNT_FIELD_W),
-	amount_field_h(Config::AMOUNT_FIELD_H)
+	amount_field_h(Config::AMOUNT_FIELD_H),
+	reload_spawn_sun(Config::RELOAD_SPAWN_SUN)
 {
 	setTexture(LoadTexture::getBorn().getTexture("map"));
 
@@ -20,7 +21,8 @@ Map::Map()
 Map::Map(sf::FloatRect rect_map)
 	:sprite(),
 	amount_field_w(Config::AMOUNT_FIELD_W),
-	amount_field_h(Config::AMOUNT_FIELD_H)
+	amount_field_h(Config::AMOUNT_FIELD_H),
+	reload_spawn_sun(Config::RELOAD_SPAWN_SUN)
 {
 	setTexture(LoadTexture::getBorn().getTexture("map"));
 	resizeGrid(rect_map);
@@ -116,6 +118,16 @@ void Map::receiveMsg(Message* msg)
 		Player& player = mng->getBorn()->getPlayer();
 		player.setMoney(player.getMoney() - msg->add_plant.cost);
 		player.resetCooldown(msg->add_plant.idx);
+	}
+}
+// появление солнышек
+void Map::spawnSkySun(double dt)
+{
+	reload_spawn_sun -= dt;
+
+	if (reload_spawn_sun <= 0) {
+		reload_spawn_sun = Config::RELOAD_SPAWN_SUN;
+
 	}
 }
 

@@ -100,6 +100,7 @@ void Animation::setScale(float x, float y)
 
 void Animation::setFrameSize(int frame_w, int frame_h)
 {
+	sprite.setTextureRect({ 0,0, frame_w, frame_h });
 	frame_width = frame_w;
 	frame_height = frame_h;
 }
@@ -110,6 +111,8 @@ sf::Vector2i Animation::getRectPos() const {
 void Animation::setRect(sf::IntRect rect)
 {
 	sprite.setTextureRect(rect);
+	frame_width = rect.width;
+	frame_height = rect.height;
 }
 void Animation::setCountFrame(int count)
 {

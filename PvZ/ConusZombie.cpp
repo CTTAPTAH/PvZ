@@ -27,16 +27,17 @@ void ConusZombie::receiveMsg(Message* msg)
 		this == msg->damage.who_receive) {
 		hp -= msg->damage.damage;
 		
-		if (hp <= Config::CONUS_ZOMBIE_HP * 3 / 4) {
+		if (Config::CONUS_ZOMBIE_HP * 2 / 4 < hp and hp <= Config::CONUS_ZOMBIE_HP * 3 / 4) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("conus_zombie2"));
 		}
-		else if (hp <= Config::CONUS_ZOMBIE_HP * 2 / 4) {
+		else if (Config::CONUS_ZOMBIE_HP * 1 / 4 < hp and hp <= Config::CONUS_ZOMBIE_HP * 2 / 4) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("conus_zombie3"));
 		}
 		else if (hp <= Config::CONUS_ZOMBIE_HP * 1 / 4) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("zombie"));
-			rect.width = 68; // вручную плохо. Config лучше
-			rect.height = 100; // вручную плохо. Config лучше
+			rect.width = Config::ZOMBIE_FRAME_WIDTH; // вручную плохо. Config лучше
+			rect.height = Config::ZOMBIE_FRAME_HEIGHT; // вручную плохо. Config лучше
+			animation.setFrameSize(rect.width, rect.height);
 		}
 
 		if (hp <= 0) {
