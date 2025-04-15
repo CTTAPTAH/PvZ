@@ -113,10 +113,10 @@ public:
 	static constexpr double MELON_GRAVITY = 300;
 
 	//Зомби
-	static constexpr int ZOMBIE_FRAME_WIDTH = 63;
+	static constexpr int ZOMBIE_FRAME_WIDTH = 100;
 	static constexpr int ZOMBIE_FRAME_HEIGHT = 100;
-	static constexpr int ZOMBIE_FRAME_COUNT = 1;
-	static constexpr int ZOMBIE_FRAME_TIME = 0;
+	static constexpr int ZOMBIE_FRAME_COUNT = 46;
+	static constexpr double ZOMBIE_FRAME_TIME = 0.085;
 
 	//Зомби с конусом
 	static constexpr int CONUS_ZOMBIE_FRAME_WIDTH = 51;
@@ -126,10 +126,10 @@ public:
 	static constexpr int CONUS_ZOMBIE_HP = 28;
 
 	// Диско Зомби
-	static constexpr int DISCO_ZOMBIE_FRAME_WIDTH = 46;
+	static constexpr int DISCO_ZOMBIE_FRAME_WIDTH = 100; // 46
 	static constexpr int DISCO_ZOMBIE_FRAME_HEIGHT = 100;
-	static constexpr int DISCO_ZOMBIE_FRAME_COUNT = 1;
-	static constexpr int DISCO_ZOMBIE_FRAME_TIME = 0;
+	static constexpr int DISCO_ZOMBIE_FRAME_COUNT = 34;
+	static constexpr int DISCO_ZOMBIE_FRAME_TIME = 0.085;
 	static constexpr int DISCO_ZOMBIE_SPAWN_LEFT_OFFSET = 100;
 	static constexpr int DISCO_ZOMBIE_SPAWN_RIGHT_OFFSET = 100;
 
@@ -145,7 +145,7 @@ public:
 	//Подсолнух
 	static constexpr int SUNFLOWER_FRAME_WIDTH = 100;
 	static constexpr int SUNFLOWER_FRAME_HEIGHT = 100;
-	static constexpr int SUNFLOWER_FRAME_COUNT = 20;
+	static constexpr int SUNFLOWER_FRAME_COUNT = 36;
 	static constexpr double SUNFLOWER_FRAME_TIME = 0.085;
 
 	static constexpr int SUNFLOWER_HP = 4;

@@ -48,7 +48,7 @@ void LoadTexture::loadAllTexture()
 	addTexture("sunflower_icon", "textures\\sunflower_icon.png");
 	addTexture("wallnut_icon", "textures\\wallnut_icon.png");
 	addTexture("snow_pea_icon", "textures\\snow_pea_icon.png");
-	addTexture("cabbage_icon", "textures\\cabbage_icon.png");
+	addTexture("mellon_icon", "textures\\mellon_icon.png");
 	addTexture("chomper_icon", "textures\\chomper_icon.png");
 
 	// другое

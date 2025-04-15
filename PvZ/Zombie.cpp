@@ -80,6 +80,7 @@ void Zombie::update(double dt, sf::RenderWindow& win) {
 		move(dt);
 		tryRegisterOnLine(); // Добавил Н
 		draw(win);
+		animation.update(dt);
 		ZombieIsFrosen(dt);
 		isGameOver();
 	}

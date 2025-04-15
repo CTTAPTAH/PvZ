@@ -8,6 +8,7 @@ DiscoZombie::DiscoZombie(int idx_line)
 	),
 	hasSpawned(false)
 {
+	animation.setCountFrame(Config::DISCO_ZOMBIE_FRAME_COUNT);
 	animation.setTexture(LoadTexture::getBorn().getTexture("disco_zombie"));
 	rect.width = Config::DISCO_ZOMBIE_FRAME_WIDTH;
 	rect.height = Config::DISCO_ZOMBIE_FRAME_HEIGHT;
@@ -31,24 +32,28 @@ void DiscoZombie::move(double dt)
 		msg.type = TypeMsg::CREATE;
 
 		// слева
-		Zombie* zm_left = new Zombie(idx_line, 63, 100);
+		Zombie* zm_left = new Zombie(idx_line,
+			Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT);
 		zm_left->setRect({
 			rect.left - Config::DISCO_ZOMBIE_SPAWN_LEFT_OFFSET,
 			zm_left->getRect().top,
-			63,
-			100
+			Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT
 			}
 		);
 		msg.create.new_object = zm_left;
 		mng->addMessage(msg);
 
 		// справа
-		Zombie* zm_right = new Zombie(idx_line, 63, 100);
+		Zombie* zm_right = new Zombie(idx_line,
+			Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT);
 		zm_right->setRect({
 			rect.left + Config::DISCO_ZOMBIE_SPAWN_RIGHT_OFFSET,
 			zm_right->getRect().top,
-			63,
-			100
+			Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT
 			}
 		);
 		msg.create.new_object = zm_right;
@@ -56,12 +61,14 @@ void DiscoZombie::move(double dt)
 
 		// сверху
 		if (idx_line != 0) {
-			Zombie* zm_up = new Zombie(idx_line - 1, 63, 100);
+			Zombie* zm_up = new Zombie(idx_line - 1,
+				Config::ZOMBIE_FRAME_WIDTH,
+				Config::ZOMBIE_FRAME_HEIGHT);
 			zm_up->setRect({
 				rect.left,
 				zm_up->getRect().top,
-				63,
-				100
+				Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT
 				}
 			);
 			msg.create.new_object = zm_up;
@@ -70,12 +77,14 @@ void DiscoZombie::move(double dt)
 
 		// снизу
 		if (idx_line != 4) {
-			Zombie* zm_down = new Zombie(idx_line + 1, 63, 100);
+			Zombie* zm_down = new Zombie(idx_line + 1,
+				Config::ZOMBIE_FRAME_WIDTH,
+				Config::ZOMBIE_FRAME_HEIGHT);
 			zm_down->setRect({
 				rect.left,
 				zm_down->getRect().top,
-				63,
-				100
+				Config::ZOMBIE_FRAME_WIDTH,
+			Config::ZOMBIE_FRAME_HEIGHT
 				}
 			);
 			msg.create.new_object = zm_down;

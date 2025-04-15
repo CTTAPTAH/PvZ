@@ -77,7 +77,7 @@ void Chomper::EatingZombie1(double dt) {
 	if (victim and isEating) {
 
 		chewing_zombie_timer -= dt;
-		std::cout << chewing_zombie_timer << std::endl;
+		//std::cout << chewing_zombie_timer << std::endl;
 
 		if (chewing_zombie_timer <= 0) {
 

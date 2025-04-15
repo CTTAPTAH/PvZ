@@ -154,7 +154,7 @@ int main()
 	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER, Config::COOLDOWN_SUNFLOWER);
 	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT, Config::COOLDOWN_NUT);
 	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::SNOWPEASHOOTER, Config::COOLDOWN_SNOW_PEA);
-	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 300, TypeEntity::MELLONPULT, Config::COOLDOWN_MELON);
+	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("mellon_icon"), 300, TypeEntity::MELLONPULT, Config::COOLDOWN_MELON);
 	PlantInfo chomper_info(LoadTexture::getBorn().getTexture("chomper_icon"), 150, TypeEntity::CHOMPER, Config::COOLDOWN_CHOMPER);
 
 	plant_slots.push_back(pea_info);

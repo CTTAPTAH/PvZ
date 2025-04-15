@@ -8,9 +8,9 @@ SnowPeashooter::SnowPeashooter(int idx_line_, sf::Vector2f pos):
 
     animation = Animation(LoadTexture::getBorn().getTexture("snowpea"),
         Config::PEASHOOTER_FRAME_WIDTH,
-        80,
-        1,
-        0,
+        Config::PEASHOOTER_FRAME_HEIGHT,
+        Config::PEASHOOTER_COUNT_FRAME,
+        Config::PEASHOOTER_FRAMETIME,
         pos
     );
     rect.width = Config::PEASHOOTER_FRAME_WIDTH;
