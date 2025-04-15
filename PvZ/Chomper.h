@@ -7,9 +7,11 @@
 class Chomper : public GameObject
 {
 private:
-	double time_to_chew_zombie = 40;
+	double time_to_chew_zombie = 10;
 
 	double chewing_zombie_timer;
+
+	GameObject* victim = nullptr;
 
 	bool isEating = false;
 public:
@@ -20,8 +22,9 @@ public:
 	void draw(sf::RenderWindow& win);
 	void receiveMsg(Message* msg) override;
 	void update(double dt, sf::RenderWindow& win) override;
+	void EatingZombie1(double dt);
 	void EatingZombie(double dt, GameObject* object);
-	void CollisionWithZombie(double dt);
+	GameObject* CollisionWithZombie();
 	bool getIsEating();
 };
 

@@ -51,58 +51,99 @@ void Chomper::update(double dt, sf::RenderWindow& win)
 {
 	draw(win);
 	animation.update(dt);
-	CollisionWithZombie(dt);
+	EatingZombie1(dt);
 }
 
-void Chomper::EatingZombie(double dt, GameObject* object)
-{
-	Manager* MGR = Manager::getBorn();
+void Chomper::EatingZombie1(double dt) {
 
-	Zombie* zombie = static_cast<Zombie*>(object);
+	if(!victim) victim = CollisionWithZombie();	
 
-	if (!isEating) {
-		isEating = true;
-		zombie->setDead(true);
-		zombie->setVictim();
+	if (victim and !victim->getIsDead()) {
+
 		animation.setCountFrame(Config::CHOMPER_EAT_FRAME_COUNT);
 		animation.setCurFrame(0);
 		animation.setTexture(LoadTexture::getBorn().getTexture("chew"));
+
+		isEating = true;
+
+		Message msg;
+		msg.type = TypeMsg::DEATH;
+		msg.death.creature = victim;
+		Manager::getBorn()->addMessage(msg);
+
+	/*	victim->setDead(true);*/
+
 	}
-	if (isEating) {
+	if (victim and isEating) {
 
 		chewing_zombie_timer -= dt;
+		std::cout << chewing_zombie_timer << std::endl;
 
 		if (chewing_zombie_timer <= 0) {
 
-			Message msg;
-			msg.type = TypeMsg::DEATH;
-			msg.death.creature = zombie;
-			MGR->addMessage(msg);
-
 			chewing_zombie_timer = time_to_chew_zombie;
+
+			victim = nullptr;
+
 			isEating = false;
+
 			animation.setTexture(LoadTexture::getBorn().getTexture("chomper"));
 			animation.setCountFrame(Config::CHOMPER_FRAME_COUNT);
 			animation.setCurFrame(0);
 		}
 	}
+
 }
 
-void Chomper::CollisionWithZombie(double dt)
-{
-	Manager* MGR = Manager::getBorn();
+//void Chomper::EatingZombie(double dt, GameObject* object)
+//{
+//	Manager* MGR = Manager::getBorn();
+//
+//	Zombie* zombie = static_cast<Zombie*>(object);
+//
+//	if (!isEating) {
+//		isEating = true;
+//		zombie->setDead(true);
+//		zombie->setVictim();
+//		animation.setCountFrame(Config::CHOMPER_EAT_FRAME_COUNT);
+//		animation.setCurFrame(0);
+//		animation.setTexture(LoadTexture::getBorn().getTexture("chew"));
+//	}
+//	if (isEating) {
+//
+//		chewing_zombie_timer -= dt;
+//
+//		if (chewing_zombie_timer <= 0) {
+//
+//			Message msg;
+//			msg.type = TypeMsg::DEATH;
+//			msg.death.creature = zombie;
+//			MGR->addMessage(msg);
+//
+//			chewing_zombie_timer = time_to_chew_zombie;
+//			isEating = false;
+//			animation.setTexture(LoadTexture::getBorn().getTexture("chomper"));
+//			animation.setCountFrame(Config::CHOMPER_FRAME_COUNT);
+//			animation.setCurFrame(0);
+//		}
+//	}
+//}
 
-	auto objects = MGR->getListObject();
+GameObject* Chomper::CollisionWithZombie()
+{
+
+	auto objects = Manager::getBorn()->getListObject();
 
 	for (auto elem : objects) {
 		if (elem->getTypeObj() == TypeObject::ZOMBIE and elem->getIdxLine() == idx_line) {
 
 			if (elem->getRect().left <= rect.left + rect.width + 20) {
-				EatingZombie(dt, elem);
-				break;
+				/*Zombie* zombie = static_cast<Zombie*>(elem);*/
+				return elem;
 			}
 		}
 	}
+	return nullptr;
 }
 
 bool Chomper::getIsEating()

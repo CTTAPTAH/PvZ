@@ -49,7 +49,7 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 
 Zombie::~Zombie()
 {
-	//std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
+	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
 
 	// уменьшаем количество зомби на указанной линии
 	Manager* mng = Manager::getBorn();
@@ -141,16 +141,9 @@ void Zombie::FindVictimN2(double dt)
 	Manager* mng = Manager::getBorn();
 	std::list<GameObject*> objects = mng->getListObject();
 	victim = nullptr;
+
 	for (auto obj : objects) {
 		if (obj->getTypeObj() == TypeObject::PLANT and !obj->getIsDead()) {
-
-			if (obj->getTypeEnt() == TypeEntity::CHOMPER) {
-				Chomper* chomp = dynamic_cast<Chomper*>(obj);
-				if (chomp and !chomp->getIsEating()) {
-					break;
-				}
-			}
-
 			if (rect.intersects(obj->getRect()) and idx_line == obj->getIdxLine()) {
 				victim = obj;
 				isEating = true;
