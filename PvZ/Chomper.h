@@ -7,9 +7,9 @@
 class Chomper : public GameObject
 {
 private:
-	double time_to_chew_zombie = 10;
+	double time_to_chew_zombie = 40;
 
-	double chewing_zombie_timer;;
+	double chewing_zombie_timer;
 
 	bool isEating = false;
 public:

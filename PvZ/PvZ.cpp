@@ -108,14 +108,14 @@ int main()
 	RenderWindow win(VideoMode(mng->getWinWidth(), mng->getWinHeight()), "PVZ");
 
 	//// создание машин
-	//for (int i = 0; i < 5; i++) {
-	//	Manager* mng = Manager::getBorn();
-	//	Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
-	//	Message msg;
-	//	msg.type = TypeMsg::CREATE;
-	//	msg.create.new_object = car;
-	//	mng->addMessage(msg);
-	//}
+	for (int i = 0; i < 5; i++) {
+		Manager* mng = Manager::getBorn();
+		Car * car = new Car(i, TypeObject::UNDEFINED, mng->getMap().getFieldWidth(), mng->getMap().getFieldHeight());
+		Message msg;
+		msg.type = TypeMsg::CREATE;
+		msg.create.new_object = car;
+		mng->addMessage(msg);
+	}
 	//for (int i = 0; i < 2; i++) {
 	//	RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
 	//	Message zombie_msg;
@@ -154,8 +154,8 @@ int main()
 	PlantInfo sunflower_info(LoadTexture::getBorn().getTexture("sunflower_icon"), 50, TypeEntity::SUNFLOWER, Config::COOLDOWN_SUNFLOWER);
 	PlantInfo wallnut_info(LoadTexture::getBorn().getTexture("wallnut_icon"), 50, TypeEntity::WALLNUT, Config::COOLDOWN_NUT);
 	PlantInfo snow_pea_info(LoadTexture::getBorn().getTexture("snow_pea_icon"), 175, TypeEntity::SNOWPEASHOOTER, Config::COOLDOWN_SNOW_PEA);
-	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 100, TypeEntity::MELLONPULT, Config::COOLDOWN_MELON);
-	PlantInfo chomper_info(LoadTexture::getBorn().getTexture("chomper_icon"), 200, TypeEntity::CHOMPER, Config::COOLDOWN_CHOMPER);
+	PlantInfo cabbage_info(LoadTexture::getBorn().getTexture("cabbage_icon"), 300, TypeEntity::MELLONPULT, Config::COOLDOWN_MELON);
+	PlantInfo chomper_info(LoadTexture::getBorn().getTexture("chomper_icon"), 150, TypeEntity::CHOMPER, Config::COOLDOWN_CHOMPER);
 
 	plant_slots.push_back(pea_info);
 	plant_slots.push_back(sunflower_info);

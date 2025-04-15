@@ -7,7 +7,6 @@ RaZombie::RaZombie(int idx_line, int frame_w, int frame_h):
 	Zombie(idx_line, frame_w, frame_h)
 {
 	animation.setTexture(LoadTexture::getBorn().getTexture("razombie"));
-	hp = 5;
 	velocity_x = Config::DEFAULT_ZOMBIE_SPEED;
 
 	type_obj = TypeObject::ZOMBIE;
@@ -26,13 +25,13 @@ void RaZombie::move(double dt)
 		if (!isTakeSuns ) {
 
 			if (WasTaken) {
-				velocity_x = 80;
+				velocity_x = Config::DEFAULT_ZOMBIE_SPEED;
 				WasTaken = false;
 			}
 			rect.left -= velocity_x * dt;
 		}
 		else {
-			velocity_x = 0;
+			velocity_x = Config::DEFAULT_ZOMBIE_IDLE_SPEED;
 			WasTaken = true;
 		}
 		animation.setPosition(rect.left, rect.top);

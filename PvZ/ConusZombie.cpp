@@ -27,13 +27,13 @@ void ConusZombie::receiveMsg(Message* msg)
 		this == msg->damage.who_receive) {
 		hp -= msg->damage.damage;
 		
-		if (hp == 6 or hp == 5) {
+		if (hp <= Config::CONUS_ZOMBIE_HP * 3 / 4) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("conus_zombie2"));
 		}
-		else if (hp == 4 or hp == 3) {
+		else if (hp <= Config::CONUS_ZOMBIE_HP * 2 / 4) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("conus_zombie3"));
 		}
-		else if (hp == 2 or hp == 1) {
+		else if (hp <= Config::CONUS_ZOMBIE_HP * 1 / 4) {
 			animation.setTexture(LoadTexture::getBorn().getTexture("zombie"));
 			rect.width = 68; // вручную плохо. Config лучше
 			rect.height = 100; // вручную плохо. Config лучше

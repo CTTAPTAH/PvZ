@@ -54,7 +54,8 @@ public:
 	static constexpr int SHOVEL_POS_Y = 0;
 	//------------------------------------
 	// спавнер
-	static constexpr int SPAWN_OFFSET_MAX = 5;
+	static constexpr int SPAWN_OFFSET_MAX = 90;
+	static constexpr int SPAWN_OFFSET_MIN = 60;
 
 	// Карта
 	// Количество линий на карте
@@ -66,8 +67,8 @@ public:
 
 	// Горох
 	static constexpr double PEASHOOTER_DAMAGE = 1.0;
-	static constexpr double PEASHOOTER_TIME_RELOAD = 1.0;
-	static constexpr int PEASHOOTER_HP = 4;
+	static constexpr double PEASHOOTER_TIME_RELOAD = 2.0;
+	static constexpr int PEASHOOTER_HP = 3;
 	static constexpr int PEASHOOTER_FRAME_WIDTH = 100;
 	static constexpr int PEASHOOTER_FRAME_HEIGHT = 100;
 	static constexpr int PEASHOOTER_COUNT_FRAME = 23; //23
@@ -88,8 +89,8 @@ public:
 	static constexpr double PEA_PROJECTILE_FRAMETIME = 0;
 
 	// Арбуз
-	static constexpr double MELONPULT_DAMAGE = 1.0;
-	static constexpr double MELONPULT_TIME_RELOAD = 1.0;
+	static constexpr double MELONPULT_DAMAGE = 3.0;
+	static constexpr double MELONPULT_TIME_RELOAD = 2.0;
 	static constexpr int MELONPULT_HP = 4;
 	static constexpr int MELONPULT_FRAME_WIDTH = 100;
 	static constexpr int MELONPULT_FRAME_HEIGHT = 100;
@@ -108,7 +109,7 @@ public:
 	static constexpr double MELON_GRAVITY = 300;
 
 	//Зомби
-	static constexpr int ZOMBIE_FRAME_WIDTH = 100;
+	static constexpr int ZOMBIE_FRAME_WIDTH = 60;
 	static constexpr int ZOMBIE_FRAME_HEIGHT = 100;
 	static constexpr int ZOMBIE_FRAME_COUNT = 1;
 	static constexpr int ZOMBIE_FRAME_TIME = 0;
@@ -118,7 +119,7 @@ public:
 	static constexpr int CONUS_ZOMBIE_FRAME_HEIGHT = 100;
 	static constexpr int CONUS_ZOMBIE_FRAME_COUNT = 1;
 	static constexpr int CONUS_ZOMBIE_FRAME_TIME = 0;
-	static constexpr int CONUS_ZOMBIE_HP = 8;
+	static constexpr int CONUS_ZOMBIE_HP = 28;
 
 	// Диско Зомби
 	static constexpr int DISCO_ZOMBIE_FRAME_WIDTH = 46;
@@ -129,9 +130,8 @@ public:
 	static constexpr int DISCO_ZOMBIE_SPAWN_RIGHT_OFFSET = 100;
 
 	// дефолтные значения зомби
-	static constexpr int DEFAULT_ZOMBIE_HP = 3;
-	static constexpr double DEFAULT_ZOMBIE_SPEED = 75;
-	static constexpr double FROZEN_DEFAULT_ZOMBIE_SPEED = 75;
+	static constexpr int DEFAULT_ZOMBIE_HP = 9;
+	static constexpr double DEFAULT_ZOMBIE_SPEED = 15;
 
 	static constexpr int DEFAULT_ZOMBIE_TIME_RELOAD = 1;
 	static constexpr int DEFAULT_ZOMBIE_RELOAD = 0;
@@ -145,10 +145,10 @@ public:
 	static constexpr double SUNFLOWER_FRAME_TIME = 0.085;
 
 	static constexpr int SUNFLOWER_HP = 4;
-	static constexpr int TIME_TO_REAPEAR_SUN = 7;
+	static constexpr int TIME_TO_REAPEAR_SUN = 17;
 
 	//Солнца
-	static constexpr int SUN_PRICE = 50;
+	static constexpr int SUN_PRICE = 25;
 	static constexpr int SUN_FRAME_WIDTH = 50;
 	static constexpr int SUN_FRAME_HEIGHT = 50;
 	static constexpr int SUN_FRAME_COUNT = 1;
@@ -160,7 +160,7 @@ public:
 	static constexpr int NUT_FRAME_COUNT = 4;
 	static constexpr int NUT_FRAME_TIME = 1;
 
-	static constexpr int NUT_HP = 12;
+	static constexpr int NUT_HP = 40;
 
 	//Машина
 	static constexpr int CAR_FRAME_WIDTH = 100;
@@ -176,7 +176,7 @@ public:
 	static constexpr double CHOMPER_FRAME_TIME = 0.085; // 0.07 было
 	static constexpr int CHOMPER_HP = 4;
 
-	static constexpr int NEWSPAPER_ZOMBIE_DOUBLE_SPEED = 200;
+	static constexpr int NEWSPAPER_ZOMBIE_DOUBLE_SPEED = 30;
 
 
 };

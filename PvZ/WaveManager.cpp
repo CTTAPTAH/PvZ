@@ -82,7 +82,7 @@ void WaveManager::update(double dt)
 
 bool WaveManager::hasZombies()
 {
-	std::list<GameObject*> objects = Manager::getBorn()->getListObject();
+	auto objects = Manager::getBorn()->getListObject();
 	for (const auto& obj : objects) {
 		// чомпер может ломать
 		if (obj->getTypeObj() == TypeObject::ZOMBIE) {
@@ -100,6 +100,8 @@ void WaveManager::spawn()
 {
 	GameObject* object = nullptr;
 
+	int old_line = -1;
+	int cur_line = -1;
 	for (const auto& zm : waves[cur_wave].zombies) {
 		if (zm == TypeEntity::ZOMBIE) {
 			object = new Zombie(Rand(0, 4),
@@ -129,7 +131,9 @@ void WaveManager::spawn()
 		if (object) {
 			// смещение от начальной при спавне, чтобы появлялись не в одну линию
 			sf::FloatRect rect_zm = object->getRect();
-			rect_zm.left += Rand(0, Config::SPAWN_OFFSET_MAX);
+			cur_line = object->getIdxLine();
+			if (cur_line == old_line) rect_zm.left += Rand(Config::SPAWN_OFFSET_MIN, Config::SPAWN_OFFSET_MAX);
+			rect_zm.left += Rand(0, 10);
 			object->setRect(rect_zm);
 			
 			// отправка сообщения
@@ -137,7 +141,8 @@ void WaveManager::spawn()
 			msg.type = TypeMsg::CREATE;
 			msg.create.new_object = object;
 			Manager::getBorn()->addMessage(msg);
-			std::cout << "отправили сообщение" << std::endl;
+
+			old_line == object->getIdxLine();
 		}
 	}
 }
