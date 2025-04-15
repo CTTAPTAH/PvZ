@@ -52,7 +52,10 @@ public:
 	// лопата
 	static constexpr int SHOVEL_POS_X = 333;
 	static constexpr int SHOVEL_POS_Y = 0;
-	
+	//------------------------------------
+	// спавнер
+	static constexpr int SPAWN_OFFSET_MAX = 5;
+
 	// Карта
 	// Количество линий на карте
 	static constexpr int AMOUNT_LINES_MAP = 5;

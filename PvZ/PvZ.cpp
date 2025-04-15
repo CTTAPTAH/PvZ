@@ -90,9 +90,6 @@ int main()
 	srand(time(0));
 	system("chcp 1251>nul");
 
-
-
-
 	SoundEditor* sound_editor = SoundEditor::getBorn();
 
 	sound_editor->loadAllSounds();
@@ -172,6 +169,7 @@ int main()
 	player.setPlantSlots(plant_slots);
 	UIManager& ui = mng->getUI();
 	ui.createPlantSelection(plant_slots);
+	WaveManager& wave_manager = mng->getWaveManager();
 
 	const double set_time = 4;
 	double timer = set_time;
@@ -186,6 +184,7 @@ int main()
 		FPS();
 		player.updateInfo(fps.dt);
 		ui.updateInfo();
+		wave_manager.update(fps.dt);
 		while (win.pollEvent(ev)) {
 			if (ev.type == Event::Closed)
 				win.close();
@@ -214,23 +213,23 @@ int main()
 		}
 
 		// Спавнер зомби
-		timer -= fps.dt;
-		if (timer <= 0) {
-			timer = Random(2, (int)set_time+2);
-			/*if (counter_z < 1) {
-				RandomSpawn(5);
-				counter_z++;
-			}*/
-			/*if (counter_z < 6) {
-				RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
-				Message zombie_msg;
-				zombie_msg.type = TypeMsg::CREATE;
-				zombie_msg.create.new_object = zombie;
-				mng->addMessage(zombie_msg);
-				counter_z++;
-			}*/
-			RandomSpawn(3);
-		}
+		//timer -= fps.dt;
+		//if (timer <= 0) {
+		//	timer = Random(2, (int)set_time+2);
+		//	/*if (counter_z < 1) {
+		//		RandomSpawn(5);
+		//		counter_z++;
+		//	}*/
+		//	/*if (counter_z < 6) {
+		//		RaZombie* zombie = new RaZombie(Random(0, 4), 100, 100);
+		//		Message zombie_msg;
+		//		zombie_msg.type = TypeMsg::CREATE;
+		//		zombie_msg.create.new_object = zombie;
+		//		mng->addMessage(zombie_msg);
+		//		counter_z++;
+		//	}*/
+		//	RandomSpawn(Random(1,5));
+		//}
 		win.clear();
 		mng->getMap().drawMap(win); // сначала рисуем карту
 
