@@ -6,12 +6,16 @@
 #include "Nut.h"
 #include "SnowPeashooter.h"
 
+int randomik(int start, int end) {
+	return rand() % (end - start + 1) + start;
+}
+
 // конструкторы, деструктор
 Map::Map()
 	: sprite(),
 	amount_field_w(Config::AMOUNT_FIELD_W),
 	amount_field_h(Config::AMOUNT_FIELD_H),
-	reload_spawn_sun(Config::RELOAD_SPAWN_SUN)
+	reload_spawn_sun(Config::RELOAD_SPAWN_SKY_SUN)
 {
 	setTexture(LoadTexture::getBorn().getTexture("map"));
 
@@ -22,7 +26,7 @@ Map::Map(sf::FloatRect rect_map)
 	:sprite(),
 	amount_field_w(Config::AMOUNT_FIELD_W),
 	amount_field_h(Config::AMOUNT_FIELD_H),
-	reload_spawn_sun(Config::RELOAD_SPAWN_SUN)
+	reload_spawn_sun(Config::RELOAD_SPAWN_SKY_SUN)
 {
 	setTexture(LoadTexture::getBorn().getTexture("map"));
 	resizeGrid(rect_map);
@@ -108,7 +112,9 @@ void Map::receiveMsg(Message* msg)
 			new_msg.create.new_object = snowpea;
 		}
 		else if (msg->add_plant.type == TypeEntity::MELLONPULT) {
-			Melonpult* melon = new Melonpult(getFieldPosition(idxPlant.x, idxPlant.y), idxPlant.x);
+			sf::Vector2f pos = getFieldPosition(idxPlant.x, idxPlant.y);
+			pos.x += Config::MELONPULT_OFFSET_POS_X;
+			Melonpult* melon = new Melonpult(pos, idxPlant.x);
 			new_msg.create.new_object = melon;
 		}
 		SoundEditor::getBorn()->playSound("plant", 30);
@@ -126,8 +132,17 @@ void Map::spawnSkySun(double dt)
 	reload_spawn_sun -= dt;
 
 	if (reload_spawn_sun <= 0) {
-		reload_spawn_sun = Config::RELOAD_SPAWN_SUN;
+		Manager* mng = Manager::getBorn();
+		reload_spawn_sun = Config::RELOAD_SPAWN_SKY_SUN;
 
+		// ещё в первом рандоме вычесть длину солнышек было бы хорошо
+		Sun* sun = new Sun(randomik(rect.left, rect.left + rect.width),
+			100,
+			randomik(0, amount_field_h));
+		Message msg;
+		msg.type = TypeMsg::CREATE;
+		msg.create.new_object = sun;
+		mng->addMessage(msg);
 	}
 }
 

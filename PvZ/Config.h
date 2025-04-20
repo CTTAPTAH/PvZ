@@ -52,6 +52,15 @@ public:
 	// лопата
 	static constexpr int SHOVEL_POS_X = 333;
 	static constexpr int SHOVEL_POS_Y = 0;
+
+	// полоска волн
+	static constexpr float WAVE_BAR_WIDTH = 260;
+	static constexpr float WAVE_BAR_HEIGHT = 17; // 2
+	static constexpr float WAVE_BAR_THIKNESS_FRAME = 10;
+	static constexpr int WAVE_BAR_POS_X = 700;
+	static constexpr int WAVE_BAR_POS_Y = 10 + WAVE_BAR_THIKNESS_FRAME;
+	static constexpr int WAVE_BAR_FILL_OFFSET_X = 17;
+	static constexpr int WAVE_BAR_FILL_OFFSET_Y = 13;
 	//------------------------------------
 	// спавнер
 	static constexpr int SPAWN_OFFSET_MAX = 15;
@@ -65,7 +74,7 @@ public:
 	static constexpr int AMOUNT_FIELD_W = 9;
 	static constexpr int AMOUNT_FIELD_H = 5;
 	// Появление солнышек с неба
-	static constexpr double RELOAD_SPAWN_SUN = 5;
+	static constexpr double RELOAD_SPAWN_SKY_SUN = 5.0;
 
 	//------------------------------------
 
@@ -83,6 +92,9 @@ public:
 	static constexpr int MELON_PROJECTILE_OFFSET_X = 0;
 	static constexpr int MELON_PROJECTILE_OFFSET_Y = 18;
 
+	// Снежный горох
+	static constexpr int SNOW_PEA_COUNT_FRAME = 39;
+	static constexpr double SNOW_PEA_FRAMETIME = 0.05; //0.085
 
 	// Горошина снаряд
 	static constexpr double PEA_PROJECTILE_SPEED = 300.0;
@@ -102,6 +114,7 @@ public:
 	static constexpr double MELONPULT_FRAMETIME = 0.085;
 	static constexpr int MELONPULT_PROJECTILE_OFFSET_X = 72;
 	static constexpr int MELONPULT_PROJECTILE_OFFSET_Y = 13;
+	static constexpr double MELONPULT_OFFSET_POS_X = -31;
 
 	// Снаряд арбуза
 	static constexpr double MELON_VY = -300.0;
@@ -115,7 +128,7 @@ public:
 	//Зомби
 	static constexpr int ZOMBIE_FRAME_WIDTH = 100;
 	static constexpr int ZOMBIE_FRAME_HEIGHT = 100;
-	static constexpr int ZOMBIE_FRAME_COUNT = 46;
+	static constexpr int ZOMBIE_FRAME_COUNT = 46; // 46
 	static constexpr double ZOMBIE_FRAME_TIME = 0.085;
 
 	//Зомби с конусом
@@ -125,8 +138,11 @@ public:
 	static constexpr int CONUS_ZOMBIE_FRAME_TIME = 0;
 	static constexpr int CONUS_ZOMBIE_HP = 28;
 
+	// Ра зомби
+	static constexpr int RAZOMBIE_FRAME_COUNT = 1;
+
 	// Диско Зомби
-	static constexpr int DISCO_ZOMBIE_FRAME_WIDTH = 100; // 46
+	static constexpr int DISCO_ZOMBIE_FRAME_WIDTH = 100; // было 46
 	static constexpr int DISCO_ZOMBIE_FRAME_HEIGHT = 100;
 	static constexpr int DISCO_ZOMBIE_FRAME_COUNT = 34;
 	static constexpr int DISCO_ZOMBIE_FRAME_TIME = 0.085;
@@ -181,7 +197,7 @@ public:
 	static constexpr double CHOMPER_FRAME_TIME = 0.085; // 0.07 было
 	static constexpr int CHOMPER_HP = 4;
 
-	static constexpr int NEWSPAPER_ZOMBIE_DOUBLE_SPEED = 30;
-
+	static constexpr double NEWSPAPER_ZOMBIE_DOUBLE_SPEED = 30;
+	static constexpr int NEWSPAPER_ZOMBIE_FRAME_COUNT = 1;
 
 };

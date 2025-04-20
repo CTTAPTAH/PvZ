@@ -59,9 +59,9 @@ void LoadTexture::loadAllTexture()
 	addTexture("sun", "textures\\sun.png");
 	addTexture("board", "textures\\board.png");
 	addTexture("shovel", "textures\\shovel.png");
-	addTexture("shovel2", "textures\\shovel2.png");
 	addTexture("frame_icon", "textures\\frame_icon.png");
 	addTexture("end_screen", "textures\\EndScreen.png");
+	addTexture("head_zm", "textures\\head_zm.png");
 }
 
 // геттеры, сеттеры

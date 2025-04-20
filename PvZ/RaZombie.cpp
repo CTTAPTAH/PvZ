@@ -6,6 +6,7 @@ std::list<RaZombie*> RaZombie::waiting_list;
 RaZombie::RaZombie(int idx_line, int frame_w, int frame_h):
 	Zombie(idx_line, frame_w, frame_h)
 {
+	animation.setCountFrame(Config::RAZOMBIE_FRAME_COUNT);
 	animation.setTexture(LoadTexture::getBorn().getTexture("razombie"));
 	velocity_x = Config::DEFAULT_ZOMBIE_SPEED;
 

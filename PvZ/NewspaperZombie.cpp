@@ -3,6 +3,7 @@
 NewspaperZombie::NewspaperZombie(int idx_line, int frame_w, int frame_h) :
 	Zombie(idx_line, frame_w, frame_h)
 {
+	animation.setCountFrame(Config::NEWSPAPER_ZOMBIE_FRAME_COUNT);
 	animation.setTexture(LoadTexture::getBorn().getTexture("newszombie"));
 	hp = 6;
 	type_ent = TypeEntity::NEWSPAPER_ZOMBIE;

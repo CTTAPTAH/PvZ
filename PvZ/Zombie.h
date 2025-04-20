@@ -73,7 +73,6 @@ public:
 class Zombie : public GameObject
 {
 protected:
-
     double velocity_x;
 
     static int count;

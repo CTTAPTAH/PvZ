@@ -50,7 +50,7 @@ Zombie::Zombie(int _index_line, int frame_w, int frame_h) :
 
 Zombie::~Zombie()
 {
-	std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
+	//std::cout << "Zombie number " << current_index << " is defeat" << std::endl;
 
 	// уменьшаем количество зомби на указанной линии
 	Manager* mng = Manager::getBorn();

@@ -126,7 +126,8 @@ void Sun::TextureCollisionWithCursor(sf::RenderWindow& win, double dt) {
 		current_motion = MOVE_SUN;
 	}
 
-	if (rect.left >= MGR->getWinWidth() || rect.top <= 4) {
+	// Исправи if Н. Было: rect.left >= MGR->getWinWidth() || rect.top <= 4
+	if (rect.left >= MGR->getWinWidth() || rect.top < 4) {
 
 		collected_sun += 1;
 		//std::cout << collected_sun << std::endl;

@@ -185,6 +185,7 @@ int main()
 		player.updateInfo(fps.dt);
 		ui.updateInfo();
 		wave_manager.update(fps.dt);
+		mng->getMap().spawnSkySun(fps.dt);
 		while (win.pollEvent(ev)) {
 			if (ev.type == Event::Closed)
 				win.close();

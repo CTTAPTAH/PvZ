@@ -7,6 +7,7 @@ ConusZombie::ConusZombie(int idx_line)
 		Config::CONUS_ZOMBIE_FRAME_HEIGHT
 	)
 {
+	animation.setCountFrame(Config::CONUS_ZOMBIE_FRAME_COUNT);
 	animation.setTexture(LoadTexture::getBorn().getTexture("conus_zombie1"));
 	rect.width = Config::CONUS_ZOMBIE_FRAME_WIDTH;
 	rect.height = Config::CONUS_ZOMBIE_FRAME_HEIGHT;

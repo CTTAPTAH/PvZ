@@ -11,7 +11,14 @@ UIManager::UIManager()
 	frame_icon(*LoadTexture::getBorn().getTexture("frame_icon")),
 	plant_icons(),
 	board(*LoadTexture::getBorn().getTexture("board")),
-	shovel(*LoadTexture::getBorn().getTexture("shovel"))
+	shovel(*LoadTexture::getBorn().getTexture("shovel")),
+	bar_size(Config::WAVE_BAR_WIDTH, Config::WAVE_BAR_HEIGHT),
+	bar_pos(Config::WAVE_BAR_POS_X, Config::WAVE_BAR_POS_Y),
+	wave_bar_border(),
+	wave_bar_background(),
+	wave_bar_fill(),
+	waves_started(false),
+	head_zm(*LoadTexture::getBorn().getTexture("head_zm"))
 {
 	frame_icon.setPosition({ 0, 0 });
 	board.setPosition(Config::BOARD_POS_X, Config::BOARD_POS_Y);
@@ -27,11 +34,40 @@ UIManager::UIManager()
 	money_text.setFillColor(sf::Color::Black); // цвет
 	money_text.setPosition(Config::MONEY_POS_X, Config::MONEY_POS_Y); // позици€
 	updateMoneyText(Config::MONEY); // установим начальный текст
+
+	// –амка
+	wave_bar_border.setSize(bar_size);
+	wave_bar_border.setPosition(bar_pos);
+	wave_bar_border.setOutlineThickness(Config::WAVE_BAR_THIKNESS_FRAME);
+	wave_bar_border.setOutlineColor(sf::Color(48, 61, 96));
+
+	// ‘он
+	wave_bar_background.setSize(bar_size);
+	wave_bar_background.setPosition(bar_pos);
+	wave_bar_background.setFillColor(sf::Color::Black);
+
+	// ѕрогресс
+	wave_bar_fill.setSize({ 0.f, bar_size.y });
+	wave_bar_fill.setPosition(bar_pos);
+	wave_bar_fill.setFillColor(sf::Color(85, 152, 10));
 }
 
 // методы
 void UIManager::updateInfo() {
 	plant_infos = Manager::getBorn()->getPlayer().getPlantSlots();
+}
+void UIManager::updateWaves(double progress_ratio)
+{
+	if (!waves_started) waves_started = true;
+
+	float new_width = progress_ratio * bar_size.x;
+	wave_bar_fill.setSize({ new_width, bar_size.y });
+	sf::Vector2f new_pos(bar_pos.x + (bar_size.x - new_width), bar_pos.y);
+	wave_bar_fill.setPosition(new_pos);
+
+	// смещение лучше как-то убрать (-4)
+	head_zm.setPosition({ new_pos.x - head_zm.getLocalBounds().width / 2,
+		new_pos.y - (head_zm.getLocalBounds().height / 2) + 4 });
 }
 void UIManager::createPlantSelection(const std::vector<PlantInfo>& plants) {
 	plant_icons.clear(); // очищаем, если не пуст
@@ -89,7 +125,15 @@ void UIManager::draw(sf::RenderWindow& win)
 			}
 		}
 	}
+	// рисуем полоску волн
+	if (waves_started) {
+		win.draw(wave_bar_border);
+		win.draw(wave_bar_background);
+		win.draw(wave_bar_fill);
+		win.draw(head_zm);
+	}
 
+	// рисуем остальное
 	win.draw(board);
 	win.draw(shovel);
 	win.draw(money_text);
@@ -202,9 +246,12 @@ void UIManager::handleMouseRelease(sf::Vector2f mousePos)
 		for (const auto& obj : list_obj) {
 			if (obj->getTypeObj() == TypeObject::PLANT and obj->getRect().contains(mousePosI)) {
 				sf::Vector2f idx_cursor = mng->getMap().getFieldIdx(mousePosI);
-				sf::Vector2f idx_plant = mng->getMap().getFieldIdx({ float(obj->getRect().left), float(obj->getRect().top) });
+				sf::Vector2f central_pos_plant = {
+					float(obj->getRect().left + (obj->getRect().width / 2)),
+					float(obj->getRect().top + (obj->getRect().height / 2)) };
+				sf::Vector2f idx_plant = mng->getMap().getFieldIdx(central_pos_plant);
 
-				// если их позиции совпали
+				// если их позиции совпали, то удалем растение
 				if (idx_cursor.x == idx_plant.x and
 					idx_cursor.y == idx_plant.y) {
 					Message msg;

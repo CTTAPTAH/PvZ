@@ -231,6 +231,7 @@ bool WaveManager::hasZombies()
 }
 void WaveManager::spawn()
 {
+	Manager* mng = Manager::getBorn();
 	// чтобы равномерно ставились зомби:
 	int size = 5;
 	int free_lines[5] = { 0, 1, 2, 3, 4 };
@@ -295,10 +296,11 @@ void WaveManager::spawn()
 			Message msg;
 			msg.type = TypeMsg::CREATE;
 			msg.create.new_object = object;
-			Manager::getBorn()->addMessage(msg);
+			mng->addMessage(msg);
 
 		}
 	}
+	mng->getUI().updateWaves(double(cur_wave + 1) / double(waves.size()));
 	std::cout << "Заспавнили волну: " << cur_wave + 1 << std::endl;
 }
 

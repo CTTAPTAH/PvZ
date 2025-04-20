@@ -9,6 +9,15 @@ class Manager;
 class UIManager
 {
 private:
+	// шкала волн зомби
+	sf::Vector2f bar_size;
+	sf::Vector2f bar_pos;
+	sf::RectangleShape wave_bar_border;     // рамка
+	sf::RectangleShape wave_bar_background; // фон
+	sf::RectangleShape wave_bar_fill;       // заполняемая часть
+	bool waves_started;
+	sf::Sprite head_zm;
+
 	// Отображаем деньги
 	sf::Font font;
 	sf::Text money_text;
@@ -36,6 +45,7 @@ public:
 
 	// методы
 	void updateInfo();
+	void updateWaves(double progress_ratio);
 	void createPlantSelection(const std::vector<PlantInfo>& plants);
 	void draw(sf::RenderWindow& win);
 	void handleMousePress(sf::Vector2f mousePos);

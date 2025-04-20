@@ -14,7 +14,7 @@ private:
 	int field_width, field_height;
 	bool isPlaced[Config::AMOUNT_FIELD_H][Config::AMOUNT_FIELD_W] = { false };
 	// появление солнышек
-	int reload_spawn_sun;
+	double reload_spawn_sun;
 
 	// при изменении размера карты, меняем и размер ячейки
 	void resizeGrid(sf::FloatRect rect_map);
